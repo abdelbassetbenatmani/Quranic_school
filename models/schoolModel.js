@@ -39,15 +39,8 @@ const schoolSchema = mongoose.Schema({
         default: 'user',
     },
     adresses:{
-        id:{type:mongoose.Schema.Types.ObjectId,},
-        comune:{
-            type:String,
-            require:[true,'comune is required'],
-        },
-        diara:{
-            type:String,
-            require:[true,'diara is required'],
-        },
+        comune:String,
+        daira:String,
         street:String        
     }
     ,
