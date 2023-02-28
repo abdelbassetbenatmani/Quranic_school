@@ -13,6 +13,8 @@ dotenv.config({ path: "config.env" })
 const dbConnection = require('./config/dbConnection')
 const apiError = require('./utils/apiError')
 const globalError = require('./Middleware/errorMiddleware')
+const mountRoutes = require('./routes')
+
 dbConnection()
 
 const app = express();
@@ -49,7 +51,7 @@ app.use(xss())
 app.use(helmet());
 
 // Middleware
-// mountRoutes(app)
+mountRoutes(app)
 app.all('*', (req, res, next) => {
     // eslint-disable-next-line new-cap
     next(new apiError(`Can't find this route ${req.originalUrl}`,400))
