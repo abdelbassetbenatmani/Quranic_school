@@ -32,6 +32,16 @@ exports.signupValidator = [
     check('confirmPassword').notEmpty().withMessage('أدخل تأكيد كلمة المرور'),
     check('phone').optional()
     .isMobilePhone('ar-DZ').withMessage('أدخل رقم هاتف صحيح'),
-    check('adresses').notEmpty().withMessage('عنوان المدرسة القراآنية إجباري'),
+    // check('comune').notEmpty().withMessage(' البلدية الخاصة بالمدرسة القراآنية إجبارية'),
+    // check('daira').notEmpty().withMessage('الدائرة الخاصة بالمدرسة القراآنية إجبارية'),
+    validatorMiddleware
+]
+
+exports.loginValidator = [ 
+    check('email').notEmpty().withMessage('يرجى إدخال الإيميل')
+    .isEmail().withMessage('يرجى إدخال إيميل صحيح ')
+    ,
+    check('password').notEmpty().withMessage('كلمة السر إجبارية ')
+    ,
     validatorMiddleware
 ]
