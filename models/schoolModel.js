@@ -101,7 +101,7 @@ const schoolSchema = mongoose.Schema({
                 enum:['before','AP','AF','AS','UN','OUT']
             },
             quranSave:{
-                type:String,
+                type:Number,
                 require:[true,'quran save is required'],
                 enum:[1/5,1/4,1/2,3/4,1]
             },
@@ -113,5 +113,13 @@ const schoolSchema = mongoose.Schema({
         }
     ]
 },{timestamps: true});
+
+schoolSchema.pre('save', async function(next){
+    if(!this.isModified('password')){
+        return next();
+    }
+    this.password = await bcrypt.hash(this.password,12);
+    next();
+})
 const School = mongoose.model('school',schoolSchema);
 module.exports = School
