@@ -37,9 +37,6 @@ exports.login = asyncHandler(async (req,res,next)=>{
 
         return next(new apiError('خطأ في الإيميل أو كلمة السر ',401))
     }
-    if(!school.active){
-        return next(new apiError('الحساب غير مفعل يرجى إنتظار المكالمة من الإدارة لتفعيل حسابك',401))
-    }
     const token = generateToken(school._id)
     res.status(200).json({data:school, token})
 })
@@ -77,7 +74,7 @@ exports.protect = asyncHandler(async (req,res,next)=>{
 });
 
 exports.allowedTo = (...roles)=> asyncHandler(async (req,res,next)=>{
-    if(!roles.includes(req.user.role)){
+    if(!roles.includes(req.school.role)){
         return next(new apiError('لا يسمح لك بالدخول إلى هذه الصفحة',403))
     }
     next()

@@ -10,6 +10,6 @@ router.post('/login',loginValidator,login)
 router.post('/forgotpassword',forgotPassword)
 router.post('/verifyResetCode',verifyPassResetCode)
 router.post('/resetPassword',resetPassword)
-router.post('/activateAccount',protect,allowedTo('admin'),activateAccount)
+// router.post('/activateAccount',protect,allowedTo('admin'),activateAccount)
 
 module.exports = router;
