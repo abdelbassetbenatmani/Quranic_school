@@ -2,11 +2,11 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
 const schoolSchema = mongoose.Schema({
-    username:{
-        type:String,
-        require:[true,'username is required'],
-        trim:true
-    },
+    // username:{
+    //     type:String,
+    //     require:[true,'username is required'],
+    //     trim:true
+    // },
     name:{
         type:String,
         require:[true,'username is required'],
@@ -19,14 +19,14 @@ const schoolSchema = mongoose.Schema({
     },
     email:{
         type: String,
-        required:[true,'email is required'],
+        // required:[true,'email is required'],
         unique:true,
         lowercase:true
     },
     phone:String,
     password:{
         type: String,
-        // required:[true,'password is required'],
+        required:[true,'password is required'],
         minlength:6,
     },
     passwordChangedAt:Date,
@@ -44,10 +44,10 @@ const schoolSchema = mongoose.Schema({
         street:String        
     }
     ,
-    active:{
-        type: Boolean,
-        default:false,
-    },
+    // active:{
+    //     type: Boolean,
+    //     default:false,
+    // },
     teachers:[{
         id:{type:mongoose.Schema.Types.ObjectId,},
         fullName :{
