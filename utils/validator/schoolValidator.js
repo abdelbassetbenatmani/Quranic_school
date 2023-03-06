@@ -6,18 +6,19 @@ const validatorMiddleware = require('../../Middleware/validatorMiddleware')
 const School = require('../../models/schoolModel')
 
 exports.createSchoolValidator = [
+    check('username').notEmpty().withMessage('اسم المستخدم إجباري')
+    .custom((val) =>
+        School.findOne({ username: val }).then((school) => {
+        if (school) {
+            return Promise.reject(new Error('اسم المستخدم مسجل مسبقا'));
+        }
+        })
+    ),
     check('name').notEmpty().withMessage('اسم المدرسة القرآنية إجباري')
     .custom((val,{req}) => {
         req.body.slug = slugify(val)
         return true
-    })
-    .custom((val) =>
-        School.findOne({ name: val }).then((school) => {
-        if (school) {
-            return Promise.reject(new Error('اسم المدرسة مسجل مسبقا'));
-        }
-        })
-    ),
+    }),
     check('email').optional()
     .isEmail().withMessage('Invalid email address')
     .custom((val) =>
@@ -70,6 +71,7 @@ exports.updateSchoolValidator = [
           .optional()
           .isMobilePhone(['ar-DZ'])
           .withMessage('أدخل رقم هاتف صحيح'),
+        check('address').optional(),  
         validatorMiddleware,
       ];
 
