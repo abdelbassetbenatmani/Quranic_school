@@ -3,7 +3,6 @@ const bcrypt = require('bcryptjs');
 
 const factory = require('./handelersFactory');
 const apiError = require('../utils/apiError')
-const {generateToken} = require('../utils/generateToken')
 
 const School = require('../models/schoolModel')
 
@@ -21,10 +20,11 @@ module.exports.updateSchool = asyncHandler(async (req, res,next) => {
         slug: req.body.slug,
         phone: req.body.phone,
         email: req.body.email,
+        address: req.body.address
     }, { new: true })
     if (!document) {
         // eslint-disable-next-line new-cap
-        return next(new apiError('لا يوجد حساب علىهذا الرقم',404))
+        return next(new apiError('لا يوجد حساب على هذا الرقم',404))
     }
     res.status(200).json({data:document})
 })

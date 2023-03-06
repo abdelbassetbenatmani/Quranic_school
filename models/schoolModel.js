@@ -2,14 +2,15 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
 const schoolSchema = mongoose.Schema({
-    // username:{
-    //     type:String,
-    //     require:[true,'username is required'],
-    //     trim:true
-    // },
-    name:{
+    username:{
         type:String,
         require:[true,'username is required'],
+        trim:true,
+        unique:[true,"username is unique"]
+    },
+    name:{
+        type:String,
+        require:[true,'name is required'],
         trim:true
     },
 
@@ -38,7 +39,7 @@ const schoolSchema = mongoose.Schema({
         enum:['user','admin'],
         default: 'user',
     },
-    adresses:{
+    address:{
         comune:String,
         daira:String,
         street:String        

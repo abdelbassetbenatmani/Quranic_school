@@ -18,21 +18,21 @@ const tokenExiste = (auth)=>{
 const generateRestCode= ()=>Math.floor(100000 + Math.random() * 900000).toString()
 const hashedResetCode = (resetCode)=>crypto.createHash('sha256').update(resetCode).digest('hex')
 
-exports.signup = asyncHandler(async (req,res,next)=>{
-    const school = await School.create({
-        username: req.body.username,
-        name: req.body.name,
-        email: req.body.email,
-        password: req.body.password,
-        phone: req.body.phone,
-        adresses: req.body.adresses
-    })
-    const token = generateToken(school._id)
-    res.status(201).json({data:school, token})
-})
+// exports.signup = asyncHandler(async (req,res,next)=>{
+//     const school = await School.create({
+//         username: req.body.username,
+//         name: req.body.name,
+//         email: req.body.email,
+//         password: req.body.password,
+//         phone: req.body.phone,
+//         adresses: req.body.adresses
+//     })
+//     const token = generateToken(school._id)
+//     res.status(201).json({data:school, token})
+// })
 
 exports.login = asyncHandler(async (req,res,next)=>{
-    const school = await School.findOne({email:req.body.email})
+    const school = await School.findOne({username:req.body.username})
     if(!school || !(await bcrypt.compare(req.body.password,school.password))){
 
         return next(new apiError('خطأ في الإيميل أو كلمة السر ',401))
@@ -152,14 +152,14 @@ exports.resetPassword = asyncHandler(async (req,res,next)=>{
 
 })
 
-exports.activateAccount = asyncHandler(async (req,res,next)=>{
+// exports.activateAccount = asyncHandler(async (req,res,next)=>{
 
-    const school = await School.findOne(req.body.email);
-    if(!school){
-        return next(new apiError(`لا يوجد حساب يخص هذا الإيميل`,500))
-    }
-    school.active= true;
-    school.save()
-    res.status(200).json({status: 'تم تفعيل الحساب'})
+//     const school = await School.findOne(req.body.email);
+//     if(!school){
+//         return next(new apiError(`لا يوجد حساب يخص هذا الإيميل`,500))
+//     }
+//     school.active= true;
+//     school.save()
+//     res.status(200).json({status: 'تم تفعيل الحساب'})
 
-});
+// });
