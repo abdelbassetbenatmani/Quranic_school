@@ -40,13 +40,13 @@ exports.createSchoolValidator = [
     check('confirmPassword').notEmpty().withMessage('تأكيد كلمة السر إجباري'),
     check('phone').optional()
     .isMobilePhone('ar-DZ').withMessage('أدخل رقم صحيح'),
-    validatorMiddleware]
+    validatorMiddleware('addschool')]
 
 exports.getSchoolValidator = [check('id')
-    .isMongoId().withMessage('incorrect id format'), validatorMiddleware]    
+    .isMongoId().withMessage('incorrect id format'), validatorMiddleware('schools')]    
 
 exports.deleteSchoolValidator = [check('id')
-    .isMongoId().withMessage('incorrect id format'), validatorMiddleware]    
+    .isMongoId().withMessage('incorrect id format'), validatorMiddleware('schools')]    
 
 exports.updateSchoolValidator = [
         check('id').isMongoId().withMessage('Invalid User id format'),
@@ -72,7 +72,7 @@ exports.updateSchoolValidator = [
           .isMobilePhone(['ar-DZ'])
           .withMessage('أدخل رقم هاتف صحيح'),
         check('address').optional(),  
-        validatorMiddleware,
+        validatorMiddleware('schools'),
       ];
 
 exports.changePasswordValidator = [
@@ -96,4 +96,4 @@ exports.changePasswordValidator = [
             }
             return true
         })
-        ,validatorMiddleware]
+        ,validatorMiddleware('schools')]

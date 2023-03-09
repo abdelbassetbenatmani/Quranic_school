@@ -40,7 +40,7 @@ const schoolSchema = mongoose.Schema({
         default: 'user',
     },
     address:{
-        comune:String,
+        commune:String,
         daira:String,
         street:String        
     }

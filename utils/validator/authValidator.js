@@ -42,5 +42,5 @@ exports.loginValidator = [
     ,
     check('password').notEmpty().withMessage('كلمة السر إجبارية ')
     ,
-    validatorMiddleware
+    validatorMiddleware('login')
 ]
