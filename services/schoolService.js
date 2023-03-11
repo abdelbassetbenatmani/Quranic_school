@@ -8,10 +8,9 @@ const School = require('../models/schoolModel')
 
 // module.exports.createSchool = factory.createOne(School)
 module.exports.createSchool =  asyncHandler(async (req, res,next) => {
-    const document = await School.create(req.body)
-    res.render('addschool',{
-        document
-    })
+    await School.create(req.body)
+    req.flash("added", 'the school has been created');
+    res.redirect('/dashboard/addschool')
 })
 
 module.exports.getSchools = factory.getAll(School)
