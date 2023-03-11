@@ -8,6 +8,8 @@ const rateLimit = require('express-rate-limit');
 const hpp = require('hpp');
 const xss = require('xss-clean');
 const helmet = require('helmet');
+const ejs = require('ejs');
+const pug = require('pug');
 
 dotenv.config({ path: 'config.env' });
 const dbConnection = require('./config/dbConnection');
@@ -32,11 +34,13 @@ app.options('*', cors());
 // compress response
 app.options(compression());
 
+// set ejs as default view engine
 app.set('view engine', 'ejs');
-app.set('views', 'views');
 
-// app.set('view engine', 'pug');
-// app.set('views', './views/teachers');
+// set view directories
+app.set('views', ['./views', './views/teachers']);
+// register pug engine
+app.engine('pug', pug.renderFile);
 
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
