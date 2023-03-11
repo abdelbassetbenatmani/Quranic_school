@@ -4,7 +4,9 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server"
+    "start": "nodemon server",
+    "build-sass": "sass ./public/scss/style.scss ./public/css/teachers/style.css",
+    "watch-sass": "sass --watch ./public/scss:./public/css/teachers"
   },
   "repository": {
     "type": "git",
@@ -18,6 +20,7 @@
   "homepage": "https://github.com/abdelbasset4/Quranic_school#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "bootstrap": "^5.2.3",
     "bootstrap-icons": "^1.10.3",
     "compression": "^1.7.4",
     "cors": "^2.8.5",
@@ -33,6 +36,8 @@
     "mongoose": "^6.10.0",
     "morgan": "^1.10.0",
     "nodemailer": "^6.9.1",
+    "pug": "^3.0.2",
+    "sass": "^1.58.3",
     "slugify": "^1.6.5",
     "uuid": "^9.0.0",
     "xss-clean": "^0.1.1"
