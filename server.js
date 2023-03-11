@@ -35,8 +35,8 @@ app.options(compression());
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 
-app.set('view engine', 'pug');
-app.set('views', './views/teachers');
+// app.set('view engine', 'pug');
+// app.set('views', './views/teachers');
 
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
@@ -57,7 +57,6 @@ app.use(limiter);
 app.use(xss());
 
 app.use(helmet());
-
 // Middleware
 mountRoutes(app);
 app.all('*', (req, res, next) => {
