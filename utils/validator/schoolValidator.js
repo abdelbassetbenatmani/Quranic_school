@@ -38,8 +38,7 @@ exports.createSchoolValidator = [
     }),
 
     check('confirmPassword').notEmpty().withMessage('تأكيد كلمة السر إجباري'),
-    check('phone').optional()
-    .isMobilePhone('ar-DZ').withMessage('أدخل رقم صحيح'),
+    check('phone').optional(),
     validatorMiddleware('addschool')]
 
 exports.getSchoolValidator = [check('id')
