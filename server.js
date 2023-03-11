@@ -8,10 +8,6 @@ const rateLimit = require('express-rate-limit');
 const hpp = require('hpp');
 const xss = require('xss-clean');
 const helmet = require('helmet');
-const flash = require('connect-flash');
-const session = require('express-session');
-const ejs = require('ejs');
-const pug = require('pug');
 
 
 dotenv.config({ path: 'config.env' });
@@ -45,7 +41,9 @@ app.options('*', cors());
 // compress response
 app.options(compression());
 
+// set ejs as default view engine
 app.set('view engine', 'ejs');
+
 // set view directories
 app.set('views', ['./views', './views/teachers']);
 // register pug engine
