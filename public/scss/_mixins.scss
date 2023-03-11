@@ -1,0 +1,10 @@
+@mixin center-layout(/*$screen-size,*/ $property: flex) {
+  //@media screen and (max-width : $screen-size){
+  display: $property;
+  justify-content: center;
+  align-items: center;
+  @if ($property == grid) {
+    justify-items: center;
+  }
+  //}
+}
