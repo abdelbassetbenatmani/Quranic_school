@@ -19,9 +19,8 @@ const {protect,allowedTo} = require('../services/authService')
 router.get('/',(req,res,next)=>{
     res.render('dashboard')
 })
-router.get('/addschool',(req,res,next)=>{
-    res.render('addschool')
-})
+router.route('/addschool').get((req,res,next)=>{res.render('addschool',{added: req.flash("added")})})
+        .post(createSchoolValidator,createSchool)
 router.get('/schools',(req,res,next)=>{
     res.render('schools')
 })

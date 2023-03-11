@@ -8,8 +8,7 @@ const rateLimit = require('express-rate-limit');
 const hpp = require('hpp');
 const xss = require('xss-clean');
 const helmet = require('helmet');
-const ejs = require('ejs');
-const pug = require('pug');
+
 
 dotenv.config({ path: 'config.env' });
 const dbConnection = require('./config/dbConnection');
@@ -21,6 +20,7 @@ dbConnection();
 
 const app = express();
 app.use(express.json({ limit: '20kb' }));
+app.use(express.urlencoded({extended:false}))
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(
   express.static(
@@ -28,6 +28,13 @@ app.use(
   )
 );
 
+app.use(session({
+  secret:'abdelbasset4real',
+  saveUninitialized: true,
+  resave: true
+}));
+
+app.use(flash());
 // allowed other domain acces api
 app.use(cors());
 app.options('*', cors());
@@ -62,6 +69,7 @@ app.use(xss());
 
 app.use(helmet());
 // Middleware
+
 mountRoutes(app);
 app.all('*', (req, res, next) => {
   // eslint-disable-next-line new-cap
