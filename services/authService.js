@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 const {generateToken} = require('../utils/generateToken')
 const sendEmail = require('../utils/sendEmail')
 const apiError = require('../utils/apiError')
-const School = require('../models/schoolModel')
+const Teacher = require('../models/teacherModel')
 
 const tokenExiste = (auth)=>{
     if(auth && auth.startsWith('Bearer')){
@@ -18,27 +18,34 @@ const tokenExiste = (auth)=>{
 const generateRestCode= ()=>Math.floor(100000 + Math.random() * 900000).toString()
 const hashedResetCode = (resetCode)=>crypto.createHash('sha256').update(resetCode).digest('hex')
 
-// exports.signup = asyncHandler(async (req,res,next)=>{
-//     const school = await School.create({
-//         username: req.body.username,
-//         name: req.body.name,
-//         email: req.body.email,
-//         password: req.body.password,
-//         phone: req.body.phone,
-//         adresses: req.body.adresses
-//     })
-//     const token = generateToken(school._id)
-//     res.status(201).json({data:school, token})
-// })
+exports.signup = asyncHandler(async (req,res,next)=>{
+    const teacher = await Teacher.create({
+        username: req.body.username,
+        email: req.body.email,
+        password: req.body.password,
+        phone: req.body.phone,
+    })
+    const token = generateToken(teacher._id)
+    res.status(201).json({data:teacher, token})
+})
 
 exports.login = asyncHandler(async (req,res,next)=>{
-    const school = await School.findOne({username:req.body.username})
-    if(!school || !(await bcrypt.compare(req.body.password,school.password))){
-
+    const teacher = await Teacher.findOne({username:req.body.username})
+    if(!teacher){
         return next(new apiError('خطأ في الإيميل أو كلمة السر ',401))
     }
-    const token = generateToken(school._id)
-    res.status(200).json({data:school, token})
+    if(teacher.role === 'admin'){
+        if(!(await bcrypt.compare(req.body.password,teacher.password))){
+            return next(new apiError('خطأ في الإيميل أو كلمة السر ',401))
+        }
+    }
+    if(teacher.role === 'user'){
+        if(req.body.password != teacher.password){
+            return next(new apiError('خطأ في الإيميل أو كلمة السر ',401))
+        }
+    }
+    const token = generateToken(teacher._id)
+    res.status(200).json({data:teacher, token})
 })
 
 exports.protect = asyncHandler(async (req,res,next)=>{

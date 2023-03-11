@@ -10,6 +10,8 @@ const xss = require('xss-clean');
 const helmet = require('helmet');
 const flash = require('connect-flash');
 const session = require('express-session');
+const ejs = require('ejs');
+const pug = require('pug');
 
 
 dotenv.config({ path: 'config.env' });
@@ -44,10 +46,10 @@ app.options('*', cors());
 app.options(compression());
 
 app.set('view engine', 'ejs');
-app.set('views', 'views');
-
-// app.set('view engine', 'pug');
-// app.set('views', './views/teachers');
+// set view directories
+app.set('views', ['./views', './views/teachers']);
+// register pug engine
+app.engine('pug', pug.renderFile);
 
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
@@ -69,6 +71,7 @@ app.use(xss());
 
 app.use(helmet());
 // Middleware
+
 mountRoutes(app);
 app.all('*', (req, res, next) => {
   // eslint-disable-next-line new-cap
