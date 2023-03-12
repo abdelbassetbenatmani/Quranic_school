@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+    <%-include('parts/dashboard-head') %>
+<body>
+    <div class="d-flex">
+        <%-include('parts/sidebar') %>
+        <div class="container-md p-5">
+          <% if(added) { %>
+            <p class="alert alert-success">
+                تم إضافة المستخدم بنجاح
+            </p>
+          <% } %>
+           <div class="d-flex align-items-center gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-person-plus-fill text-success" viewBox="0 0 16 16">
+              <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+              <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
+            </svg>
+            <h2>إضافة  مستخدم</h2>
+           </div>
+            <form action="adduser" class="was-validated" method="post">
+              
+                <div class="mb-3 mt-3 col-md-4">
+                  <label for="username" class="form-label">اسم المستخدم :</label>
+                  <input type="text" class="form-control " id="username" placeholder="أدخل اسم المستخدم" name="username" required>
+                  <div class="valid-feedback">تمام</div>
+                  <% if(typeof errors != 'undefined'){ %>
+                    <% let usernameError = errors.find(err => err.param === 'username') %>
+                    <% if (usernameError) { %>
+                        <div class="invalid-feedback">
+                            <%= usernameError.msg %>
+                        </div>
+                    <% }else{ %>
+                      <div class="invalid-feedback">
+                    </div>
+                      <% } %>
+                    <% } %>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 mb-3 mt-3">
+                      <label for="phone" class="form-label">رقم الهاتف :</label>
+                      <input type="tel" class="form-control" id="phone" placeholder="أدخل رقم الهاتف (اختياري)" name="phone" >
+                      <div class="valid-feedback">Valid.</div>
+                      <!-- <div class="invalid-feedback">Please fill out this field.</div> -->
+                    </div>
+                    <div class="col-md-4 mb-3 mt-3">
+                      <label for="email" class="form-label">الإيميل</label>
+                      <input type="email" class="form-control" id="email" placeholder="أدخل الإيميل (اختياري) " name="email">
+                      <div class="valid-feedback">Valid.</div>
+                      <!-- <div class="invalid-feedback">Please fill out this field.</div> -->
+                    </div>
+              </div>
+                <div class="row">
+                    <div class="col-md-4 mb-3 mt-3">
+                        <label for="password" class="form-label">كملة السر:</label>
+                        <input type="password" class="form-control" id="password" placeholder="أدخل كلمة السر" name="password" required>
+                        <div class="valid-feedback">Valid.</div>
+                        <!-- <div class="invalid-feedback">Please fill out this field.</div> -->
+                        <% if(typeof errors != 'undefined'){ %>
+                          <% let passError = errors.find(err => err.param === 'password') %>
+                          <% if (passError) { %>
+                              <div class="invalid-feedback">
+                                  <%= passError.msg %>
+                              </div>
+                          <% } %>
+                          <% } %>
+                      </div>
+                      <div class="col-md-4 mb-3 mt-3">
+                        <label for="confirmpassword" class="form-label">تأكيد كلمة السر :</label>
+                        <input type="password" class="form-control" id="confirmPassword" placeholder="أدخل تأكيد كلمة السر" name="confirmPassword" required>
+                        <div class="valid-feedback">Valid.</div>
+                        <% if(typeof errors != 'undefined'){ %>
+                          <% let repassError = errors.find(err => err.param === 'confirmPassword') %>
+                          <% if (repassError) { %>
+                              <div class="invalid-feedback">
+                                  <%= repassError.msg %>
+                              </div>
+                          <% } %>
+                          <% } %>
+                        <!-- <div class="invalid-feedback">Please fill out this field.</div> -->
+                      </div>
+                </div>
+                
+              <button type="submit" class="btn btn-primary">إضافة</button>
+              </form>
+        </div>
+    </div>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/addschool.js"></script>
+</html>

@@ -16,8 +16,8 @@ const teacherSchema = mongoose.Schema({
     email:{
         type: String,
         // required:[true,'email is required'],
-        unique:true,
-        default:null,
+        // unique:true,
+        default:'',
         lowercase:true
     },
     phone:String,
@@ -39,12 +39,12 @@ const teacherSchema = mongoose.Schema({
 
 },{timestamps: true});
 
-teacherSchema.pre('save', async function(next){
-    if(!this.isModified('password')){
-        return next();
-    }
-    this.password = await bcrypt.hash(this.password,12);
-    next();
-})
+// teacherSchema.pre('save', async function(next){
+//     if(!this.isModified('password')){
+//         return next();
+//     }
+//     this.password = await bcrypt.hash(this.password,12);
+//     next();
+// })
 const Teacher = mongoose.model('teacher',teacherSchema);
 module.exports = Teacher
