@@ -14,21 +14,6 @@ exports.createUserValidator = [
       }
       })
   ),
-  check('email').optional()
-  // .isEmail().withMessage('Invalid email address')
-  .custom((val) =>
-      {
-        if(val === ''){
-          return true
-        }
-        Teacher.findOne({ email: val }).then((teacher) => {
-          if (teacher) {
-              return Promise.reject(new Error('الإيميل مسجل مسبقا'));
-          }
-        })
-        return true
-      }
-  ),
   check('password').notEmpty().withMessage('كلمة السر إجباري')
     .isLength({ min:6}).withMessage('كلمة السر يجب أن تتكون من 6 أحرف أو أكثر')
     .custom((val,{req}) => {

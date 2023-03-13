@@ -7,7 +7,7 @@ const apiError = require('../utils/apiError')
 const Teacher = require('../models/teacherModel')
 
 module.exports.getUserPage =  asyncHandler(async (req, res,next) => {
-    res.render('adduser',{errors:req.flash("errors"),added:req.flash("added")[0]})
+    res.render('adduser',{errors:[],added:req.flash("added")[0]})
 })
 // module.exports.createSchool = factory.createOne(School)
 module.exports.createUser =  asyncHandler(async (req, res,next) => {
