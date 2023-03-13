@@ -12,7 +12,8 @@ exports.createSchoolValidator = [
         req.body.slug = slugify(val)
         return true
     }),
-
+    check('daira').notEmpty().withMessage('يرجى تحديد الدائرة'),
+    check('commune').notEmpty().withMessage('يرجى تحديد البلدية'),
     validatorMiddleware('addschool')]
 
 exports.getSchoolValidator = [check('id')

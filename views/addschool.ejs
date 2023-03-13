@@ -7,7 +7,7 @@
         <div class="container-md p-5">
           <% if(added) { %>
             <p class="alert alert-success">
-               done
+               تم إضافة المدرسة القرآنية بنجاح
             </p>
           <% } %>
            <div class="d-flex align-items-center gap-3">
@@ -18,14 +18,13 @@
            </div>
             <form action="addschool" class="was-validated" method="post">
                 <div class="mb-3 mt-3 col-md-4">
-                  <label for="username" class="form-label">اسم المستخدم :</label>
-                  <select class="form-select" id="username" name="username" required>
+                  <label for="teacher" class="form-label">اسم المستخدم :</label>
+                  <select class="form-select" id="teacher" name="teacher" required>
                     <% user.forEach((elem,index)=>{ %>
-                      <option value="<%= elem.id %>"><%= elem.username %></option>
+                      <option value="<%= elem._id %>"><%= elem.username %></option>
                   
                     <% }) %>  
                 </select>
-                  <!-- <input type="text" class="form-control " id="username" placeholder="أدخل اسم المستخدم" name="username" required> -->
                   <div class="valid-feedback">تمام</div>
                   <% if(typeof errors != 'undefined'){ %>
                   <% let usernameError = errors.find(err => err.param === 'username') %>
@@ -40,6 +39,14 @@
                   <label for="name" class="form-label">المدرسة القرآنية:</label>
                   <input type="text" class="form-control " id="name" placeholder="أدخل اسم المدرسة القرآنية" name="name" required>
                   <div class="valid-feedback">تمام</div>
+                  <% if(typeof errors != 'undefined'){ %>
+                    <% let nameError = errors.find(err => err.param === 'name') %>
+                    <% if (nameError) { %>
+                        <div class="invalid-feedback">
+                            <%= nameError.msg %>
+                        </div>
+                  <% } %>
+                  <% } %>
                 </div>
                 <div class="row">
                     <div class="col-md-4">
@@ -47,12 +54,28 @@
                         <select class="form-select" id="daira" name="daira" required>
                             <option selected disabled value="">اختر دائرة</option>
                         </select>
+                        <% if(typeof errors != 'undefined'){ %>
+                          <% let dairaError = errors.find(err => err.param === 'daira') %>
+                          <% if (dairaError) { %>
+                              <div class="invalid-feedback">
+                                  <%= dairaError.msg %>
+                              </div>
+                          <% } %>
+                          <% } %>
                     </div>
                     <div class="col-md-4">
                         <label for="commune" class="form-label">البلدية</label>
                         <select class="form-select" id="commune" name="commune" required>
                             <option selected disabled value="">اختر بلدية</option>
-                          </select>
+                        </select>
+                        <% if(typeof errors != 'undefined'){ %>
+                          <% let communeError = errors.find(err => err.param === 'commune') %>
+                          <% if (communeError) { %>
+                              <div class="invalid-feedback">
+                                  <%= communeError.msg %>
+                              </div>
+                        <% } %>
+                        <% } %>
                     </div>
                     <div class="col-md-4">
                         <label for="street" class="form-label">العنوان</label>

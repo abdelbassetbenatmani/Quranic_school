@@ -83,6 +83,12 @@ const schoolSchema = mongoose.Schema({
     ]
 },{timestamps: true});
 
-
+schoolSchema.pre(/^find/, function(next) {
+    this.populate({
+        path: 'teacher',
+        select: 'username -_id'
+    });
+    next();
+})
 const School = mongoose.model('school',schoolSchema);
 module.exports = School
