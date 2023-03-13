@@ -6,39 +6,13 @@ const validatorMiddleware = require('../../Middleware/validatorMiddleware')
 const School = require('../../models/schoolModel')
 
 exports.createSchoolValidator = [
-    check('username').notEmpty().withMessage('اسم المستخدم إجباري')
-    .custom((val) =>
-        School.findOne({ username: val }).then((school) => {
-        if (school) {
-            return Promise.reject(new Error('اسم المستخدم مسجل مسبقا'));
-        }
-        })
-    ),
+   
     check('name').notEmpty().withMessage('اسم المدرسة القرآنية إجباري')
     .custom((val,{req}) => {
         req.body.slug = slugify(val)
         return true
     }),
-    check('email').optional()
-    .isEmail().withMessage('Invalid email address')
-    .custom((val) =>
-        School.findOne({ email: val }).then((school) => {
-        if (school) {
-            return Promise.reject(new Error('الإيميل مسجل مسبقا'));
-        }
-        })
-    ),
-    check('password').notEmpty().withMessage('كلمة السر إجباري')
-    .isLength({ min:6}).withMessage('كلمة السر يجب أن تتكون من 6 أحرف أو أكثر')
-    .custom((val,{req}) => {
-        if(val !== req.body.confirmPassword){
-            throw new Error('خطأ في تأكيد كلمة السر')
-        }
-        return true
-    }),
 
-    check('confirmPassword').notEmpty().withMessage('تأكيد كلمة السر إجباري'),
-    check('phone').optional(),
     validatorMiddleware('addschool')]
 
 exports.getSchoolValidator = [check('id')
@@ -55,17 +29,7 @@ exports.updateSchoolValidator = [
             req.body.slug = slugify(val);
             return true;
           }),
-        check('email')
-          .optional()
-          .isEmail()
-          .withMessage('أدخل إيميل صحيح')
-          .custom((val) =>
-            School.findOne({ email: val }).then((school) => {
-              if (school) {
-                return Promise.reject(new Error('الإيميل مسجل مسبقا'));
-              }
-            })
-          ),
+
         check('phone')
           .optional()
           .isMobilePhone(['ar-DZ'])

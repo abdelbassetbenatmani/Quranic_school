@@ -5,9 +5,9 @@
     <div class="d-flex">
         <%-include('parts/sidebar') %>
         <div class="container-md p-5">
-          <% if(added !='') { %>
+          <% if(added) { %>
             <p class="alert alert-success">
-               <%= added %>
+               done
             </p>
           <% } %>
            <div class="d-flex align-items-center gap-3">
@@ -17,9 +17,15 @@
             <h2>إضافة مدرسة قرآنية</h2>
            </div>
             <form action="addschool" class="was-validated" method="post">
-                <div class="mb-3 mt-3">
+                <div class="mb-3 mt-3 col-md-4">
                   <label for="username" class="form-label">اسم المستخدم :</label>
-                  <input type="text" class="form-control w-50" id="username" placeholder="أدخل اسم المستخدم" name="username" required>
+                  <select class="form-select" id="username" name="username" required>
+                    <% user.forEach((elem,index)=>{ %>
+                      <option value="<%= elem.id %>"><%= elem.username %></option>
+                  
+                    <% }) %>  
+                </select>
+                  <!-- <input type="text" class="form-control " id="username" placeholder="أدخل اسم المستخدم" name="username" required> -->
                   <div class="valid-feedback">تمام</div>
                   <% if(typeof errors != 'undefined'){ %>
                   <% let usernameError = errors.find(err => err.param === 'username') %>
@@ -30,9 +36,9 @@
                   <% } %>
                   <% } %>
                 </div>
-                <div class="mb-3 mt-3">
+                <div class="mb-3 mt-3 col-md-4">
                   <label for="name" class="form-label">المدرسة القرآنية:</label>
-                  <input type="text" class="form-control w-50" id="name" placeholder="أدخل اسم المدرسة القرآنية" name="name" required>
+                  <input type="text" class="form-control " id="name" placeholder="أدخل اسم المدرسة القرآنية" name="name" required>
                   <div class="valid-feedback">تمام</div>
                 </div>
                 <div class="row">
@@ -53,52 +59,7 @@
                         <input type="text" class="form-control" id="street" name="street" placeholder="(اختياري)أدخل عنوان المدرسة القرآنية" name="uname" >
                     </div>
                 </div>
-                <div class="row">
-                  <div class="col-md-4 mb-3 mt-3">
-                      <label for="email" class="form-label">الإيميل</label>
-                      <input type="email" class="form-control" id="email" placeholder="أدخل الإيميل (اختياري) " name="email">
-                      <div class="valid-feedback">Valid.</div>
-                      <!-- <div class="invalid-feedback">Please fill out this field.</div> -->
-                    </div>
-                    <div class="col-md-4 mb-3 mt-3">
-                      <label for="phone" class="form-label">رقم الهاتف :</label>
-                      <input type="tel" class="form-control" id="phone" placeholder="أدخل رقم الهاتف (اختياري)" name="phone" >
-                      <div class="valid-feedback">Valid.</div>
-                      <!-- <div class="invalid-feedback">Please fill out this field.</div> -->
-                    </div>
-              </div>
-                <div class="row">
-                    <div class="col-md-4 mb-3 mt-3">
-                        <label for="password" class="form-label">كملة السر:</label>
-                        <input type="password" class="form-control" id="password" placeholder="أدخل كلمة السر" name="password" required>
-                        <div class="valid-feedback">Valid.</div>
-                        <!-- <div class="invalid-feedback">Please fill out this field.</div> -->
-                        <% if(typeof errors != 'undefined'){ %>
-                        <% let passError = errors.find(err => err.param === 'password') %>
-                        <% if (passError) { %>
-                            <div class="invalid-feedback">
-                                <%= passError.msg %>
-                            </div>
-                        <% } %>
-                        <% } %>
-                      </div>
-                      <div class="col-md-4 mb-3 mt-3">
-                        <label for="confirmpassword" class="form-label">تأكيد كلمة السر :</label>
-                        <input type="password" class="form-control" id="confirmPassword" placeholder="أدخل تأكيد كلمة السر" name="confirmPassword" required>
-                        <div class="valid-feedback">Valid.</div>
-                        <% if(typeof errors != 'undefined'){ %>
-                        <% let repassError = errors.find(err => err.param === 'confirmPassword') %>
-                        <% if (repassError) { %>
-                            <div class="invalid-feedback">
-                                <%= repassError.msg %>
-                            </div>
-                        <% } %>
-                        <% } %>
-                        <!-- <div class="invalid-feedback">Please fill out this field.</div> -->
-                      </div>
-                </div>
-                
-              <button type="submit" class="btn btn-primary">إضافة</button>
+              <button type="submit" class="btn btn-primary mb-3 mt-3">إضافة</button>
               </form>
         </div>
     </div>
