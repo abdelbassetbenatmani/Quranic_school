@@ -8,9 +8,8 @@ const rateLimit = require('express-rate-limit');
 const hpp = require('hpp');
 const xss = require('xss-clean');
 const helmet = require('helmet');
-const flash = require('connect-flash');
 const session = require('express-session');
-const ejs = require('ejs');
+const flash = require('connect-flash');
 const pug = require('pug');
 
 
@@ -31,13 +30,11 @@ app.use(
     path.join(__dirname, 'node_modules', 'bootstrap', 'dist', 'js')
   )
 );
-
 app.use(session({
   secret:'abdelbasset4real',
   saveUninitialized: true,
   resave: true
 }));
-
 app.use(flash());
 // allowed other domain acces api
 app.use(cors());
