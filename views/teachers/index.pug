@@ -1,3 +1,69 @@
 extends layout 
-block content   
-    h1 index
+block content
+    section.school-infos.py-5.position-relative
+        .school-infos__wrapper.position-relative.py-3
+            .container-lg  
+                h1.school-name.text-white.py-4 مدرسة الامام مالك 
+                .row.mb-4 
+                    .col-sm-6.col-lg-3
+                        .card.statistics_card.mb-3
+                            .statistics_card__stats.py-3
+                                p.statistics_card__title.fw-bold عدد الطلبة
+                                p.statistics_card__number.h2 50
+                            .statistics_card__icon.bg-tertiary.text-center
+                                img.opacity-25(src="/assets/students-cap.png", alt="students cap icon" width="100")
+                    .col-sm-6.col-lg-3
+                        .card.statistics_card.mb-3
+                            .statistics_card__stats.py-3
+                                p.statistics_card__title.fw-bold عدد الذكور
+                                p.statistics_card__number.h2 50
+                            .statistics_card__icon.bg-tertiary.text-center
+                                img.opacity-25(src="/assets/male_icon.png", alt="students cap icon" width="90")
+                    .col-sm-6.col-lg-3
+                        .card.statistics_card.mb-3
+                            .statistics_card__stats.py-3
+                                p.statistics_card__title.fw-bold عدد الاناث
+                                p.statistics_card__number.h2 50
+                            .statistics_card__icon.bg-tertiary.text-center
+                                img.opacity-25(src="/assets/female.png", alt="students cap icon" width="100")
+                    .col-sm-6.col-lg-3
+                        .card.statistics_card.mb-3
+                            .statistics_card__stats.py-3
+                                p.statistics_card__title.fw-bold عدد المدرسين
+                                p.statistics_card__number.h2 50
+                            .statistics_card__icon.bg-tertiary.text-center
+                                img.opacity-25(src="/assets/teachers_icon.png", alt="students cap icon" width="90")
+    section.students-infos.py-5 
+        .school-infos__wrapper.py-5
+            .container-lg
+                .search-and-add-wrapper.d-flex.justify-content-between.align-items-center 
+                    input.form-control.ms-2(type='search' placeholder='بحث' aria-label='Search')
+                    button.btn.btn-primary(type='submit') اضافة
+                .students-list 
+                    h2.students-list__title.text-center.my-5 لائحة الطلبة
+                    .students-list__wrapper
+                        .student-card.shadow-sm.d-flex.justify-content-between.align-items-center.p-2.mb-3 
+                            p.student-name.m-0.ml-1 سيد احمد بن دومة
+                            .controllers-wrapper 
+                                button.get-student-infos.btn.btn-primary.ms-2 معلومات
+                                button.remove-student.btn.btn-danger  احالة
+                        .student-card.shadow-sm.d-flex.justify-content-between.align-items-center.p-2.mb-3 
+                            p.student-name.m-0.ml-1 سيد احمد بن دومة
+                            .controllers-wrapper 
+                                button.get-student-infos.btn.btn-primary.ms-2 معلومات
+                                button.remove-student.btn.btn-danger  احالة
+                        .student-card.shadow-sm.d-flex.justify-content-between.align-items-center.p-2.mb-3 
+                            p.student-name.m-0.ml-1 سيد احمد بن دومة
+                            .controllers-wrapper 
+                                button.get-student-infos.btn.btn-primary.ms-2 معلومات
+                                button.remove-student.btn.btn-danger  احالة
+                        .student-card.shadow-sm.d-flex.justify-content-between.align-items-center.p-2.mb-3 
+                            p.student-name.m-0.ml-1 سيد احمد بن دومة
+                            .controllers-wrapper 
+                                button.get-student-infos.btn.btn-primary.ms-2 معلومات
+                                button.remove-student.btn.btn-danger  احالة
+                        .student-card.shadow-sm.d-flex.justify-content-between.align-items-center.p-2.mb-3 
+                            p.student-name.m-0 سيد احمد بن دومة
+                            .controllers-wrapper 
+                                button.get-student-infos.btn.btn-primary.ms-2 معلومات
+                                button.remove-student.btn.btn-danger  احالة
