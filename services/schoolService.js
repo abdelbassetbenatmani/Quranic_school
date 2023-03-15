@@ -13,14 +13,19 @@ module.exports.getAddSchoolPage =  asyncHandler(async (req, res,next) => {
     res.render('addschool',{errors:req.flash("errors"),added: req.flash("added")[0],user})
 })
 
-
-module.exports.createSchool =  asyncHandler(async (req, res,next) => {
-    const address = {
-        daira: req.body.daira,
-        commune: req.body.commune,
-        street : req.body.street
+exports.setadressToBody = (req, res, next) => {
+    if (!req.body.adress) {
+        const address = {
+            daira: req.body.daira,
+            commune: req.body.commune,
+            street : req.body.street
+        }
+        req.body.address = address
     }
-    req.body.address = address
+    next()
+}
+
+module.exports.createSchool =  asyncHandler(async (req, res,next) => { 
     await School.create(req.body)
     req.flash("added", true);
     res.redirect('/dashboard/addschool')

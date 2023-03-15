@@ -4,9 +4,23 @@ const bcrypt = require('bcryptjs');
 
 const validatorMiddleware = require('../../middleware/validatorMiddleware')
 const School = require('../../models/schoolModel')
+const Teacher = require('../../models/teacherModel')
 
+
+const getUsers = async ()=>{
+    const users = await Teacher.find({}).select({username:1 ,_id:1});
+    console.log(`the  ${users}`);
+    return users
+}
 exports.createSchoolValidator = [
-   
+    check('teacher').notEmpty().withMessage('اسم المستخدم إجباري')
+    .custom((val) =>{
+        return School.findOne({ teacher: val }).then((teacher) => {
+            if (teacher) {
+                return Promise.reject(new Error('اسم المستخدم مسجل مسبقا'));
+            }
+        })}
+    ),
     check('name').notEmpty().withMessage('اسم المدرسة القرآنية إجباري')
     .custom((val,{req}) => {
         req.body.slug = slugify(val)
@@ -14,7 +28,7 @@ exports.createSchoolValidator = [
     }),
     check('daira').notEmpty().withMessage('يرجى تحديد الدائرة'),
     check('commune').notEmpty().withMessage('يرجى تحديد البلدية'),
-    validatorMiddleware('addschool')]
+    validatorMiddleware('addschool',{user: getUsers()})]
 
 exports.getSchoolValidator = [check('id')
     .isMongoId().withMessage('incorrect id format'), validatorMiddleware('schools')]    

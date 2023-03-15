@@ -46,5 +46,5 @@ const teacherSchema = mongoose.Schema({
 //     this.password = await bcrypt.hash(this.password,12);
 //     next();
 // })
-const Teacher = mongoose.model('teacher',teacherSchema);
+const Teacher = mongoose.model('Teacher',teacherSchema);
 module.exports = Teacher

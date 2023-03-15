@@ -90,5 +90,5 @@ schoolSchema.pre(/^find/, function(next) {
     });
     next();
 })
-const School = mongoose.model('school',schoolSchema);
+const School = mongoose.model('School',schoolSchema);
 module.exports = School

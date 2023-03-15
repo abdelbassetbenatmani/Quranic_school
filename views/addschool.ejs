@@ -20,14 +20,15 @@
                 <div class="mb-3 mt-3 col-md-4">
                   <label for="teacher" class="form-label">اسم المستخدم :</label>
                   <select class="form-select" id="teacher" name="teacher" required>
-                    <% user.forEach((elem,index)=>{ %>
-                      <option value="<%= elem._id %>"><%= elem.username %></option>
-                  
-                    <% }) %>  
+                    <% if(typeof user != 'undefined'){ %>
+                      <% user.forEach((elem,index)=>{ %>
+                        <option value="<%= elem._id %>"><%= elem.username %></option>
+                      <% }) %>  
+                    <% } %>
                 </select>
                   <div class="valid-feedback">تمام</div>
                   <% if(typeof errors != 'undefined'){ %>
-                  <% let usernameError = errors.find(err => err.param === 'username') %>
+                  <% let usernameError = errors.find(err => err.param === 'teacher') %>
                   <% if (usernameError) { %>
                       <div class="invalid-feedback">
                           <%= usernameError.msg %>
