@@ -13,7 +13,6 @@ const session = require('express-session');
 const ejs = require('ejs');
 const pug = require('pug');
 
-
 dotenv.config({ path: 'config.env' });
 const dbConnection = require('./config/dbConnection');
 const apiError = require('./utils/apiError');
@@ -24,18 +23,27 @@ dbConnection();
 
 const app = express();
 app.use(express.json({ limit: '20kb' }));
-app.use(express.urlencoded({extended:false}))
+app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
+// for bootstrap
 app.use(
   express.static(
     path.join(__dirname, 'node_modules', 'bootstrap', 'dist', 'js')
   )
 );
-app.use(session({
-  secret:'abdelbasset4real',
-  saveUninitialized: true,
-  resave: true
-}));
+// for bootstrap icons
+app.use(
+  express.static(
+    path.join(__dirname, 'node_modules', 'bootstrap-icons', 'font')
+  )
+);
+app.use(
+  session({
+    secret: 'abdelbasset4real',
+    saveUninitialized: true,
+    resave: true,
+  })
+);
 app.use(flash());
 // allowed other domain acces api
 app.use(cors());

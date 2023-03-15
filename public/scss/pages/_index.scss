@@ -1,0 +1,51 @@
+@use '../mixins' as mx;
+// section
+.school-infos {
+  background: url('../../assets/school_wallpaper.jpg') center center/cover;
+  position: relative;
+  &::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    top: 0;
+    background-color: var(--dark-green);
+    opacity: 0.8;
+  }
+  &__wrapper {
+    z-index: 2;
+    .statistics_card {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      &__stats {
+        @include mx.center-layout;
+        flex-direction: column;
+      }
+      &__icon {
+        @include mx.center-layout;
+      }
+    }
+  }
+}
+
+//section
+.students-infos {
+  .search-and-add-wrapper {
+    input[type='search'] {
+      max-width: 400px;
+    }
+  }
+  .students-list {
+    &__wrapper {
+      .student-card {
+        .student-name {
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+          max-width: 200px;
+        }
+      }
+    }
+  }
+}
