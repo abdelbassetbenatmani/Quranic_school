@@ -6,36 +6,38 @@ html(dir="rtl" lang="ar")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
         title=title 
         link(rel="stylesheet", href="/css/teachers/style.css")
+        link(rel="stylesheet", href="/bootstrap-icons.css")
     body 
         header
-            nav.navbar.navbar-expand-lg.bg-light
+            nav.navbar.navbar-expand-lg.bg-light.shadow
                 .container-xl 
-                    a.navbar-brand(href='#') Navbar
+                    a.navbar-brand(href='/teachers') 
+                        img.logo(src="/assets/logo.png", alt="logo" width="100")
                     button.navbar-toggler(type='button' data-bs-toggle='collapse' data-bs-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation')
                         span.navbar-toggler-icon
                     #navbarSupportedContent.collapse.navbar-collapse
                         ul.navbar-nav.me-auto.mb-2.mb-lg-0
                             li.nav-item
-                            a.nav-link.active(aria-current='page' href='#') Home
+                                a.nav-link.active(aria-current='page' href='#') اضافة طالب
                             li.nav-item
-                            a.nav-link(href='#') Link
-                            li.nav-item.dropdown
-                            a.nav-link.dropdown-toggle(href='#' role='button' data-bs-toggle='dropdown' aria-expanded='false')
-                                | Dropdown
-                            ul.dropdown-menu
-                                li
-                                a.dropdown-item(href='#') Action
-                                li
-                                a.dropdown-item(href='#') Another action
-                                li
-                                hr.dropdown-divider
-                                li
-                                a.dropdown-item(href='#') Something else here
+                                a.nav-link(href='#') اضافة مدرس 
                             li.nav-item
-                            a.nav-link.disabled Disabled
-                        form.d-flex(role='search')
-                            input.form-control.me-2(type='search' placeholder='Search' aria-label='Search')
-                            button.btn.btn-outline-success(type='submit') Search
-        main 
+                                a.nav-link.disabled تسجيل الخروج
+                        
+        main  
             block content
+        footer.bg-secondary.py-5.text-white   
+            .container-lg
+                .footer-wrapper.d-flex.flex-wrap.justify-content-between.align-items-center 
+                    p.owner.ml-2 مديرية الشؤون الدينية و الأوقاف الأغواط
+                    ul.social-media.d-flex 
+                        li.ms-3 
+                            a.text-tertiary(href="http://", target="_blank") 
+                                <i class="bi bi-facebook h4"></i>
+                        li.ms-3 
+                            a.text-tertiary(href="http://", target="_blank") 
+                                <i class="bi bi-google h4"></i>
+                        li.ms-3 
+                            a.text-tertiary(href="http://", target="_blank") 
+                                <i class="bi bi-whatsapp h4"></i>
         script(src="/bootstrap.min.js") 
