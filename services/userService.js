@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 const factory = require('./handelersFactory');
 const apiError = require('../utils/apiError')
 
-const Teacher = require('../models/teacherModel')
+const Teacher = require('../models/userModel')
 
 module.exports.getUserPage =  asyncHandler(async (req, res,next) => {
     res.render('adduser',{errors:[],added:req.flash("added")[0]})

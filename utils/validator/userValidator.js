@@ -3,7 +3,7 @@ const {check ,body} = require('express-validator');
 const bcrypt = require('bcryptjs');
 
 const validatorMiddleware = require('../../middleware/validatorMiddleware')
-const Teacher = require('../../models/teacherModel')
+const Teacher = require('../../models/userModel')
 
 exports.createUserValidator = [
   check('username').notEmpty().withMessage('اسم المستخدم إجباري')

@@ -5,7 +5,7 @@ const factory = require('./handelersFactory');
 const apiError = require('../utils/apiError')
 
 const School = require('../models/schoolModel')
-const Teacher = require('../models/teacherModel')
+const Teacher = require('../models/userModel')
 
 // module.exports.createSchool = factory.createOne(School)
 module.exports.getAddSchoolPage =  asyncHandler(async (req, res,next) => {
