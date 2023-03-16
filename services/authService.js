@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 const {generateToken} = require('../utils/generateToken')
 const sendEmail = require('../utils/sendEmail')
 const apiError = require('../utils/apiError')
-const Teacher = require('../models/teacherModel')
+const Teacher = require('../models/userModel')
 
 const tokenExiste = (auth)=>{
     if(auth && auth.startsWith('Bearer')){

@@ -13,13 +13,7 @@ const teacherSchema = mongoose.Schema({
         type: String,
         lowercase:true
     },
-    email:{
-        type: String,
-        // required:[true,'email is required'],
-        // unique:true,
-        default:'',
-        lowercase:true
-    },
+
     phone:String,
     password:{
         type: String,
@@ -32,19 +26,13 @@ const teacherSchema = mongoose.Schema({
     passwordResetCodeVerify:Boolean,
     role:{
         type: String,
-        enum:['user','admin'],
-        default: 'user',
+        enum:['teacher','admin'],
+        default: 'teacher',
     },
   
 
 },{timestamps: true});
 
-// teacherSchema.pre('save', async function(next){
-//     if(!this.isModified('password')){
-//         return next();
-//     }
-//     this.password = await bcrypt.hash(this.password,12);
-//     next();
-// })
-const Teacher = mongoose.model('Teacher',teacherSchema);
-module.exports = Teacher
+
+const User = mongoose.model('User',teacherSchema);
+module.exports = User

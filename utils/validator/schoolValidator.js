@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 
 const validatorMiddleware = require('../../middleware/validatorMiddleware')
 const School = require('../../models/schoolModel')
-const Teacher = require('../../models/teacherModel')
+const Teacher = require('../../models/userModel')
 
 
 const getUsers = async ()=>{
