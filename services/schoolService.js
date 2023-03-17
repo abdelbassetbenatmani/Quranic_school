@@ -31,7 +31,7 @@ module.exports.createSchool =  asyncHandler(async (req, res,next) => {
     res.redirect('/dashboard/addschool')
 })
 
-module.exports.getSchools = factory.getAll(School)
+module.exports.geSchoolsPage = factory.getAll(School)
 
 module.exports.getSpecificSchool = factory.getOne(School)
 

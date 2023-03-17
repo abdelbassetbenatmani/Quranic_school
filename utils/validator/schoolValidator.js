@@ -8,7 +8,6 @@ const Teacher = require('../../models/userModel');
 
 const getUsersMiddleware = async (req, res, next) => {
   const users = await Teacher.find({}).select({ username: 1, _id: 1 });
-  console.log('from users middleware : ', users);
   if (!req.renderOptions) req.renderOptions = {};
   req.renderOptions.user = users;
   next();
@@ -18,16 +17,9 @@ exports.createSchoolValidator = [
     .notEmpty()
     .withMessage('اسم المستخدم إجباري')
     .custom(async (val) => {
-      console.log('val : ', val);
       const teacher = await School.findOne({ teacher: val });
       if (teacher) throw new Error('اسم المستخدم مسجل مسبقا');
       return true;
-      /*return School.findOne({ teacher: val }).then((teacher) => {
-        if (teacher) {
-          console.log('teacher founded');
-          return Promise.reject(new Error('اسم المستخدم مسجل مسبقا'));
-        }
-      });*/
     }),
   check('name')
     .notEmpty()
@@ -39,7 +31,7 @@ exports.createSchoolValidator = [
   check('daira').notEmpty().withMessage('يرجى تحديد الدائرة'),
   check('commune').notEmpty().withMessage('يرجى تحديد البلدية'),
   //validatorMiddleware('addschool', { user: Promise.resolve(getUsers()) }),
-  getUsersMiddleware,
+  // getUsersMiddleware,
   validatorMiddleware('addschool'),
 ];
 
