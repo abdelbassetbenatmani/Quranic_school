@@ -1,8 +1,9 @@
-const slugify = require('slugify')
-const {check } = require('express-validator');
+const slugify = require('slugify');
+const { check } = require('express-validator');
 
-const validatorMiddleware = require('../../middleware/validatorMiddleware')
-const School = require('../../models/schoolModel')
+const validatorMiddleware = require('../../middleware/validatorMiddleware');
+const setBodyToRenderOptions = require('../../middleware/setBodyToRenderMiddleware');
+const School = require('../../models/schoolModel');
 
 // exports.signupValidator = [
 //     check('username').notEmpty().withMessage('أدخل اسم المستخدم '),
@@ -37,10 +38,9 @@ const School = require('../../models/schoolModel')
 //     validatorMiddleware
 // ]
 
-exports.loginValidator = [ 
-    check('username').notEmpty().withMessage('يرجى إدخال اسم المستخدم')
-    ,
-    check('password').notEmpty().withMessage('كلمة السر إجبارية ')
-    ,
-    validatorMiddleware('login')
-]
+exports.loginValidator = [
+  check('username').notEmpty().withMessage('يرجى إدخال اسم المستخدم'),
+  check('password').notEmpty().withMessage('كلمة السر إجبارية '),
+  setBodyToRenderOptions,
+  validatorMiddleware('login.pug'),
+];
