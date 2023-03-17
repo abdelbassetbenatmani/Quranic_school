@@ -12,6 +12,7 @@ const flash = require('connect-flash');
 const session = require('express-session');
 const ejs = require('ejs');
 const pug = require('pug');
+const cookieParser = require('cookie-parser');
 
 dotenv.config({ path: 'config.env' });
 const dbConnection = require('./config/dbConnection');
@@ -45,6 +46,7 @@ app.use(
   })
 );
 app.use(flash());
+app.use(cookieParser());
 // allowed other domain acces api
 app.use(cors());
 app.options('*', cors());
