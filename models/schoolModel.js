@@ -91,7 +91,7 @@ const schoolSchema = mongoose.Schema(
 schoolSchema.pre(/^find/, function (next) {
   this.populate({
     path: 'teacher',
-    select: 'username -_id',
+    select: 'username password -_id',
   });
   next();
 });

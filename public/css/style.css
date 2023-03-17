@@ -80,3 +80,30 @@ li{
     -webkit-transform: scaleX(1);
     transform: scaleX(1);
   }
+
+  /* schools list style */
+  
+.qa-container {
+    margin: 0 auto;
+}
+
+.schools-box {
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+.school-name {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.school-inf {
+    margin-top: 10px;
+    display: none;
+}
+.show{
+    display: block;
+}
