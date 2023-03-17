@@ -6,16 +6,24 @@ html(dir="rtl" lang="ar")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
         link(rel="stylesheet", href="/css/teachers/style.css")
         title login
-    body 
+    body
+        -const errorsArr = errors || []
+        -const reqBody = body || {}
+        -let usernameErr = errorsArr.find(err => err.param === "username")
+        -let passwordErr = errorsArr.find(err => err.param === "password")
         .container-center.py-4.px-1
             .card.p-4 
                 img.logo(src="/assets/logo.png", alt="logo") 
-                form(action="/login" method="post")
-                    .mb-3
+                div(class=`error-prompt bg-danger text-danger bg-opacity-10 p-2 mb-2 rounded ${loginError ? "" : "d-none"}`)= loginError || ""
+                form(action="" method="post")
+                    .username-input-wrapper.mb-3
                         label.form-label(for='exampleInputEmail1') اسم المستخدم
-                        input#exampleInputEmail1.form-control(type='email')
-
-                    .mb-3
+                        input#username-input(type='text' name="username" class=`form-control ${usernameErr ? "border border-danger" : ""}` value=`${reqBody.username || ""}`)
+                    -if(usernameErr)
+                        .invalid-feedback.d-block.my-2= usernameErr.msg 
+                    .password-input-wrapper.mb-3
                         label.form-label(for='exampleInputPassword1') كلمة المرور
-                        input#exampleInputPassword1.form-control(type='password')
+                        input#password-input(type='password' name="password" class=`form-control ${passwordErr ? "border border-danger" : ""}`)
+                    -if(passwordErr)
+                        .invalid-feedback.d-block.my-2= passwordErr.msg 
                     button.btn.btn-primary(type='submit') تسجيل الدخول
