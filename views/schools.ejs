@@ -16,21 +16,91 @@
                     <div class="schools-box">
                         <div class="school-name d-flex align-items-center gap-2">
                             <h5><%= elem.name %></h5>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-chevron-down " viewBox="0 0 16 16">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-chevron-down " viewBox="0 0 16 16">
                                 <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
                             </svg>
                         </div>
                         <div class="school-inf">
-                            <p>اسم المستخدم <%= elem.teacher.username %></p>
-                            <p>اسم المدرسة القرآنية <%= elem.name %></p>
-                            <p>العنوان </p>
-                            <div class="d-flex">
-                                <p>دائرة  <%= elem.address.daira %></p>
-                                <p> بلدية <%= elem.address.commune %></p>
-                                <p> حي <%= elem.address.street %></p>
+                            <div class="user-box">
+                               <form method="post" action="/dashboard/schools/updateuser" class="d-flex flex-wrap gap-3 mb-5">
+                                    <div>
+                                        <label class="form-label">اسم المستخدم : </label>
+                                        <input type="text" class="p-1 rounded-2" name="username" disabled value="<%= elem.teacher.username %>">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                                            <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <label>  كلمة السر : </label>
+                                        <input type="text" class="p-1 rounded-2" name="password" disabled value="<%= elem.teacher.password %>">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                                            <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <label>  الهاتف  : </label>
+                                        <input type="text" class="p-1 rounded-2" name="phone" disabled value="<%= elem.teacher.phone %>">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                                            <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                                        </svg>
+                                    </div>
+                                    <input type="hidden" name="userId" value="<%= elem.teacher._id %>">
+                                    <button type="submit" class="btn btn-primary " >تعديل</button>
+                                </form>
                             </div>
-                            <p>كلمة السر</p>
-                            <p><%= elem.teacher.password %></p>
+                            <div class="school-box">
+                                <form  method="post" action="/dashboard/schools/updateschool" class="">
+                                    <div>
+                                        <label>  اسم المدرسة القرآنية : </label>
+                                        <input type="text" class="p-1 rounded-2"  name="name" disabled value=" <%= elem.name %>">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                                            <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                                        </svg>
+                                    </div>
+                                    <label class="mb-3 mt-3">العنوان </label>
+                                    <div class="d-flex">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <label for="daira" class="form-label">الدائرة : </label>
+                                                <select class="form-select" id="daira" name="daira" >
+                                                    <option selected disabled value="">اختر دائرة</option>
+                                                </select>
+                                                <% if(typeof errors != 'undefined'){ %>
+                                                  <% let dairaError = errors.find(err => err.param === 'daira') %>
+                                                  <% if (dairaError) { %>
+                                                      <div class="invalid-feedback">
+                                                          <%= dairaError.msg %>
+                                                      </div>
+                                                  <% } %>
+                                                  <% } %>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label for="commune" class="form-label">البلدية : </label>
+                                                <select class="form-select" id="commune" name="commune" >
+                                                    <option selected disabled value="">اختر بلدية</option>
+                                                </select>
+                                                <% if(typeof errors != 'undefined'){ %>
+                                                  <% let communeError = errors.find(err => err.param === 'commune') %>
+                                                  <% if (communeError) { %>
+                                                      <div class="invalid-feedback">
+                                                          <%= communeError.msg %>
+                                                      </div>
+                                                <% } %>
+                                                <% } %>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label for="street" class="form-label">العنوان : </label>
+                                                <input type="text" class="p-1 rounded-2" id="street" name="street" placeholder="(اختياري)أدخل عنوان المدرسة القرآنية" name="uname" >
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" name="schoolId" value="<%= elem._id %>">
+                                    <button type="submit" class="btn btn-primary mt-4">تعديل</button>
+                                </form>
+                            </div>
+                            
+
+                            
                         </div>
                     </div>
                 <% }) %>   
@@ -40,5 +110,6 @@
     </div>
     
     <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/addschool.js"></script>
     <script src="/js/schools.js"></script>
 </html>

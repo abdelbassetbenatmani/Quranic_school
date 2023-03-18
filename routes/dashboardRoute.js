@@ -2,7 +2,7 @@ const express = require('express')
 
 const router = express.Router()
 const {createSchool,setadressToBody,geSchoolsPage,getAddSchoolPage,getSpecificSchool,deleteSchool,updateSchool,changePassword} = require('../services/schoolService')
-const {createUser,getUserPage} = require('../services/userService')
+const {createUser,getUserPage,updateUser} = require('../services/userService')
 const {createSchoolValidator,getSchoolValidator,deleteSchoolValidator,updateSchoolValidator,changePasswordValidator} = require('../utils/validator/schoolValidator')
 const {createUserValidator} = require('../utils/validator/userValidator')
 const {protect,allowedTo} = require('../services/authService')
@@ -28,6 +28,9 @@ router.route('/addschool')
         .get(getAddSchoolPage)
         .post(createSchoolValidator,setadressToBody,createSchool)
 router.get('/schools',geSchoolsPage)
+router.post('/schools/updateuser',updateUser)
+router.post('/schools/updateschool',updateSchool)
+    
 router.get('/mapschools',(req,res,next)=>{
     res.render('mapschools')
 })
