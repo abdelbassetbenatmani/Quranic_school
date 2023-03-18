@@ -1,13 +1,10 @@
-const authRoute = require('./authRoute')
-const schoolRoute = require('./dashboardRoute')
+const authRoute = require('./authRoute');
+const schoolRoute = require('./dashboardRoute');
+const teachersRoute = require('./teachersRoute');
+const mountRoutes = (app) => {
+  app.use('/dashboard', schoolRoute);
+  app.use('/auth', authRoute);
+  app.use('/teachers', teachersRoute);
+};
 
-
-const mountRoutes = (app)=>{
-    app.use('/dashboard',schoolRoute)
-    app.use('/auth',authRoute)
-    app.get('/teachers',(req,res)=>{
-        res.render('index.pug')
-    })
-}
-
-module.exports = mountRoutes
+module.exports = mountRoutes;
