@@ -9,12 +9,17 @@ html(dir="rtl" lang="ar")
     body
         -const errorsArr = errors || []
         -const reqBody = body || {}
+        -const protectErrorMsg = protectError || null
         -let usernameErr = errorsArr.find(err => err.param === "username")
         -let passwordErr = errorsArr.find(err => err.param === "password")
         .container-center.py-4.px-1
             .card.p-4 
-                img.logo(src="/assets/logo.png", alt="logo") 
-                div(class=`error-prompt bg-danger text-danger bg-opacity-10 p-2 mb-2 rounded ${loginError ? "" : "d-none"}`)= loginError || ""
+                img.logo(src="/assets/logo.png", alt="logo")
+                -if(loginError) 
+                    div(class="error-prompt bg-danger text-danger bg-opacity-10 p-2 mb-2 rounded")= loginError
+                //p=localVars.protectError
+                -if(protectErrorMsg)
+                    div(class="error-prompt bg-danger text-danger bg-opacity-10 p-2 mb-2 rounded")= protectErrorMsg
                 form(action="" method="post")
                     .username-input-wrapper.mb-3
                         label.form-label(for='exampleInputEmail1') اسم المستخدم
