@@ -23,18 +23,18 @@ module.exports.getSpecificUser = factory.getOne(Teacher)
 module.exports.deleteUser = factory.deleteOne(Teacher)
 
 module.exports.updateUser = asyncHandler(async (req, res,next) => {
-    const document = await Teacher.findByIdAndUpdate(req.params.id,{
-        name: req.body.name,
-        slug: req.body.slug,
+    const document = await Teacher.findByIdAndUpdate(req.body.userId,{
+        username: req.body.username,
+        password: req.body.password,
         phone: req.body.phone,
-        email: req.body.email,
-        address: req.body.address
     }, { new: true })
     if (!document) {
         // eslint-disable-next-line new-cap
         return next(new apiError('لا يوجد حساب على هذا الرقم',404))
     }
-    res.status(200).json({data:document})
+
+    res.redirect('/dashboard/schools')
+
 })
 
 exports.changePassword = asyncHandler(async (req, res,next) => {

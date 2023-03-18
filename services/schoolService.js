@@ -38,18 +38,15 @@ module.exports.getSpecificSchool = factory.getOne(School)
 module.exports.deleteSchool = factory.deleteOne(School)
 
 module.exports.updateSchool = asyncHandler(async (req, res,next) => {
-    const document = await School.findByIdAndUpdate(req.params.id,{
+    const document = await School.findByIdAndUpdate(req.body.schoolId,{
         name: req.body.name,
-        slug: req.body.slug,
-        phone: req.body.phone,
-        email: req.body.email,
         address: req.body.address
     }, { new: true })
     if (!document) {
         // eslint-disable-next-line new-cap
         return next(new apiError('لا يوجد حساب على هذا الرقم',404))
     }
-    res.status(200).json({data:document})
+    res.redirect('/dashboard/schools')
 })
 
 exports.changePassword = asyncHandler(async (req, res,next) => {

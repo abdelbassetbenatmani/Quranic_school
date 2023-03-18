@@ -114,19 +114,19 @@ exports.allowedTo = (...roles) =>
 
 exports.forgotPassword = asyncHandler(async (req, res, next) => {
   // find user by email
-  const school = await School.findOne({ email: req.body.email });
-  if (!school) {
-    return next(new apiError(`لا يوجد حساب لدى هذا الإيميل`, 404));
+  const user = await User.findOne({ email: req.body.email });
+  if (!user) {
+    return next(new apiError(`لا يوجد حساب لدى هذا الاسم`, 404));
   }
   // if user existe generate ramdom code 6 digits and save it in db
   const resetCode = generateRestCode();
   const resetCodeHashed = hashedResetCode(resetCode);
 
-  school.passwordResetCode = resetCodeHashed;
-  school.passwordResetCodeExpired = Date.now() + 10 * 60 * 1000;
-  school.passwordResetCodeVerify = false;
+  user.passwordResetCode = resetCodeHashed;
+  user.passwordResetCodeExpired = Date.now() + 10 * 60 * 1000;
+  user.passwordResetCodeVerify = false;
 
-  await school.save();
+  await user.save();
 
   // Send Email
   const message = `<p>مرحبا لقد طلبت تغيير كلمة السر الخاصة بحسابك يرجى إدخال الرقم المكون من 6 أرقام المرفوق في هذا الإيميل إلى خانة تأكيد تغيير كلمة السر في الموقع </p>
@@ -139,10 +139,10 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
       message,
     });
   } catch (error) {
-    school.passwordResetCode = undefined;
-    school.passwordResetCodeExpired = undefined;
-    school.passwordResetCodeVerify = undefined;
-    school.save();
+    user.passwordResetCode = undefined;
+    user.passwordResetCodeExpired = undefined;
+    user.passwordResetCodeVerify = undefined;
+    user.save();
 
     return next(new apiError(`There was a problem to send email`, 500));
   }
@@ -151,24 +151,24 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
 
 exports.verifyPassResetCode = asyncHandler(async (req, res, next) => {
   const resetCodeHashed = hashedResetCode(req.body.resetCode);
-  const school = await School.findOne({
+  const user = await User.findOne({
     passwordResetCode: resetCodeHashed,
     passwordResetCodeExpired: { $gt: Date.now() },
   });
-  if (!school) {
+  if (!user) {
     return next(new apiError(`رقم التحقق خاطئ أو منتهي الصلاحية `, 500));
   }
-  school.passwordResetCodeVerify = true;
-  school.save();
+  user.passwordResetCodeVerify = true;
+  user.save();
   res.status(200).json({ status: 'تم التحقق من الرقم' });
 });
 
 exports.resetPassword = asyncHandler(async (req, res, next) => {
-  const school = await School.findOne({ email: req.body.email });
-  if (!school) {
+  const user = await User.findOne({ email: req.body.email });
+  if (!user) {
     return next(new apiError(`لا يوجد حساب خاص بهذا الإيميل`, 404));
   }
-  if (!school.passwordResetCodeVerify) {
+  if (!user.passwordResetCodeVerify) {
     return next(new apiError(`لم يتم التحقق من الرقم `, 400));
   }
   if (req.body.password !== req.body.rePassword) {
@@ -179,13 +179,13 @@ exports.resetPassword = asyncHandler(async (req, res, next) => {
       )
     );
   }
-  school.password = req.body.password;
-  school.passwordResetCode = undefined;
-  school.passwordResetCodeExpired = undefined;
-  school.passwordResetCodeVerify = undefined;
+  user.password = req.body.password;
+  user.passwordResetCode = undefined;
+  user.passwordResetCodeExpired = undefined;
+  user.passwordResetCodeVerify = undefined;
 
-  await school.save();
-  const token = generateToken(school._id);
+  await user.save();
+  const token = generateToken(user._id);
   res.status(200).json({ token });
 });
 

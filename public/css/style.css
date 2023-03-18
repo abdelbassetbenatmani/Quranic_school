@@ -87,7 +87,7 @@ li{
     margin: 0 auto;
 }
 
-.schools-box {
+.schools-box ,.user-box,.school-box{
     margin-bottom: 30px;
     padding: 20px;
     background-color: #fff;
