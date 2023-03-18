@@ -14,6 +14,8 @@ const tokenExiste = (auth) => {
   }*/
 };
 
+const sharedVars = {};
+
 const generateRestCode = () =>
   Math.floor(100000 + Math.random() * 900000).toString();
 const hashedResetCode = (resetCode) =>
@@ -61,45 +63,44 @@ exports.login = asyncHandler(async (req, res, next) => {
 });
 
 exports.getLoginPage = (req, res) => {
-  res.render('login.pug');
+  const { protectError } = sharedVars;
+  res.render('login.pug', { protectError });
 };
 
 exports.protect = asyncHandler(async (req, res, next) => {
   // check token exist
-  let token;
-  token = tokenExiste(req.headers.authorization);
-
+  const { token } = req.cookies;
+  console.log('token : ', token);
   if (!token) {
-    return next(new apiError('لست مسجل الدخول سجل دخولك أولا', 401));
+    //return next(new apiError('لست مسجل الدخول سجل دخولك أولا', 401));
+    sharedVars.protectError = 'عليك ان تسجل الدخول';
+    return res.redirect('/auth/login');
   }
   // verify token
   const decoded = jwt.verify(token, process.env.JWT_SECRET);
   if (!decoded) {
-    return next(new apiError('token invalid', 401));
+    return res.redirect('/auth/login');
   }
 
   // check user with userId is existe
-  const currentSchool = await School.findById(decoded.schoolId);
-  if (!currentSchool) {
-    return next(new apiError('الحساب غير متاح حاليا', 401));
+  const currentUser = await User.findById(decoded.userId);
+  if (!currentUser) {
+    return res.redirect('/auth/login');
   }
 
   // check if user change password
-  if (currentSchool.passwordChangedAt) {
+  if (currentUser.passwordInfos) {
     const passwordChangedTimeStemp = parseInt(
-      currentSchool.passwordChangedAt / 1000,
+      currentUser.passwordInfos.passwordChangedAt / 1000,
       10
     );
     if (passwordChangedTimeStemp > decoded.iat) {
-      return next(
-        new apiError(
-          'لقد غيرت كلمة السر الخاصة بك يرجى إعادة تسجيل الدخول',
-          401
-        )
-      );
+      res.locals.loginError =
+        'لقد غيرت كلمة السر الخاصة بك يرجى إعادة تسجيل الدخول';
+      return res.redirect('/auth/login');
     }
   }
-  req.school = currentSchool;
+  req.user = currentUser;
   next();
 });
 
