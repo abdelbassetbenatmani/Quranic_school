@@ -35,7 +35,14 @@ module.exports.geSchoolsPage = factory.getAll(School)
 
 module.exports.getSpecificSchool = factory.getOne(School)
 
-module.exports.deleteSchool = factory.deleteOne(School)
+module.exports.deleteSchool = asyncHandler(async (req, res,next) => {
+    const {userId,schoolId} = req.body
+    const user = await Teacher.findByIdAndDelete(userId)
+    user.remove()
+    const school =await School.findByIdAndDelete(schoolId)
+    school.remove()
+    res.redirect('/dashboard/schools')
+})
 
 module.exports.updateSchool = asyncHandler(async (req, res,next) => {
     const document = await School.findByIdAndUpdate(req.body.schoolId,{

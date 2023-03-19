@@ -159,7 +159,6 @@ daira.addEventListener('change',()=>{
     baladiya= laghouat.filter((element)=>{
        return  element.daira_name === daira.value
     })
-    console.log(baladiya);
     commune.innerHTML = '';
     baladiya.forEach((element)=>{
         const option = document.createElement('option')

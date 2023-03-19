@@ -28,6 +28,14 @@ exports.createUserValidator = [
 
   validatorMiddleware('adduser')]
 
+exports.updateUserValidator = [
+    // check('userId').isMongoId().withMessage('Invalid User id format'),
+    // body('username').notEmpty().withMessage('اسم المستخدم إجباري'),
+    body('phone').optional(),
+    body('password').notEmpty().withMessage('كلمة السر إجبارية'),
+    // .isLength({ min:6}).withMessage('كلمة السر يجب أن تتكون من 6 أحرف أو أكثر'),
+    validatorMiddleware('schools'),
+];
 // exports.getSchoolValidator = [check('id')
 //     .isMongoId().withMessage('incorrect id format'), validatorMiddleware('schools')]    
 
