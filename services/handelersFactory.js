@@ -58,5 +58,6 @@ exports.getAll = (Model,modelName = '') => asyncHandler(async (req, res,next) =>
         .sort()
     const { mongooseQuery, paginationResults } = apiFeatures;
     const documents = await mongooseQuery;
+    // res.status(200).json({data:documents})
     res.render('schools',{result:documents.length,paginationResults,data:documents})
 })

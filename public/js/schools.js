@@ -2,6 +2,9 @@ const schoolsBox = document.querySelectorAll('.schools-box');
 const schoolBox = document.querySelectorAll('.school-box');
 const userBox = document.querySelectorAll('.user-box');
 const updateAddress = document.querySelectorAll('.update-address');
+const bigContainer = document.querySelector('.big-school-container')
+const emptyInput = document.querySelector("#emptyInput")
+let search_query = document.getElementById("searchInput")
 
 schoolsBox.forEach(item => {
   const schoolName = item.querySelector('.school-name');
@@ -206,4 +209,36 @@ schoolBox.forEach((item)=>{
   item.addEventListener('click', (e) => {
     e.target.previousElementSibling.removeAttribute("disabled")
   })
+})
+
+
+    
+function liveSearch() {
+  let search_query = document.getElementById("searchInput").value;
+  
+
+  for (var i = 0; i < schoolsBox.length; i++) {
+      if(schoolsBox[i].textContent.toLowerCase()
+              .includes(search_query.toLowerCase())) {
+                schoolsBox[i].classList.remove("is-hidden");
+      } else {
+        schoolsBox[i].classList.add("is-hidden");
+      }
+  }
+}
+
+//A little delay
+let typingTimer;               
+let typeInterval = 500;  
+let searchInput = document.getElementById('searchInput');
+
+searchInput.addEventListener('keyup', () => {
+  clearTimeout(typingTimer);
+  typingTimer = setTimeout(liveSearch, typeInterval);
+});
+
+emptyInput.addEventListener('click',()=>{
+  searchInput.value = '';
+  clearTimeout(typingTimer);
+  typingTimer = setTimeout(liveSearch, typeInterval);
 })

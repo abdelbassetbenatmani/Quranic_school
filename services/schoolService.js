@@ -31,7 +31,16 @@ module.exports.createSchool =  asyncHandler(async (req, res,next) => {
     res.redirect('/dashboard/addschool')
 })
 
-module.exports.geSchoolsPage = factory.getAll(School)
+module.exports.getSchoolsPage = factory.getAll(School)
+
+module.exports.filterSchools =  asyncHandler(async (req, res,next) => {
+    const {schoolSearch} = req.body;
+    const school = School.find({name:{'$regex':req.query.schoolSearch}})
+    if(!school){
+        return next(new apiError('there is not document found',404))
+    }
+    res.render('schools',{result:school.length,data:school})
+})
 
 module.exports.getSpecificSchool = factory.getOne(School)
 
