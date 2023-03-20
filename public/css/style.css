@@ -20,9 +20,17 @@ li{
     box-shadow: none;
 }
 .side-bar{
-    height: 100vh;
+    height: 100%;
     width: 250px;
+    background-image: url("/assets/26080.jpg");
+    background-size: cover;
+    position: fixed;
+    top: 0;
+    right: 0;
+    overflow-x: hidden;
+    transition:  1s;
 }
+
 .side-bar-list{
     margin-right: 20px;
     display: flex;
@@ -37,7 +45,7 @@ li{
     height: 35px;
 }
 .side-bar-list li a{
-    color: #525252;
+    color: #ffffff;
 }
 .side-bar-list li svg{
     width: 20px;
@@ -91,6 +99,34 @@ li{
     margin: 0 auto;
 }
 
+.large-box{
+    margin-right: 250px;
+}
+.menu{
+    display: none;
+}
+@media screen and (max-width:480px){
+    .side-bar{
+     display: none;
+    }
+    .large-box{
+     margin-right: 0;
+    }
+    .menu{
+        display: block;
+        padding-top:10px ;
+        padding-right: 10px;
+        position: fixed;
+        z-index: 1111111;
+    }
+    .menu.white-menu{
+        color: #fff;
+    }
+    .side-bar.show-bar{
+        display: block;
+        z-index: 1111;
+    }
+ }
 .schools-box ,.user-box,.school-box{
     margin-bottom: 30px;
     padding: 20px;
