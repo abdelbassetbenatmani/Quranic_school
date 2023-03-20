@@ -63,7 +63,8 @@ exports.login = asyncHandler(async (req, res, next) => {
 });
 
 exports.getLoginPage = (req, res) => {
-  const { protectError } = sharedVars;
+  const protectError = sharedVars.protectError;
+  sharedVars.protectError = null;
   res.render('login.pug', { protectError });
 };
 
@@ -95,7 +96,7 @@ exports.protect = asyncHandler(async (req, res, next) => {
       10
     );
     if (passwordChangedTimeStemp > decoded.iat) {
-      res.locals.loginError =
+      sharedVars.protectError =
         'لقد غيرت كلمة السر الخاصة بك يرجى إعادة تسجيل الدخول';
       return res.redirect('/auth/login');
     }
@@ -200,3 +201,8 @@ exports.resetPassword = asyncHandler(async (req, res, next) => {
 //     res.status(200).json({status: 'تم تفعيل الحساب'})
 
 // });
+
+exports.logout = asyncHandler(async (req, res, next) => {
+  res.clearCookie('token', { httpOnly: true });
+  return res.redirect('/auth/login');
+});

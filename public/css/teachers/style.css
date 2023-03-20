@@ -10994,7 +10994,7 @@ ul li {
 }
 
 .students-infos .search-and-add-wrapper input[type=search] {
-  max-width: 400px;
+  max-width: 600px;
 }
 .students-infos .students-list__wrapper .student-card .student-name {
   text-overflow: ellipsis;

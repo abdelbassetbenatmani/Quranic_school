@@ -16,13 +16,13 @@ html(dir="rtl" lang="ar")
                     button.navbar-toggler(type='button' data-bs-toggle='collapse' data-bs-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation')
                         span.navbar-toggler-icon
                     #navbarSupportedContent.collapse.navbar-collapse
-                        ul.navbar-nav.me-auto.mb-2.mb-lg-0
+                        ul.navbar-nav.me-auto.mb-2.mb-lg-0.gap-3
                             li.nav-item
-                                a.nav-link.active(aria-current='page' href='#') اضافة طالب
+                                button.nav-link.btn.btn-outline-primary#show-add-student-btn.px-1  اضافة طالب
                             li.nav-item
-                                a.nav-link(href='#') اضافة مدرس 
+                                button.nav-link.btn.btn-outline-primary#show-add-teacher-btn.px-1 اضافة مدرس 
                             li.nav-item
-                                a.nav-link.disabled تسجيل الخروج
+                                button.nav-link.btn.btn-danger#logout-btn.text-white.px-2 تسجيل الخروج
                         
         main  
             block content
