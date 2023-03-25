@@ -7,9 +7,9 @@ block content
     //{fullName : "سيد احمد بن دومة",_id:2}
     -const stats = stat || {nStudents : 0 , nMales : 0 , nFemales : 0 , nTeachers : 0}
     section.school-infos.py-5.position-relative
-        .school-infos__wrapper.position-relative.py-3
+        .school-infos__wrapper.position-relative.py-5
             .container-lg  
-                h1.school-name.text-white.py-4 #{schoolName}#{schoolDaira}
+                h1.school-name.text-white.py-4 مدرسة #{schoolName}#{schoolDaira}
                 .row.mb-4 
                     .col-sm-6.col-lg-3
                         .card.statistics_card.mb-3
@@ -17,28 +17,28 @@ block content
                                 p.statistics_card__title.fw-bold عدد الطلبة
                                 p.statistics_card__number.h2= stats.nStudents
                             .statistics_card__icon.bg-tertiary.text-center
-                                img.opacity-25(src="/assets/students-cap.png", alt="students cap icon" width="100")
+                                img.opacity-50(src="/assets/students-cap.png", alt="students cap icon" width="100")
                     .col-sm-6.col-lg-3
                         .card.statistics_card.mb-3
                             .statistics_card__stats.py-3
                                 p.statistics_card__title.fw-bold عدد الذكور
                                 p.statistics_card__number.h2= stats.nMales
                             .statistics_card__icon.bg-tertiary.text-center
-                                img.opacity-25(src="/assets/male_icon.png", alt="students cap icon" width="90")
+                                img.opacity-50(src="/assets/male_icon.png", alt="students cap icon" width="90")
                     .col-sm-6.col-lg-3
                         .card.statistics_card.mb-3
                             .statistics_card__stats.py-3
                                 p.statistics_card__title.fw-bold عدد الاناث
                                 p.statistics_card__number.h2= stats.nFemales
                             .statistics_card__icon.bg-tertiary.text-center
-                                img.opacity-25(src="/assets/female.png", alt="students cap icon" width="100")
+                                img.opacity-50(src="/assets/female.png", alt="students cap icon" width="100")
                     .col-sm-6.col-lg-3
                         .card.statistics_card.mb-3
                             .statistics_card__stats.py-3
                                 p.statistics_card__title.fw-bold عدد المدرسين
                                 p.statistics_card__number.h2= stats.nTeachers
                             .statistics_card__icon.bg-tertiary.text-center
-                                img.opacity-25(src="/assets/teachers_icon.png", alt="students cap icon" width="90")
+                                img.opacity-50(src="/assets/teachers_icon.png", alt="students cap icon" width="90")
     section.students-infos.py-5 
         .school-infos__wrapper.py-5
             .container-lg
@@ -52,7 +52,7 @@ block content
                             .student-card.shadow-sm.d-flex.justify-content-between.align-items-center.p-2.mb-3(data-id=`${student._id}`) 
                                 p.student-name.m-0.ml-1= student.fullName 
                                 .controllers-wrapper 
-                                    button.get-student-infos.btn.btn-primary.ms-2.shadow معلومات
+                                    button.get-student-infos.btn.btn-primary.ms-2.shadow(data-bs-toggle='modal' data-bs-target='#staticBackdrop') معلومات
                                     button.remove-student.btn.btn-outline-danger.shadow  احالة
                     -else 
                         p.h3.text-center.opacity-25 لا يوجد طلبة
@@ -64,8 +64,46 @@ block content
                             .teachers-card.shadow-sm.d-flex.justify-content-between.align-items-center.p-2.mb-3(data-id=`${teacher._id}`) 
                                 p.teachers-name.m-0.ml-1= teacher.fullName 
                                 .controllers-wrapper 
-                                    button.get-teachers-infos.btn.btn-primary.ms-2.shadow معلومات
-                                    button.remove-teachers.btn.btn-danger.shadow  احالة
+                                    button.get-teacher-infos.btn.btn-primary.ms-2.shadow(data-bs-toggle='modal' data-bs-target='#staticBackdrop') معلومات
+                                    button.remove-teacher.btn.btn-danger.shadow  احالة
                     -else 
                         p.h3.text-center.opacity-75 لا يوجد مدرسين
+    #staticBackdrop.modal.fade(data-bs-backdrop='static' data-bs-keyboard='false' tabindex='-1' aria-labelledby='staticBackdropLabel' aria-hidden='true')
+        .modal-dialog
+            .modal-content
+                .modal-header.flex-row-reverse
+                    h1#staticBackdropLabel.modal-title.fs-5 عنوان
+                    button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
+                .modal-body
+                    form(class="row g-3 needs-validation" novalidate)
+                        .py-2 
+                            label.form-label.fw-bold.fs-5(for='teacher-fullname-input') الاسم و اللقب
+                            input#teacher-fullname-input.form-control(type='text' name="fullname" required='true')
+                            .invalid-feedback يرجي ملئ البيانات
+                        .py-2  
+                            label.form-label.fw-bold.fs-5(for='grade-selectbox') الرتبة
+                            select#grade-selectbox.form-control(name="grade" required='true')
+                                option(value="dd" ) dd 
+                                option(value="cc" selected) cc 
+                            .invalid-feedback يرجي ملئ البيانات
+                        .py-2
+                            p(class="fw-bold fs-5").form-label الحالة
+                            .form-check
+                                label.form-check-label(for='#state-emp') موظف
+                                input#state-emp.form-check-input(type='radio' name='type' checked)
+                            .form-check
+                                label.form-check-label(for='#state-non-emp') متطوع
+                                input#state-non-emp.form-check-input(type='radio' name='type')
+                        .py-2
+                            p(class="fw-bold fs-5").form-label الترخيص
+                            .form-check
+                                input#authorization-checkbox.form-check-input(type='checkbox' value='true' name="isAuthorized")
+                                label.form-check-label(for='authorization-checkbox') مرخص
+                        .py-2 
+                            label(class="fw-bold fs-5").form-label  تاريخ اول تعيين
+                            input.form-control(type="date" required="true")
+                            .invalid-feedback يرجي ملئ البيانات 
+                        .modal-footer
+                            button.btn.btn-secondary(type='button' data-bs-dismiss='modal') اغلاق
+                            input(type="submit", value="حفظ" data-title="حفظ").btn.btn-primary#save-btn
     script(src="/js/teachersPage.js") 

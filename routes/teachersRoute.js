@@ -1,7 +1,20 @@
 const router = require('express').Router();
-const { getTeachersPage } = require('../services/teachersService');
+const multer = require('multer');
+const uploads = multer();
+// services
+const {
+  getTeachersPage,
+  createTeacher,
+} = require('../services/teachersService');
+// auth middlewares
 const { protect } = require('../services/authService');
-
-router.route('/').get(protect, getTeachersPage);
+// validators
+const {
+  addTeacherValidator,
+} = require('../utils/validator/teachersValidator');
+router
+  .route('/')
+  .get(protect, getTeachersPage)
+  .post(protect, uploads.none(), addTeacherValidator, createTeacher);
 
 module.exports = router;
