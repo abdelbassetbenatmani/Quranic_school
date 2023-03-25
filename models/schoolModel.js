@@ -30,9 +30,9 @@ const schoolSchema = mongoose.Schema(
         grade: {
           type: String,
         },
-        status: {
-          type: String,
-          enum: ['auth', 'nonAuth'],
+        isAuthorized: {
+          type: Boolean,
+          default: false,
         },
         registrationDate: Date,
       },
