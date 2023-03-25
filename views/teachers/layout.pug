@@ -18,11 +18,11 @@ html(dir="rtl" lang="ar")
                     #navbarSupportedContent.collapse.navbar-collapse
                         ul.navbar-nav.me-auto.mb-2.mb-lg-0.gap-3
                             li.nav-item
-                                button.nav-link.btn.btn-outline-primary#show-add-student-btn.px-1  اضافة طالب
+                                button.nav-link.btn.btn-outline-primary#add-student-btn.px-1(data-bs-toggle='modal' data-bs-target='#staticBackdrop' data-title="اضافة طالب")  اضافة طالب
                             li.nav-item
-                                button.nav-link.btn.btn-outline-primary#show-add-teacher-btn.px-1 اضافة مدرس 
+                                button.nav-link.btn.btn-outline-primary#add-teacher-btn.px-1(data-bs-toggle='modal' data-bs-target='#staticBackdrop' data-title="اضافة مدرس") اضافة مدرس 
                             li.nav-item
-                                button.nav-link.btn.btn-danger#logout-btn.text-white.px-2 تسجيل الخروج
+                                button.nav-link.btn.btn-secondary#logout-btn.text-white.px-2 تسجيل الخروج
                         
         main  
             block content
