@@ -28,6 +28,11 @@ class SchoolFeatures {
     const teachers = await this.getTeachers(filterCallback);
     return teachers.length;
   };
+  createTeacher = async function (teacherObj) {
+    const school = await this.getSchool();
+    school.teachers.push(teacherObj);
+    await school.save();
+  };
 }
 
 module.exports = SchoolFeatures;
