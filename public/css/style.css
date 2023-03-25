@@ -134,8 +134,8 @@ li{
     }
  }
 .schools-box ,.user-box,.school-box{
-    margin-bottom: 30px;
-    padding: 20px;
+    margin-bottom: 15px;
+    padding:  12px;
     background-color: #fff;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
     cursor: pointer;
