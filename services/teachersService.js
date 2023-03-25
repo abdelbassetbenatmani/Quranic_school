@@ -28,3 +28,22 @@ exports.getTeachersPage = asyncHandler(async (req, res, next) => {
     daira,
   });
 });
+
+exports.createTeacher = asyncHandler(async (req, res, next) => {
+  const { user } = req;
+  const schoolFeatures = new SchoolFeatures(user._id);
+  // teachers object shape
+  const newTeacher = ({
+    fullName,
+    type,
+    grade,
+    isAuthorized,
+    registrationDate,
+  } = req.body);
+  console.log('body : ', req.body);
+  console.log('new Teacher : ', newTeacher);
+  await schoolFeatures.createTeacher(newTeacher);
+  res.json({
+    message: 'succ',
+  });
+});
