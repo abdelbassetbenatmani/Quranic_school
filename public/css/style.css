@@ -1,3 +1,4 @@
+/* strat reset element */
 *{
     margin: 0;
     padding: 0;
@@ -11,6 +12,11 @@ a{
 li{
     list-style: none;
 }
+.is-hidden { display: none; }
+.qa-container {
+    margin: 0 auto;
+}
+/* end reset element */
 .logo{
     margin-right: 10px;
     cursor: pointer;
@@ -19,10 +25,13 @@ li{
 .logo img{
     filter: invert(100%);
 }
-.is-hidden { display: none; }
+
+/* remove focus in input search */
 .remove-focus:focus {
     box-shadow: none;
 }
+
+/* start side bar style */
 .side-bar{
     height: 100%;
     width: 250px;
@@ -39,14 +48,15 @@ li{
     margin-right: 20px;
     display: flex;
     flex-direction: column;
-    gap: 25px;
+    gap: 20px;
     font-size: 20px;
     font-weight: 500;
 }
 .side-bar-list li{
     cursor: pointer;
     width: 230px;
-    height: 35px;
+    height: 40px;
+    line-height: 40px;
 }
 .side-bar-list li a{
     color: #ffffff;
@@ -55,8 +65,9 @@ li{
     width: 20px;
     height: 20px;
 }
+/* end side bar style */
 
-/* Sweep To Left */
+/* Sweep To Left Hover*/
 .hvr-sweep-to-left {
     display: inline-block;
     vertical-align: middle;
@@ -99,9 +110,7 @@ li{
 
   /* schools list style */
   
-.qa-container {
-    margin: 0 auto;
-}
+
 
 .large-box{
     margin-right: 250px;
@@ -109,6 +118,7 @@ li{
 .menu{
     display: none;
 }
+/* responsive menu  */
 @media screen and (max-width:480px){
     .side-bar{
      position: fixed;
@@ -130,7 +140,7 @@ li{
     }
     .side-bar.show-bar{
        right: 0;
-        z-index: 1111;
+       z-index: 1111;
     }
  }
 .schools-box ,.user-box,.school-box{
@@ -150,6 +160,7 @@ li{
     margin-top: 10px;
     display: none;
 }
+/* show all information about school */
 .show{
     display: block;
 }
