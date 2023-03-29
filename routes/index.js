@@ -4,7 +4,7 @@ const teachersRoute = require('./teachersRoute');
 const mountRoutes = (app) => {
   app.use('/dashboard', schoolRoute);
   app.use('/auth', authRoute);
-  app.use('/teachers', teachersRoute);
+  app.use('/myschool', teachersRoute);
 };
 
 module.exports = mountRoutes;
