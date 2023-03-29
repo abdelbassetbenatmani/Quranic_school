@@ -5,6 +5,8 @@ const uploads = multer();
 const {
   getTeachersPage,
   createTeacher,
+  getSpecificTeacher,
+  updateTeacher,
 } = require('../services/teachersService');
 // auth middlewares
 const { protect } = require('../services/authService');
@@ -12,9 +14,12 @@ const { protect } = require('../services/authService');
 const {
   addTeacherValidator,
 } = require('../utils/validator/teachersValidator');
+router.route('/').get(protect, getTeachersPage);
 router
-  .route('/')
-  .get(protect, getTeachersPage)
+  .route('/teachers')
   .post(protect, uploads.none(), addTeacherValidator, createTeacher);
-
+router
+  .route('/teachers/:id')
+  .get(protect, getSpecificTeacher)
+  .put(protect, uploads.none(), addTeacherValidator, updateTeacher);
 module.exports = router;
