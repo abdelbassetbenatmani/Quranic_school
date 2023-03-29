@@ -44,6 +44,30 @@ exports.createTeacher = asyncHandler(async (req, res, next) => {
   console.log('new Teacher : ', newTeacher);
   await schoolFeatures.createTeacher(newTeacher);
   res.json({
-    message: 'succ',
+    msg: 'تمت الاضافة بنجاح',
+  });
+});
+
+exports.getSpecificTeacher = asyncHandler(async (req, res, next) => {
+  const { user } = req;
+  const schoolFeatures = new SchoolFeatures(user._id);
+  const teacher = await schoolFeatures.getSpecificTeacher(req.params.id);
+  res.json({ msg: 'scc', teacher });
+});
+
+exports.updateTeacher = asyncHandler(async (req, res, next) => {
+  const { user } = req;
+  const schoolFeatures = new SchoolFeatures(user._id);
+  // teachers object shape
+  const newTeacher = ({
+    fullName,
+    type,
+    grade,
+    isAuthorized,
+    registrationDate,
+  } = req.body);
+  await schoolFeatures.updateTeacher(req.params.id, newTeacher);
+  res.json({
+    msg: 'تم التعديل بنجاح',
   });
 });

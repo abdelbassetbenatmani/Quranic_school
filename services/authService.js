@@ -58,7 +58,7 @@ exports.login = asyncHandler(async (req, res, next) => {
     sameSite: 'strict',
     maxAge: 1000 * 3600 * 24 * 90,
   });
-  const redirectPage = user.role === 'admin' ? '/dashboard' : '/teachers';
+  const redirectPage = user.role === 'admin' ? '/dashboard' : '/myschool';
   return res.redirect(redirectPage);
 });
 
@@ -75,6 +75,7 @@ exports.protect = asyncHandler(async (req, res, next) => {
   if (!token) {
     //return next(new apiError('لست مسجل الدخول سجل دخولك أولا', 401));
     sharedVars.protectError = 'عليك ان تسجل الدخول';
+    console.log('from protect');
     return res.redirect('/auth/login');
   }
   // verify token
@@ -203,6 +204,11 @@ exports.resetPassword = asyncHandler(async (req, res, next) => {
 // });
 
 exports.logout = asyncHandler(async (req, res, next) => {
-  res.clearCookie('token', { httpOnly: true });
-  return res.redirect('/auth/login');
+  res.clearCookie('token', {
+    httpOnly: true,
+    sameSite: 'strict',
+    maxAge: 1000 * 3600 * 24 * 90,
+  });
+  res.set('Location', 'http://localhost:3000/auth/login');
+  res.status(302).send();
 });
