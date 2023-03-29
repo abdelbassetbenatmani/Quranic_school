@@ -33,6 +33,23 @@ class SchoolFeatures {
     school.teachers.push(teacherObj);
     await school.save();
   };
+  getSpecificTeacher = async function (id) {
+    const teachers = await this.getTeachers();
+    return teachers.find((teacher) => teacher._id.toString() === id);
+  };
+  updateTeacher = async function (id, teacherObj) {
+    const school = await this.getSchool();
+    const { teachers } = school;
+    const teacherIndex = teachers.findIndex(
+      (teacher) => teacher._id.toString() === id
+    );
+    let teacher = teachers[teacherIndex];
+    //console.log('teacherIndex : ', teacherIndex);
+    const teacherId = teacher._id;
+    teacher = { _id: teacherId, ...teacherObj };
+    teachers[teacherIndex] = teacher;
+    await school.save();
+  };
 }
 
 module.exports = SchoolFeatures;
