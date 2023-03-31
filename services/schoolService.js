@@ -31,16 +31,9 @@ module.exports.createSchool =  asyncHandler(async (req, res,next) => {
     res.redirect('/dashboard/addschool')
 })
 
-module.exports.getSchoolsPage = factory.getAll(School)
+module.exports.getSchoolsPage = factory.getAll('schools',School)
 
-module.exports.filterSchools =  asyncHandler(async (req, res,next) => {
-    const {schoolSearch} = req.body;
-    const school = School.find({name:{'$regex':req.query.schoolSearch}})
-    if(!school){
-        return next(new apiError('there is not document found',404))
-    }
-    res.render('schools',{result:school.length,data:school})
-})
+
 
 module.exports.getSpecificSchool = factory.getOne(School)
 
@@ -65,13 +58,4 @@ module.exports.updateSchool = asyncHandler(async (req, res,next) => {
     res.redirect('/dashboard/schools')
 })
 
-exports.changePassword = asyncHandler(async (req, res,next) => {
-    const document = await School.findByIdAndUpdate(req.params.id,{
-        password : await bcrypt.hash(req.body.password,12),
-        passwordChangedAt:Date.now()
-    }, { new: true })
-    if (!document) {
-        return next(new apiError('there is not document found',404))
-    }
-    res.status(200).json({data:document})
-})
+module.exports.getStaticsPage =  factory.getAll('statics',School)
