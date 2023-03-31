@@ -164,3 +164,6 @@ li{
 .show{
     display: block;
 }
+.filter-images{
+    filter: invert(100%);
+}
