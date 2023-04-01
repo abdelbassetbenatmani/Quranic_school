@@ -1,22 +1,20 @@
 const carousels = document.querySelectorAll('.carousel-item')
 const searchInput = document.getElementById('searchInput')
+const searchBtn = document.getElementById('searchBtn')
 const emptyInput = document.getElementById('emptyInput')
 carousels[0].classList.add('active')
 
 function liveSearch() {
     let search_query = document.getElementById("searchInput").value;
     
-    // if(search_query ===''){
-    //     carousels[0].classList.add("active");
-    // }
+
     for (var i = 0; i < carousels.length; i++) {
         if(carousels[i].textContent.toLowerCase()
                 .includes(search_query.toLowerCase())) {
-                    // carousels[i].style.display = "none";
                     carousels[i].classList.add("active");
+                    break;
         } else {
-            // carousels[i].style.display = "block";
-            carousels[i].classList.remove("active");
+                    carousels[i].classList.remove("active");
         }
     }
   }
@@ -25,13 +23,28 @@ function liveSearch() {
   let typingTimer;               
   let typeInterval = 500;  
   
-  searchInput.addEventListener('keyup', () => {
-    clearTimeout(typingTimer);
-    typingTimer = setTimeout(liveSearch, typeInterval);
-  });
-  
-  emptyInput.addEventListener('click',()=>{
+  // searchInput.addEventListener('keyup', () => {
+  //   clearTimeout(typingTimer);
+  //   typingTimer = setTimeout(liveSearch, typeInterval);
+  // });
+searchBtn.addEventListener('click', () => {
+      clearTimeout(typingTimer);
+      typingTimer = setTimeout(liveSearch, typeInterval);
+}) 
+emptyInput.addEventListener('click',()=>{
     searchInput.value = '';
-    clearTimeout(typingTimer);
-    typingTimer = setTimeout(liveSearch, typeInterval);
-  })
+    for (var i = 1; i < carousels.length ; i++) {
+      carousels[i].classList.remove("active");
+    }
+    carousels[0].classList.add('active')
+})
+
+searchInput.addEventListener('input',()=>{
+  if(searchInput.value ===''){
+    for (var i = 1; i < carousels.length ; i++) {
+      carousels[i].classList.remove("active");
+    }
+    carousels[0].classList.add('active')
+  }
+  
+})
