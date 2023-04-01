@@ -10993,14 +10993,22 @@ ul li {
   align-items: center;
 }
 
-.students-infos .search-and-add-wrapper input[type=search] {
+.school-list-infos .search-input-wrapper input {
   max-width: 600px;
+  border: 1px solid #eee;
 }
-.students-infos .students-list__wrapper .student-card .student-name {
+.school-list-infos .students-list__wrapper .student-card .student-name,
+.school-list-infos .students-list__wrapper .student-card .teachers-name,
+.school-list-infos .students-list__wrapper .teachers-card .student-name,
+.school-list-infos .students-list__wrapper .teachers-card .teachers-name,
+.school-list-infos .teachers-list__wrapper .student-card .student-name,
+.school-list-infos .teachers-list__wrapper .student-card .teachers-name,
+.school-list-infos .teachers-list__wrapper .teachers-card .student-name,
+.school-list-infos .teachers-list__wrapper .teachers-card .teachers-name {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
-  max-width: 200px;
+  max-width: 170px;
 }
 
 /*# sourceMappingURL=style.css.map */
