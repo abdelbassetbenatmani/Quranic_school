@@ -39,11 +39,11 @@ block content
                                 p.statistics_card__number.h2= stats.nTeachers
                             .statistics_card__icon.bg-tertiary.text-center
                                 img.opacity-50(src="/assets/teachers_icon.png", alt="students cap icon" width="90")
-    section.students-infos.py-5 
+    section.school-list-infos.py-5 
         .school-infos__wrapper.py-5
             .container-lg
-                .search-and-add-wrapper.d-flex.justify-content-between.align-items-center 
-                    input.form-control.mx-auto(type='search' placeholder='بحث' aria-label='Search')
+                .search-input-wrapper.d-flex.justify-content-between.align-items-center 
+                    input#search-by-name.form-control.mx-auto.shadow(type='search' placeholder='بحث' aria-label='Search')
                 .students-list.py-3 
                     h2.students-list__title.text-center.my-5 لائحة الطلبة
                     .students-list__wrapper
@@ -58,16 +58,16 @@ block content
                         p.h3.text-center.opacity-25 لا يوجد طلبة
                 .teachers-list.py-3
                     h2.teachers-list__title.text-center.my-5 لائحة المدرسين
-                    .teachers-list__wrapper
-                    -if(teachersList.length > 0)
-                        each teacher of teachersList 
-                            .teachers-card.shadow-sm.d-flex.justify-content-between.align-items-center.p-2.mb-3(data-id=`${teacher._id}`) 
-                                p.teachers-name.m-0.ml-1= teacher.fullName 
-                                .controllers-wrapper 
-                                    button.get-teacher-infos.btn.btn-primary.ms-2(data-bs-toggle='modal' data-bs-target='#staticBackdrop' data-title="معلومات") معلومات
-                                    button.remove-teacher.btn.btn-danger  احالة
-                    -else 
-                        p.h3.text-center.opacity-75 لا يوجد مدرسين
+                    ul.teachers-list__wrapper.px-0
+                        -if(teachersList.length > 0)
+                            each teacher of teachersList 
+                                li.teachers-card.shadow-sm.d-flex.justify-content-between.align-items-center.p-2.mb-3(data-id=`${teacher._id}` data-fullName=`${teacher.fullName}`) 
+                                    p.teachers-name.m-0.ml-1= teacher.fullName 
+                                    .controllers-wrapper 
+                                        button.get-teacher-infos.btn.btn-primary.ms-2(data-bs-toggle='modal' data-bs-target='#staticBackdrop' data-title="معلومات" data-def="get-teacher-infos") معلومات
+                                        button.remove-teacher.btn.btn-danger  احالة
+                        -else 
+                            p.h3.text-center.opacity-25 لا يوجد مدرسين
     #staticBackdrop.modal.fade(data-bs-backdrop='static' data-bs-keyboard='false' tabindex='-1' aria-labelledby='staticBackdropLabel' aria-hidden='true')
         .modal-dialog
             .modal-content
