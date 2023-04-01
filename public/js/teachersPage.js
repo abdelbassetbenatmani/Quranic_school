@@ -221,31 +221,55 @@ addStudentBtn.addEventListener('click', function () {
 });
 
 // infos buttons
-const getTeacherInfosButtons = document.querySelectorAll(
-  '.get-teacher-infos'
-);
-[...getTeacherInfosButtons].forEach((button) => {
-  button.addEventListener('click', (event) => {
-    const teacherCard = event.target.closest('.teachers-card');
-    //console.log('closest : ', teacherCard);
-    const teacherId = teacherCard.dataset.id;
-    fetch(`http://localhost:3000/myschool/teachers/${teacherId}`, {
-      method: 'GET',
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        const { msg, teacher } = data;
-        console.log('teacher : ', teacher);
-        createModel.call(
-          button,
-          getTeacherModel(teacher),
-          `teachers/${teacherId}`,
-          {
-            method: 'PUT',
-          }
-        );
-      });
+const teachersCards = document.querySelectorAll('.teachers-card');
+[...teachersCards].forEach((card) => {
+  card.addEventListener('click', (event) => {
+    if (event.target.dataset.def === 'get-teacher-infos') {
+      const button = event.target;
+      console.log('from button');
+      const teacherId = card.dataset.id;
+      fetch(`http://localhost:3000/myschool/teachers/${teacherId}`, {
+        method: 'GET',
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          const { msg, teacher } = data;
+          console.log('teacher : ', teacher);
+          createModel.call(
+            button,
+            getTeacherModel(teacher),
+            `teachers/${teacherId}`,
+            {
+              method: 'PUT',
+            }
+          );
+        });
+    }
   });
+});
+
+// search functionality
+const searchInput = document.getElementById('search-by-name');
+searchInput.addEventListener('keyup', () => {
+  const teachersList = document.querySelector('.teachers-list__wrapper');
+  teachersList.innerHTML = '';
+  const searchInputVal = searchInput.value;
+  const searchRegex = new RegExp(searchInputVal, 'g');
+  //console.log('search regex : ', searchRegex);
+  // append the items
+  teachersCards.forEach((card) => {
+    //console.log('fulName : ', card.dataset.fullName);
+    if (searchRegex.test(card.dataset.fullname)) {
+      teachersList.append(card);
+    }
+  });
+  // if there are no matches
+  if (teachersList.innerHTML === '') {
+    const thereIsNoMatchWrapper = document.createElement('p');
+    thereIsNoMatchWrapper.classList.add('h3', 'text-center', 'opacity-25');
+    thereIsNoMatchWrapper.textContent = 'لا يوجد مدرسين';
+    teachersList.append(thereIsNoMatchWrapper);
+  }
 });
 
 // from bootstrap docs
