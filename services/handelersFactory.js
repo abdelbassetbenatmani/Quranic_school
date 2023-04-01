@@ -43,7 +43,7 @@ exports.getOne = (Model,populateOpt) =>asyncHandler(async (req, res,next) => {
     res.status(200).json({data:document})
 })
 
-exports.getAll = (Model,modelName = '') => asyncHandler(async (req, res,next) => {
+exports.getAll = (page,Model,modelName = '') => asyncHandler(async (req, res,next) => {
     let filter = {};
     if (req.filterObj) {
         filter = req.filterObj
@@ -59,5 +59,5 @@ exports.getAll = (Model,modelName = '') => asyncHandler(async (req, res,next) =>
     const { mongooseQuery, paginationResults } = apiFeatures;
     const documents = await mongooseQuery;
     // res.status(200).json({data:documents})
-    res.render('schools',{result:documents.length,paginationResults,data:documents})
+    res.render(page,{result:documents.length,paginationResults,data:documents})
 })

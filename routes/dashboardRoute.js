@@ -1,7 +1,7 @@
 const express = require('express')
 
 const router = express.Router()
-const {createSchool,setadressToBody,getSchoolsPage,getAddSchoolPage,filterSchools,getSpecificSchool,deleteSchool,updateSchool,changePassword} = require('../services/schoolService')
+const {createSchool,setadressToBody,getSchoolsPage,getAddSchoolPage,getStaticsPage,getSpecificSchool,deleteSchool,updateSchool,changePassword} = require('../services/schoolService')
 const {createUser,getUserPage,updateUser} = require('../services/userService')
 const {createSchoolValidator,getSchoolValidator,deleteSchoolValidator,updateSchoolValidator,changePasswordValidator} = require('../utils/validator/schoolValidator')
 const {createUserValidator,updateUserValidator} = require('../utils/validator/userValidator')
@@ -36,9 +36,7 @@ router.post('/schools/deleteschool',deleteSchool)
 router.get('/mapschools',(req,res,next)=>{
     res.render('mapschools')
 })
-router.get('/statics',(req,res,next)=>{
-    res.render('statics')
-})
+router.get('/statics',getStaticsPage)
 
 
 module.exports = router;

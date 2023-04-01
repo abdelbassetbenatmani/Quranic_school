@@ -18,6 +18,8 @@ module.exports.createUser =  asyncHandler(async (req, res,next) => {
 
 module.exports.getUsers = factory.getAll(Teacher)
 
+
+
 module.exports.getSpecificUser = factory.getOne(Teacher)
 
 module.exports.deleteUser = factory.deleteOne(Teacher)
