@@ -28,7 +28,7 @@
                     </button>
                   </div>
                 </div>
-                <button type="button" class="btn btn-success">بحث</button>
+                <button type="button" class="btn btn-success searchBtn" id="searchBtn">بحث</button>
                 <div class="slider-btn d-flex gap-3" style="height: 40px;">
                     <button class="border-0 text-white rounded-1 bg-dark d-flex align-items-center justify-content-center" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
@@ -317,14 +317,37 @@
                                         <td class="text-nowrap">متطوع</td>
                                         <% }else{ %>
                                           <td class="text-nowrap">موظف</td>
-                                      <% } %>    
-                                      <td class="text-nowrap"><%= teacher.grade %></td>
+                                      <% } %>  
+                                      <% if(teacher.grade ==='OTQ'){ %>  
+                                        <td class="text-nowrap">أستاذ التعليم القرآني</td>
+                                      <% }else if(teacher.grade ==='MQ'){ %>  
+                                          <td class="text-nowrap">معلم قرآن</td>
+                                      <% }else if(teacher.grade ==='MD'){ %>    
+                                          <td class="text-nowrap">مرشدة دينية</td>
+                                      <% }else if(teacher.grade ==='MO'){ %>    
+                                          <td class="text-nowrap">مؤذن</td>
+                                      <% }else if(teacher.grade ==='QAY'){ %>    
+                                          <td class="text-nowrap">قيم</td>
+                                      <% }else if(teacher.grade ==='IM'){ %>    
+                                          <td class="text-nowrap">إمام</td>
+                                      <% }else if(teacher.grade ==='IO'){ %>    
+                                          <td class="text-nowrap">إمام أستاذ</td>
+                                          <% } else{%>
+                                            <td class="text-nowrap"></td>
+
+                                       <% } %> 
                                       <% if(teacher.isAuthorized ===true){ %>
                                         <td class="text-nowrap">مرخص</td>
                                         <% }else{ %>
                                           <td class="text-nowrap">غير مرخص</td>
                                       <% } %>  
-                                      <td class="text-nowrap"><%= teacher.registrationDate.getMonth() %></td>
+                                      <td class="text-nowrap"><%= teacher.registrationDate.getFullYear() %>-<%= String(teacher.registrationDate.getMonth() + 1).padStart(
+                                        2,
+                                        '0'
+                                      )  %>-<%= String(teacher.registrationDate.getDate()).padStart(
+                                        2,
+                                        '0'
+                                      )  %></td>
                                     </tr>
                                   <% }) %> 
                                   
