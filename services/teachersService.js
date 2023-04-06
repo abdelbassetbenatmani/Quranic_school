@@ -32,14 +32,21 @@ exports.getTeachersPage = asyncHandler(async (req, res, next) => {
 exports.createTeacher = asyncHandler(async (req, res, next) => {
   const { user } = req;
   const schoolFeatures = new SchoolFeatures(user._id);
+  const {
+    fullName,
+    type,
+    grade,
+    isAuthorized = req.body.type === 'employee' ? true : false,
+    registrationDate,
+  } = req.body;
   // teachers object shape
-  const newTeacher = ({
+  const newTeacher = {
     fullName,
     type,
     grade,
     isAuthorized,
     registrationDate,
-  } = req.body);
+  };
   console.log('body : ', req.body);
   console.log('new Teacher : ', newTeacher);
   await schoolFeatures.createTeacher(newTeacher);
@@ -58,14 +65,21 @@ exports.getSpecificTeacher = asyncHandler(async (req, res, next) => {
 exports.updateTeacher = asyncHandler(async (req, res, next) => {
   const { user } = req;
   const schoolFeatures = new SchoolFeatures(user._id);
+  const {
+    fullName,
+    type,
+    grade,
+    isAuthorized = req.body.type === 'employee' ? true : false,
+    registrationDate,
+  } = req.body;
   // teachers object shape
-  const newTeacher = ({
+  const newTeacher = {
     fullName,
     type,
     grade,
     isAuthorized,
     registrationDate,
-  } = req.body);
+  };
   await schoolFeatures.updateTeacher(req.params.id, newTeacher);
   res.json({
     msg: 'تم التعديل بنجاح',

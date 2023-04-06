@@ -25,16 +25,22 @@ const schoolSchema = mongoose.Schema(
         },
         type: {
           type: String,
+          required: true,
           enum: ['employee', 'nonEmployee'],
         },
         grade: {
           type: String,
+          default: null,
         },
         isAuthorized: {
           type: Boolean,
           default: false,
         },
         registrationDate: Date,
+        isActive: {
+          type: Boolean,
+          default: true,
+        },
       },
     ],
     students: [
@@ -44,9 +50,9 @@ const schoolSchema = mongoose.Schema(
           type: String,
           require: [true, 'full name is required'],
         },
-        BirthDay: {
+        BirthDate: {
           type: Date,
-          require: [true, 'date birthday is required'],
+          require: [true, 'date birthdate is required'],
         },
         sex: {
           type: String,
@@ -62,26 +68,23 @@ const schoolSchema = mongoose.Schema(
           require: [true, 'school status is required'],
           enum: ['before', 'in', 'out', 'old'],
         },
-        internal: {
-          type: String,
+        isInternal: {
+          type: Boolean,
+          default: false,
         },
         level: {
           type: String,
-          require: [true, 'level is required'],
           enum: ['before', 'AP', 'AF', 'AS', 'UN', 'OUT'],
         },
         quranSave: {
           type: Number,
           require: [true, 'quran save is required'],
-          enum: [1 / 5, 1 / 4, 1 / 2, 3 / 4, 1],
+          enum: [0, 0.25, 0.5, 0.75, 1],
         },
-        isActive: Boolean,
-        TRM: [
-          {
-            trmNumber: Number,
-            year: Number,
-          },
-        ],
+        isActive: {
+          type: Boolean,
+          default: true,
+        },
       },
     ],
   },

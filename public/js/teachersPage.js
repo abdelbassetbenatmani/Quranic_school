@@ -40,9 +40,26 @@ function getTeacherModel(teacherInfos = {}) {
     <input class="form-control" id="teacher-fullname-input" type="text" value="${fullName}" name="fullName" required="true"/>
     <div class="invalid-feedback">يرجي ملئ البيانات</div>
   </div>
+  <div class="py-2">
+  <p class="fw-bold fs-5 form-label">الحالة</p>
+  <div class="form-check">
+    <label class="form-check-label" for="state-emp">موظف</label>
+    <input class="form-check-input" id="state-emp" type="radio" name="type" ${
+      type === 'employee' ? 'checked' : ''
+    } value="employee" required/>
+  </div>
+  <div class="form-check">
+    <label class="form-check-label" for="state-non-emp">متطوع</label>
+    <input class="form-check-input" id="state-non-emp" type="radio" name="type" ${
+      type === 'nonEmployee' ? 'checked' : ''
+    } value="nonEmployee"/>
+  </div>
+</div>
   <div class="py-2"> 
     <label class="form-label fw-bold fs-5" for="grade-selectbox">الرتبة</label>
-    <select class="form-control" id="grade-selectbox" name="grade" required="true">
+    <select class="form-control" id="grade-selectbox" name="grade" ${
+      type === 'employee' ? '' : 'disabled'
+    } ${type === 'employee' ? 'required' : ''}>
       <option value="OTQ" ${
         grade === 'OTQ' ? 'selected' : ''
       }>استاذ التعليم القراني</option>
@@ -64,26 +81,11 @@ function getTeacherModel(teacherInfos = {}) {
     <div class="invalid-feedback">يرجي ملئ البيانات</div>
   </div>
   <div class="py-2">
-    <p class="fw-bold fs-5 form-label">الحالة</p>
-    <div class="form-check">
-      <label class="form-check-label" for="#state-emp">موظف</label>
-      <input class="form-check-input" id="state-emp" type="radio" name="type" ${
-        type === 'employee' ? 'checked' : ''
-      } value="employee"/>
-    </div>
-    <div class="form-check">
-      <label class="form-check-label" for="#state-non-emp">متطوع</label>
-      <input class="form-check-input" id="state-non-emp" type="radio" name="type" ${
-        type === 'nonEmployee' ? 'checked' : ''
-      } value="nonEmployee"/>
-    </div>
-  </div>
-  <div class="py-2">
     <p class="fw-bold fs-5 form-label">الترخيص</p>
     <div class="form-check">
       <input class="form-check-input" id="authorization-checkbox" type="checkbox" value="${isAuthorized}" ${
     isAuthorized ? 'checked' : ''
-  } name="isAuthorized"/>
+  } name="isAuthorized" ${type === 'employee' ? 'disabled' : ''} />
       <label class="form-check-label" for="authorization-checkbox">مرخص</label>
     </div>
   </div>
@@ -128,13 +130,35 @@ function createModel(
     (checkbox) => {
       checkbox.addEventListener('change', () => {
         checkbox.value = checkbox.checked ? 'true' : 'false';
+        //checkbox.checked = checkbox.checked ? 'true' : 'false';
+        console.log('checkbox  : ', checkbox);
+      });
+    }
+  );
+  // handle the changed state of the radio buttons
+  [...modalBody.querySelectorAll('input[name="type"]')].forEach(
+    (radioBtn) => {
+      radioBtn.addEventListener('change', () => {
+        const gradeSelectBox = modalBody.querySelector('#grade-selectbox');
+        const authorizationCheckbox = modalBody.querySelector(
+          '#authorization-checkbox'
+        );
+        if (radioBtn.value === 'employee') {
+          gradeSelectBox.removeAttribute('disabled');
+          gradeSelectBox.removeAttribute('required');
+          authorizationCheckbox.setAttribute('disabled', true);
+        } else {
+          gradeSelectBox.setAttribute('disabled', true);
+          gradeSelectBox.setAttribute('required', true);
+          authorizationCheckbox.removeAttribute('disabled');
+        }
       });
     }
   );
   const form = modalBody.querySelector('.submit-form');
   form.addEventListener('submit', (event) => {
     event.preventDefault();
-    const successMessage = modalBody.querySelector('.success-message');
+    const successMessage = modalBody.querySelector('.alert-success');
     if (successMessage) successMessage.remove();
     // get form data
     const formData = new FormData(form);
@@ -148,16 +172,7 @@ function createModel(
         // add success message
         if (!data.errors) {
           const successMessage = document.createElement('div');
-          successMessage.classList.add(
-            'success-message',
-            'error-prompt',
-            'bg-success',
-            'text-success',
-            'bg-opacity-10',
-            'p-2',
-            'mb-2',
-            'rounded'
-          );
+          successMessage.classList.add('alert', 'alert-success');
           successMessage.textContent = data.msg;
           modalBody.prepend(successMessage);
         }
