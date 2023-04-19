@@ -9,8 +9,7 @@ const Teacher = require('../models/userModel')
 
 // module.exports.createSchool = factory.createOne(School)
 module.exports.getAddSchoolPage =  asyncHandler(async (req, res,next) => {
-    const user = await Teacher.find({}).select({username:1 ,_id:1});
-    res.render('addschool',{errors:req.flash("errors"),added: req.flash("added")[0],user})
+    res.render('addschool',{errors:req.flash("errors"),added: req.flash("added")[0]})
 })
 
 exports.setadressToBody = (req, res, next) => {
