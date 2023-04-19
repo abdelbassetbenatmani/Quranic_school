@@ -9,6 +9,11 @@ const Teacher = require('../models/userModel')
 module.exports.getUserPage =  asyncHandler(async (req, res,next) => {
     res.render('adduser',{errors:[],added:req.flash("added")[0]})
 })
+
+module.exports.getUsersList =  asyncHandler(async (req, res,next) => {
+    const users = await Teacher.find({}).select({username:1 ,_id:1});
+    res.status(200).json({data:users})
+})
 // module.exports.createSchool = factory.createOne(School)
 module.exports.createUser =  asyncHandler(async (req, res,next) => {
     await Teacher.create(req.body)

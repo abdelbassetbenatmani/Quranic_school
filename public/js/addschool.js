@@ -170,6 +170,29 @@ daira.addEventListener('change',()=>{
 
 
 // fetch users to select box
-teacher.addEventListener('click',()=>{
-    
-})
+teacher.addEventListener('click',async (e)=>{
+    await getUsersList()
+},{once:true})
+
+async function getUsersList (){
+    try {
+        const response = await fetch('http://localhost:3000/dashboard/users', {
+          method: 'GET',
+        });
+        const users = await response.json();
+        teacher.innerHTML = '';
+        let option = document.createElement("option");
+        option.text = 'اختراسم مستخدم';
+        teacher.add(option)
+        users.data.forEach((user)=>{
+            let option = document.createElement("option");
+            option.text = user.username;
+            option.value = user._id;
+            teacher.add(option)
+            
+        })
+        console.log(users);
+      } catch (error) {
+        console.log(error);
+      }
+}
