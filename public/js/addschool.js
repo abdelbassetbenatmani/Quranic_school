@@ -144,6 +144,7 @@ const laghouat = [
 ]
 const daira = document.querySelector('#daira')
 const commune = document.querySelector('#commune')
+const teacher = document.getElementById('teacher')
 let dairaArr = []
 laghouat.forEach((element)=>{
     dairaArr.push( element.daira_name)
@@ -165,4 +166,10 @@ daira.addEventListener('change',()=>{
         option.innerHTML = element.commune_name
         commune.appendChild(option)
     })
+})
+
+
+// fetch users to select box
+teacher.addEventListener('click',()=>{
+    
 })
