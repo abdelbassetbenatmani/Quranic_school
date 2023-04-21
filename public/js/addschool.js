@@ -183,6 +183,7 @@ async function getUsersList (){
         teacher.innerHTML = '';
         let option = document.createElement("option");
         option.text = 'اختراسم مستخدم';
+        option.value = '';
         teacher.add(option)
         users.data.forEach((user)=>{
             let option = document.createElement("option");
