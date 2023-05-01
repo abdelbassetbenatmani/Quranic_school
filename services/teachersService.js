@@ -1,3 +1,4 @@
+const { Types } = require('mongoose');
 const User = require('../models/userModel');
 const School = require('../models/schoolModel');
 const SchoolFeatures = require('../utils/schoolFeatures');
@@ -41,6 +42,7 @@ exports.createTeacher = asyncHandler(async (req, res, next) => {
   } = req.body;
   // teachers object shape
   const newTeacher = {
+    _id: Types.ObjectId(),
     fullName,
     type,
     grade,
@@ -52,6 +54,8 @@ exports.createTeacher = asyncHandler(async (req, res, next) => {
   await schoolFeatures.createTeacher(newTeacher);
   res.json({
     msg: 'تمت الاضافة بنجاح',
+    teacher: newTeacher,
+    numberOfTeachers: await schoolFeatures.getNumberOfTeachers(),
   });
 });
 
@@ -74,6 +78,7 @@ exports.updateTeacher = asyncHandler(async (req, res, next) => {
   } = req.body;
   // teachers object shape
   const newTeacher = {
+    _id: req.params.id,
     fullName,
     type,
     grade,
@@ -83,5 +88,7 @@ exports.updateTeacher = asyncHandler(async (req, res, next) => {
   await schoolFeatures.updateTeacher(req.params.id, newTeacher);
   res.json({
     msg: 'تم التعديل بنجاح',
+    teacher: newTeacher,
+    numberOfTeachers: await schoolFeatures.getNumberOfTeachers(),
   });
 });

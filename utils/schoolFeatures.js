@@ -43,11 +43,7 @@ class SchoolFeatures {
     const teacherIndex = teachers.findIndex(
       (teacher) => teacher._id.toString() === id
     );
-    let teacher = teachers[teacherIndex];
-    //console.log('teacherIndex : ', teacherIndex);
-    const teacherId = teacher._id;
-    teacher = { _id: teacherId, ...teacherObj };
-    teachers[teacherIndex] = teacher;
+    teachers[teacherIndex] = teacherObj;
     await school.save();
   };
 }

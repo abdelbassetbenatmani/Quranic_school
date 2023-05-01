@@ -169,12 +169,61 @@ function createModel(
       .then((res) => res.json())
       .then((data) => {
         console.log('data : ', data);
-        // add success message
+
         if (!data.errors) {
+          const { _id, fullName } = data.teacher;
+          // add success message
           const successMessage = document.createElement('div');
           successMessage.classList.add('alert', 'alert-success');
           successMessage.textContent = data.msg;
           modalBody.prepend(successMessage);
+          // update the stats on the UI
+          if (/\bteachers/.test(UrlEndpoint)) {
+            // update the number
+            document.querySelector('#nbr-teachers').textContent =
+              data.numberOfTeachers;
+            const teachersListWrapper = document.querySelector(
+              'ul.teachers-list__wrapper'
+            );
+            // add the teacher info to the UI
+            if (fetchOptions.method === 'POST') {
+              const teachersCard = document.createElement('li');
+              teachersCard.classList.add(
+                'teachers-card',
+                'shadow-sm',
+                'd-flex',
+                'justify-content-between',
+                'align-items-center',
+                'p-2',
+                '.mb-3'
+              );
+              teachersCard.dataset.id = _id;
+              teachersCard.dataset.fullname = fullName;
+              teachersCard.innerHTML = `<p class="teachers-name m-0 ml-1">${fullName} </p>
+              <div class="controllers-wrapper"> 
+                <button class="get-teacher-infos btn btn-primary ms-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop" data-title="معلومات" data-def="get-teacher-infos">معلومات</button>
+                <button class="remove-teacher btn btn-danger"> احالة</button>
+              </div>`;
+              console.log('teachers card : ', teachersCard);
+              // add event listeners to buttons
+              teachersCard
+                .querySelector('button.get-teacher-infos')
+                .addEventListener('click', (event) => {
+                  showInfosEvent(event, _id);
+                });
+              teachersListWrapper.append(teachersCard);
+            }
+            // update the teacher info
+            else {
+              const teachersCard = document.querySelector(
+                `.teachers-card[data-id="${_id}"]`
+              );
+              console.log('teacherCard : ', teachersCard);
+              teachersCard.querySelector('.teachers-name').textContent =
+                fullName;
+            }
+          } else {
+          }
         }
       })
       .catch((e) => console.log('errr : ', e));
@@ -239,30 +288,32 @@ addStudentBtn.addEventListener('click', function () {
 const teachersCards = document.querySelectorAll('.teachers-card');
 [...teachersCards].forEach((card) => {
   card.addEventListener('click', (event) => {
-    if (event.target.dataset.def === 'get-teacher-infos') {
-      const button = event.target;
-      console.log('from button');
-      const teacherId = card.dataset.id;
-      fetch(`http://localhost:3000/myschool/teachers/${teacherId}`, {
-        method: 'GET',
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          const { msg, teacher } = data;
-          console.log('teacher : ', teacher);
-          createModel.call(
-            button,
-            getTeacherModel(teacher),
-            `teachers/${teacherId}`,
-            {
-              method: 'PUT',
-            }
-          );
-        });
-    }
+    showInfosEvent(event, card.dataset.id);
   });
 });
 
+function showInfosEvent(event, teacherId) {
+  if (event.target.dataset.def === 'get-teacher-infos') {
+    const button = event.target;
+    console.log('from button');
+    fetch(`http://localhost:3000/myschool/teachers/${teacherId}`, {
+      method: 'GET',
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        const { msg, teacher } = data;
+        console.log('teacher : ', teacher);
+        createModel.call(
+          button,
+          getTeacherModel(teacher),
+          `teachers/${teacherId}`,
+          {
+            method: 'PUT',
+          }
+        );
+      });
+  }
+}
 // search functionality
 const searchInput = document.getElementById('search-by-name');
 searchInput.addEventListener('keyup', () => {
