@@ -90,3 +90,43 @@ exports.updateTeacher = asyncHandler(async (req, res, next) => {
     numberOfTeachers: await schoolFeatures.getNumberOfTeachers(),
   });
 });
+
+
+exports.createStudent = asyncHandler(async (req, res, next) => {
+  const { user } = req;
+  const schoolFeatures = new SchoolFeatures(user._id);
+  const {
+    fullName ,
+    BirthDate,
+    sex,
+    fatherName,
+    schoolStatus,
+    isInternal ,
+    level ,
+    quranSave,
+  }  = req.body;
+  // teachers object shape
+  const newStudent = {
+    _id: Types.ObjectId(),
+    fullName,
+    BirthDate,
+    sex,
+    fatherName,
+    schoolStatus:{
+      status:schoolStatus,
+      date:Date.now()
+    },
+    isInternal ,
+    level ,
+    quranSave:{
+      Qsave:quranSave,
+      date:Date.now()
+    },
+  };
+  await schoolFeatures.createStudent(newStudent);
+  res.json({
+    msg: 'تمت الاضافة بنجاح',
+    student: newStudent,
+    numberOfStudent: await schoolFeatures.getNumberOfStudents(),
+  });
+});

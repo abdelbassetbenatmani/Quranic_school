@@ -103,6 +103,116 @@ function getTeacherModel(teacherInfos = {}) {
   </form>`;
 }
 
+function getStudentModel(studentInfos = {}) {
+  const {
+    fullName = '',
+    BirthDate = '01/01/2000',
+    sex = 'male',
+    fatherName = '',
+    schoolStatus = 'in',
+    isInternal = false,
+    level = '',
+    quranSave = '',
+  } = studentInfos;
+  return `<form action="addstudent" class="row g-3 needs-validation submit-form" novalidate="novalidate">
+  <div class="py-2"> 
+    <label class="form-label fw-bold fs-5" for="student-fullname-input">الاسم و اللقب</label>
+    <input class="form-control" id="student-fullname-input" type="text" value="${fullName}" name="fullName" required="true"/>
+    <div class="invalid-feedback">يرجي ملئ الاسم و اللقب</div>
+  </div>
+  <div class="py-2"> 
+    <label class="fw-bold fs-5 form-label"> تاريخ الميلاد</label>
+    <input class="form-control" type="date" required="true" name="BirthDate" value="${BirthDate}"/>
+    <div class="invalid-feedback">يرجي ملئ تاريخ الميلاد </div>
+  </div>
+  <div class="py-2">
+  <p class="fw-bold fs-5 form-label">الجنس</p>
+  <div class="form-check">
+    <label class="form-check-label" for="male">ذكر</label>
+    <input class="form-check-input" id="male" type="radio" name="sex" ${
+      sex === 'male' ? 'checked' : ''
+    } value="male" required/>
+  </div>
+  <div class="form-check">
+    <label class="form-check-label" for="female">أنثى</label>
+    <input class="form-check-input" id="female" type="radio" name="sex" ${
+      sex === 'female' ? 'checked' : ''
+    } value="female"/>
+  </div>
+  </div>
+  <div class="py-2"> 
+    <label class="form-label fw-bold fs-5" for="student-fathername-input">اسم الأب</label>
+    <input class="form-control" id="student-fathername-input" type="text" value="${fatherName}" name="fatherName" required="true"/>
+    <div class="invalid-feedback">اسم الأب</div>
+  </div>
+  <div class="py-2"> 
+    <label class="form-label fw-bold fs-5" for="schoolStatus-selectbox">الوضعية مع المدرسة التربوية</label>
+    <select class="form-control" id="schoolStatus-selectbox" name="schoolStatus">
+      <option value="before" ${
+        schoolStatus === 'before' ? 'selected' : ''
+      }>قبل سن التمدرس</option>
+      <option value="in" ${
+        schoolStatus === 'in' ? 'selected' : ''
+      }>متمدرس</option>
+      <option value="out" ${
+        schoolStatus === 'out' ? 'selected' : ''
+      }>منفصل</option>
+      <option value="old" ${schoolStatus === 'old' ? 'selected' : ''}>متفرغ</option>
+
+    </select>
+    <div class="invalid-feedback">يرجي ملئ الوضعية التربوية</div>
+  </div>
+  <div class="py-2">
+    <p class="fw-bold fs-5 form-label">داخلي</p>
+    <div class="form-check">
+      <input class="form-check-input" id="isInternal-checkbox" type="checkbox" value="${isInternal}" ${
+        isInternal ? 'checked' : ''
+  } name="isInternal"  />
+      <label class="form-check-label" for="authorization-checkbox">داخلي</label>
+    </div>
+  </div>
+  <div class="py-2"> 
+    <label class="form-label fw-bold fs-5" for="level-selectbox">المستوى التعليمي</label>
+    <select class="form-control" id="level-selectbox" name="level" ${
+      schoolStatus === 'in' ? '' : 'disabled'
+    } ${schoolStatus === 'in' ? 'required' : ''}>
+      <option value="AP" ${
+        level === 'AP' ? 'selected' : ''
+      }>مستوى ابتدائي</option>
+      <option value="AF" ${
+        level === 'AF' ? 'selected' : ''
+      }>مستوى متوسط</option>
+      <option value="AS" ${level === 'AS' ? 'selected' : ''}>مستوى ثانوي</option>
+      <option value="UN" ${level === 'UN' ? 'selected' : ''}>مستوى جامعي</option>
+    </select>
+    <div class="invalid-feedback">يرجي ملئ المستوى التعليمي</div>
+  </div>
+  <div class="py-2"> 
+    <label class="form-label fw-bold fs-5" for="quranSave-selectbox">متسوى الحفظ</label>
+    <select class="form-control" id="quranSave-selectbox" name="quranSave">
+      <option value="0" ${
+        quranSave === '0' ? 'selected' : ''
+      }>أقل من الربع</option>
+      <option value="0.25" ${
+        quranSave === '0.25' ? 'selected' : ''
+      }>ربع القرآن</option>
+      <option value="0.5" ${
+        quranSave === '0.5' ? 'selected' : ''
+      }>نصف القرآن</option>
+      <option value="0.75" ${quranSave === '0.75' ? 'selected' : ''}>ثلاثة أرباع القرآن</option>
+      <option value="1" ${quranSave === '1' ? 'selected' : ''}>القرآن كاملا</option>
+
+    </select>
+    <div class="invalid-feedback">يرجي ملئ  مستوى الحفظ</div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">اغلاق</button>
+    <input class="btn btn-primary" type="submit" value="حفظ" data-title="حفظ" id="save-student-btn"/>
+  </div>
+  </form>`;
+}
+
+
 // add buttons
 const addStudentBtn = document.getElementById('add-student-btn');
 const addTeacherBtn = document.getElementById('add-teacher-btn');
@@ -155,6 +265,16 @@ function createModel(
       });
     }
   );
+  // let schoolStatus= document.querySelector('#schoolStatus-selectbox')
+  // let levelStatus= document.querySelector('#level-selectbox')
+  // schoolStatus.addEventListener('change',()=>{
+  //   if(schoolStatus.value ==="before"){
+  //     levelStatus.setAttribute('disabled', true);
+  //   }else{
+  //     levelStatus.removeAttribute('disabled')
+  //   }
+  // })
+  
   const form = modalBody.querySelector('.submit-form');
   form.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -163,12 +283,10 @@ function createModel(
     // get form data
     const formData = new FormData(form);
     fetchOptions.body = formData;
-    console.log('fetch : ', fetchOptions);
     // send the request
     fetch(`http://localhost:3000/myschool/${UrlEndpoint}`, fetchOptions)
       .then((res) => res.json())
       .then((data) => {
-        console.log('data : ', data);
 
         if (!data.errors) {
           const { _id, fullName } = data.teacher;
@@ -237,51 +355,10 @@ addTeacherBtn.addEventListener('click', function () {
 addStudentBtn.addEventListener('click', function () {
   createModel.call(
     addStudentBtn,
-    `<form class="row g-3 needs-validation submit-form" novalidate="novalidate">
-  <div class="py-2"> 
-    <label class="form-label fw-bold fs-5" for="fullname-input">الاسم و اللقب</label>
-    <input class="form-control" id="fullname-input" type="text" name="fullName" required="true"/>
-    <div class="invalid-feedback">يرجي ملئ البيانات</div>
-  </div>
-  <div class="py-2"> 
-  <label class="fw-bold fs-5 form-label"> تاريخ الميلاد</label>
-  <input class="form-control" type="date" required="true" name="BirthDate" value="01/01/2023"/>
-  <div class="invalid-feedback">يرجي ملئ البيانات </div>
-</div>
-  <div class="py-2"> 
-    <label class="form-label fw-bold fs-5" for="grade-selectbox">الرتبة</label>
-    <select class="form-control" id="grade-selectbox" name="grade" required="true">
-      <option value="dd">استاذ</option>
-      <option value="MQ" selected> معلم قران </option>
-      <option value="MD"> مرشدة دينية </option>
-    </select>
-    <div class="invalid-feedback">يرجي ملئ البيانات</div>
-  </div>
-  <div class="py-2">
-    <p class="fw-bold fs-5 form-label">الحالة</p>
-    <div class="form-check">
-      <label class="form-check-label" for="#state-emp">موظف</label>
-      <input class="form-check-input" id="state-emp" type="radio" name="type" checked="checked" value="employee"/>
-    </div>
-    <div class="form-check">
-      <label class="form-check-label" for="#state-non-emp">متطوع</label>
-      <input class="form-check-input" id="state-non-emp" type="radio" name="type" value="nonEemployee"/>
-    </div>
-  </div>
-  <div class="py-2">
-    <p class="fw-bold fs-5 form-label">الترخيص</p>
-    <div class="form-check">
-      <input class="form-check-input" id="authorization-checkbox" type="checkbox" value="true" name="isAuthorized"/>
-      <label class="form-check-label" for="authorization-checkbox">مرخص</label>
-    </div>
-  </div>
-  <div class="modal-footer">
-    <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">اغلاق</button>
-    <input class="btn btn-primary" type="submit" value="حفظ" data-title="حفظ" id="save-btn"/>
-  </div>
-  </form>`,
+    getStudentModel(),
     'student'
   );
+
 });
 
 // infos buttons
@@ -361,3 +438,5 @@ function clientSideValidation() {
     );
   });
 }
+
+

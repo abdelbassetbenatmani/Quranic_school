@@ -46,6 +46,13 @@ class SchoolFeatures {
     teachers[teacherIndex] = teacherObj;
     await school.save();
   };
+
+  createStudent= async function (studentObj) {
+    const school = await this.getSchool();
+    school.students.push(studentObj);
+    await school.save();
+  };
+  
 }
 
 module.exports = SchoolFeatures;
