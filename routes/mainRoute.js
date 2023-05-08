@@ -3,18 +3,18 @@ const multer = require('multer');
 const uploads = multer();
 // services
 const {
-  getTeachersPage,
+  getMainPage,
   createTeacher,
   getSpecificTeacher,
   updateTeacher,
-} = require('../services/teachersService');
+} = require('../services/mainService');
 // auth middlewares
 const { protect } = require('../services/authService');
 // validators
 const {
   addTeacherValidator,
 } = require('../utils/validator/teachersValidator');
-router.route('/').get(protect, getTeachersPage);
+router.route('/').get(protect, getMainPage);
 router
   .route('/teachers')
   .post(protect, uploads.none(), addTeacherValidator, createTeacher);

@@ -63,24 +63,44 @@ const schoolSchema = mongoose.Schema(
           type: String,
           require: [true, 'father name is required'],
         },
-        schoolStatus: {
-          type: String,
-          require: [true, 'school status is required'],
-          enum: ['before', 'in', 'out', 'old'],
-        },
+        schoolStatus:[{
+          status:{
+            type:String,
+            require: [true, 'school status is required'],
+            enum: ['before', 'in', 'out', 'old'],
+          },
+          date:{
+            type:Date
+          }
+        }],
+        // schoolStatus: {
+        //   type: String,
+        //   require: [true, 'school status is required'],
+        //   enum: ['before', 'in', 'out', 'old'],
+        // },
         isInternal: {
           type: Boolean,
           default: false,
         },
         level: {
           type: String,
-          enum: ['before', 'AP', 'AF', 'AS', 'UN', 'OUT'],
+          enum: ['without', 'AP', 'AF', 'AS', 'UN'],
         },
-        quranSave: {
-          type: Number,
-          require: [true, 'quran save is required'],
-          enum: [0, 0.25, 0.5, 0.75, 1],
-        },
+        quranSave:[{
+          Qsave:{
+            type:Number,
+            require: [true, 'quran save is required'],
+            enum: [0, 0.25, 0.5, 0.75, 1],
+          },
+          date:{
+            type:Date
+          }
+        }],
+        // quranSave: {
+        //   type: Number,
+        //   require: [true, 'quran save is required'],
+        //   enum: [0, 0.25, 0.5, 0.75, 1],
+        // },
         isActive: {
           type: Boolean,
           default: true,

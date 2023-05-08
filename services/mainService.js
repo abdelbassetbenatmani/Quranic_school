@@ -4,7 +4,7 @@ const School = require('../models/schoolModel');
 const SchoolFeatures = require('../utils/schoolFeatures');
 const asyncHandler = require('express-async-handler');
 
-exports.getTeachersPage = asyncHandler(async (req, res, next) => {
+exports.getMainPage = asyncHandler(async (req, res, next) => {
   const { user } = req;
   const schoolFeatures = new SchoolFeatures(user._id);
   const school = await schoolFeatures.getSchool(user._id);
@@ -21,7 +21,7 @@ exports.getTeachersPage = asyncHandler(async (req, res, next) => {
     nTeachers: await schoolFeatures.getNumberOfTeachers(),
   };
   //console.log('teachers : ', getTeachers(school));
-  res.render('teachers.pug', {
+  res.render('index.pug', {
     stat,
     teachers: await schoolFeatures.getTeachers(),
     students: await schoolFeatures.getStudents(),
@@ -49,8 +49,6 @@ exports.createTeacher = asyncHandler(async (req, res, next) => {
     isAuthorized,
     registrationDate,
   };
-  console.log('body : ', req.body);
-  console.log('new Teacher : ', newTeacher);
   await schoolFeatures.createTeacher(newTeacher);
   res.json({
     msg: 'تمت الاضافة بنجاح',
