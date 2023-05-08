@@ -57,7 +57,7 @@ app.options(compression());
 app.set('view engine', 'ejs');
 
 // set view directories
-app.set('views', ['./views', './views/teachers']);
+app.set('views', ['./views', './views/mainPage']);
 // register pug engine
 app.engine('pug', pug.renderFile);
 
