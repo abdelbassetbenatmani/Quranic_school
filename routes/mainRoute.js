@@ -30,5 +30,5 @@ router
 
 router
   .route('/students')
-  .post(protect, uploads.none(), addStudentValidator, createStudent);  
+  .post(protect, uploads.none(), createStudent);  
 module.exports = router;

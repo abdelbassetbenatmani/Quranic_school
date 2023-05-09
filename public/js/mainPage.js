@@ -265,15 +265,19 @@ function createModel(
       });
     }
   );
-  // let schoolStatus= document.querySelector('#schoolStatus-selectbox')
-  // let levelStatus= document.querySelector('#level-selectbox')
-  // schoolStatus.addEventListener('change',()=>{
-  //   if(schoolStatus.value ==="before"){
-  //     levelStatus.setAttribute('disabled', true);
-  //   }else{
-  //     levelStatus.removeAttribute('disabled')
-  //   }
-  // })
+  let schoolStatus= document.querySelector('#schoolStatus-selectbox')
+  if (typeof(schoolStatus) != 'undefined' && schoolStatus != null)
+  {
+    let levelStatus= document.querySelector('#level-selectbox')
+    schoolStatus.addEventListener('change',()=>{
+      if(schoolStatus.value ==="before"){
+        levelStatus.setAttribute('disabled', true);
+      }else{
+        levelStatus.removeAttribute('disabled')
+      }
+    })
+  }
+  
   
   const form = modalBody.querySelector('.submit-form');
   form.addEventListener('submit', (event) => {
@@ -287,9 +291,9 @@ function createModel(
     fetch(`http://localhost:3000/myschool/${UrlEndpoint}`, fetchOptions)
       .then((res) => res.json())
       .then((data) => {
-
+        console.log(data);
         if (!data.errors) {
-          const { _id, fullName } = data.teacher;
+          const { _id, fullName } = data.teacher || data.student;
           // add success message
           const successMessage = document.createElement('div');
           successMessage.classList.add('alert', 'alert-success');
@@ -340,7 +344,48 @@ function createModel(
               teachersCard.querySelector('.teachers-name').textContent =
                 fullName;
             }
-          } else {
+          } else if(/\bstudents/.test(UrlEndpoint)){
+            document.querySelector('##nbr-students').textContent =
+              data.numberOfStudent;
+            const studentsListWrapper = document.querySelector(
+                'ul.students-list__wrapper'
+            );
+            if (fetchOptions.method === 'POST'){
+              const studentsCard = document.createElement('li');
+              studentsCard.classList.add(
+                'students-card',
+                'shadow-sm',
+                'd-flex',
+                'justify-content-between',
+                'align-items-center',
+                'p-2',
+                '.mb-3'
+              );
+              studentsCard.dataset.id = _id;
+              studentsCard.dataset.fullname = fullName;
+              studentsCard.innerHTML = `<p class="students-name m-0 ml-1">${fullName} </p>
+              <div class="controllers-wrapper"> 
+                <button class="get-student-infos btn btn-primary ms-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop" data-title="معلومات" data-def="get-teacher-infos">معلومات</button>
+                <button class="remove-student btn btn-danger"> احالة</button>
+              </div>`;
+              console.log('student card : ', studentsCard);
+              // add event listeners to buttons
+              studentsCard
+                .querySelector('button.get-student-infos')
+                .addEventListener('click', (event) => {
+                  showInfosEvent(event, _id);
+                });
+                studentsListWrapper.append(studentsCard);
+            }
+            // update the teacher info
+            else {
+              const studentsCard = document.querySelector(
+                `.students-card[data-id="${_id}"]`
+              );
+              console.log('studentCard : ', studentsCard);
+              studentsCard.querySelector('.students-name').textContent =
+                fullName;
+            }
           }
         }
       })
@@ -356,7 +401,7 @@ addStudentBtn.addEventListener('click', function () {
   createModel.call(
     addStudentBtn,
     getStudentModel(),
-    'student'
+    'students'
   );
 
 });
