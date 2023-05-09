@@ -128,5 +128,7 @@ exports.createStudent = asyncHandler(async (req, res, next) => {
     msg: 'تمت الاضافة بنجاح',
     student: newStudent,
     numberOfStudent: await schoolFeatures.getNumberOfStudents(),
+    numberOfStudentMale: await schoolFeatures.getNumberOfStudents((students) => students.sex === 'male'),
+    numberOfStudentFemale: await schoolFeatures.getNumberOfStudents((students) => students.sex === 'female'),
   });
 });
