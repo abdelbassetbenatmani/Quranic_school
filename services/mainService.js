@@ -11,12 +11,12 @@ exports.getMainPage = asyncHandler(async (req, res, next) => {
   const { name, address = {} } = school;
   const { daira } = address;
   const stat = {
-    nStudents: await schoolFeatures.getNumberOfStudents(),
+    nStudents: await schoolFeatures.getNumberOfStudents((students) => students.isActive === true),
     nMales: await schoolFeatures.getNumberOfStudents(
-      (students) => students.sex === 'male'
+      (students) => students.sex === 'male' && students.isActive === true
     ),
     nFemales: await schoolFeatures.getNumberOfStudents(
-      (students) => students.sex === 'female'
+      (students) => students.sex === 'female' && students.isActive === true
     ),
     nTeachers: await schoolFeatures.getNumberOfTeachers(),
   };
@@ -24,7 +24,7 @@ exports.getMainPage = asyncHandler(async (req, res, next) => {
   res.render('index.pug', {
     stat,
     teachers: await schoolFeatures.getTeachers(),
-    students: await schoolFeatures.getStudents(),
+    students: await schoolFeatures.getStudents((students) => students.isActive === true),
     name,
     daira,
   });
@@ -127,8 +127,15 @@ exports.createStudent = asyncHandler(async (req, res, next) => {
   res.json({
     msg: 'تمت الاضافة بنجاح',
     student: newStudent,
-    numberOfStudent: await schoolFeatures.getNumberOfStudents(),
-    numberOfStudentMale: await schoolFeatures.getNumberOfStudents((students) => students.sex === 'male'),
-    numberOfStudentFemale: await schoolFeatures.getNumberOfStudents((students) => students.sex === 'female'),
+    numberOfStudent: await schoolFeatures.getNumberOfStudents((students) => students.isActive === true),
+    numberOfStudentMale: await schoolFeatures.getNumberOfStudents((students) => students.sex === 'male' && students.isActive === true),
+    numberOfStudentFemale: await schoolFeatures.getNumberOfStudents((students) => students.sex === 'female' && students.isActive === true),
   });
+});
+
+exports.getSpecificStudent = asyncHandler(async (req, res, next) => {
+  const { user } = req;
+  const schoolFeatures = new SchoolFeatures(user._id);
+  const student = await schoolFeatures.getSpecificStudent(req.params.id);
+  res.json({ msg: 'scc', student });
 });

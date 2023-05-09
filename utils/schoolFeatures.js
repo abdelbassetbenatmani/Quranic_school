@@ -47,7 +47,10 @@ class SchoolFeatures {
     const { students } = school;
     return students.filter(filterCallback);
   };
-
+  getSpecificStudent = async function (id) {
+    const students = await this.getStudents();
+    return students.find((student) => student._id.toString() === id);
+  };
   getNumberOfStudents = async function (filterCallback = (e) => e) {
     const students = await this.getStudents(filterCallback);
     return students.length;
