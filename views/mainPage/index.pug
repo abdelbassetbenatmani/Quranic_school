@@ -46,16 +46,16 @@ block content
                     input#search-by-name.form-control.mx-auto.shadow(type='search' placeholder='بحث' aria-label='Search')
                 .students-list.py-3 
                     h2.students-list__title.text-center.my-5 لائحة الطلبة
-                    .students-list__wrapper
-                    -if(studentsList.length > 0)
-                        each student of studentsList 
-                            .students-card.shadow-sm.d-flex.justify-content-between.align-items-center.p-2.mb-3(data-id=`${student._id}`) 
-                                p.students-name.m-0.ml-1= student.fullName 
-                                .controllers-wrapper 
-                                    button.get-student-infos.btn.btn-primary.ms-2(data-bs-toggle='modal' data-bs-target='#staticBackdrop') معلومات
-                                    button.remove-student.btn.btn-outline-danger  احالة
-                    -else 
-                        p.h3.text-center.opacity-25 لا يوجد طلبة
+                    ul.students-list__wrapper.px-0
+                        -if(studentsList.length > 0)
+                            each student of studentsList 
+                                li.students-card.shadow-sm.d-flex.justify-content-between.align-items-center.p-2.mb-3(data-id=`${student._id}`) 
+                                    p.students-name.m-0.ml-1= student.fullName 
+                                    .controllers-wrapper 
+                                        button.get-student-infos.btn.btn-primary.ms-2(data-bs-toggle='modal' data-bs-target='#staticBackdrop') معلومات
+                                        button.remove-student.btn.btn-outline-danger  احالة
+                        -else 
+                            p.h3.text-center.opacity-25 لا يوجد طلبة
                 .teachers-list.py-3
                     h2.teachers-list__title.text-center.my-5 لائحة المدرسين
                     ul.teachers-list__wrapper.px-0

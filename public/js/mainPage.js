@@ -345,8 +345,12 @@ function createModel(
                 fullName;
             }
           } else if(/\bstudents/.test(UrlEndpoint)){
-            document.querySelector('##nbr-students').textContent =
+            document.querySelector('#nbr-students').textContent =
               data.numberOfStudent;
+            document.querySelector('#nbr-males').textContent =
+              data.numberOfStudentMale;
+            document.querySelector('#nbr-females').textContent =
+              data.numberOfStudentFemale;
             const studentsListWrapper = document.querySelector(
                 'ul.students-list__wrapper'
             );
@@ -366,7 +370,7 @@ function createModel(
               studentsCard.innerHTML = `<p class="students-name m-0 ml-1">${fullName} </p>
               <div class="controllers-wrapper"> 
                 <button class="get-student-infos btn btn-primary ms-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop" data-title="معلومات" data-def="get-teacher-infos">معلومات</button>
-                <button class="remove-student btn btn-danger"> احالة</button>
+                <button class="remove-student btn btn-outline-danger"> احالة</button>
               </div>`;
               console.log('student card : ', studentsCard);
               // add event listeners to buttons
