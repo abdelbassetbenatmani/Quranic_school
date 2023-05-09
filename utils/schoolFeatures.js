@@ -13,16 +13,6 @@ class SchoolFeatures {
     const { teachers } = school;
     return teachers.filter(filterCallback);
   };
-  getStudents = async function (filterCallback = (e) => e) {
-    const school = await this.getSchool();
-    const { students } = school;
-    return students.filter(filterCallback);
-  };
-
-  getNumberOfStudents = async function (filterCallback = (e) => e) {
-    const students = await this.getStudents(filterCallback);
-    return students.length;
-  };
 
   getNumberOfTeachers = async function (filterCallback = (e) => e) {
     const teachers = await this.getTeachers(filterCallback);
@@ -52,7 +42,16 @@ class SchoolFeatures {
     school.students.push(studentObj);
     await school.save();
   };
-  
+  getStudents = async function (filterCallback = (e) => e) {
+    const school = await this.getSchool();
+    const { students } = school;
+    return students.filter(filterCallback);
+  };
+
+  getNumberOfStudents = async function (filterCallback = (e) => e) {
+    const students = await this.getStudents(filterCallback);
+    return students.length;
+  };
 }
 
 module.exports = SchoolFeatures;

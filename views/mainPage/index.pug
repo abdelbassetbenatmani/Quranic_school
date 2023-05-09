@@ -49,8 +49,8 @@ block content
                     .students-list__wrapper
                     -if(studentsList.length > 0)
                         each student of studentsList 
-                            .student-card.shadow-sm.d-flex.justify-content-between.align-items-center.p-2.mb-3(data-id=`${student._id}`) 
-                                p.student-name.m-0.ml-1= student.fullName 
+                            .students-card.shadow-sm.d-flex.justify-content-between.align-items-center.p-2.mb-3(data-id=`${student._id}`) 
+                                p.students-name.m-0.ml-1= student.fullName 
                                 .controllers-wrapper 
                                     button.get-student-infos.btn.btn-primary.ms-2(data-bs-toggle='modal' data-bs-target='#staticBackdrop') معلومات
                                     button.remove-student.btn.btn-outline-danger  احالة
