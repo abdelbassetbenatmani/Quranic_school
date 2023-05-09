@@ -26,6 +26,25 @@ function formatDateForDateInput(givenDate = Date.now()) {
   )}-${String(date.getDate()).padStart(2, '0')}`;
 }
 
+function findMaxDateElement(arr) {
+  if (arr.length === 0) {
+    return null; // Return null if the array is empty
+  }
+
+  let maxDateElement = arr[0]; // Assume the first element has the biggest date
+
+  for (let i = 1; i < arr.length; i++) {
+    const currentDate = new Date(arr[i].date);
+    const maxDate = new Date(maxDateElement.date);
+
+    if (currentDate > maxDate) {
+      maxDateElement = arr[i]; // Update maxDateElement if a bigger date is found
+    }
+  }
+
+  return maxDateElement;
+}
+
 function getTeacherModel(teacherInfos = {}) {
   const {
     fullName = '',
@@ -122,7 +141,9 @@ function getStudentModel(studentInfos = {}) {
   </div>
   <div class="py-2"> 
     <label class="fw-bold fs-5 form-label"> تاريخ الميلاد</label>
-    <input class="form-control" type="date" required="true" name="BirthDate" value="${BirthDate}"/>
+    <input class="form-control" type="date" required="true" name="BirthDate" value="${formatDateForDateInput(
+      BirthDate
+    )}"/>
     <div class="invalid-feedback">يرجي ملئ تاريخ الميلاد </div>
   </div>
   <div class="py-2">
@@ -149,15 +170,15 @@ function getStudentModel(studentInfos = {}) {
     <label class="form-label fw-bold fs-5" for="schoolStatus-selectbox">الوضعية مع المدرسة التربوية</label>
     <select class="form-control" id="schoolStatus-selectbox" name="schoolStatus">
       <option value="before" ${
-        schoolStatus === 'before' ? 'selected' : ''
+        schoolStatus[0].status === 'before' ? 'selected' : ''
       }>قبل سن التمدرس</option>
       <option value="in" ${
-        schoolStatus === 'in' ? 'selected' : ''
+        schoolStatus[0].status === 'in' ? 'selected' : ''
       }>متمدرس</option>
       <option value="out" ${
-        schoolStatus === 'out' ? 'selected' : ''
+        schoolStatus[0].status === 'out' ? 'selected' : ''
       }>منفصل</option>
-      <option value="old" ${schoolStatus === 'old' ? 'selected' : ''}>متفرغ</option>
+      <option value="old" ${schoolStatus[0].status === 'old' ? 'selected' : ''}>متفرغ</option>
 
     </select>
     <div class="invalid-feedback">يرجي ملئ الوضعية التربوية</div>
@@ -174,7 +195,7 @@ function getStudentModel(studentInfos = {}) {
   <div class="py-2"> 
     <label class="form-label fw-bold fs-5" for="level-selectbox">المستوى التعليمي</label>
     <select class="form-control" id="level-selectbox" name="level" ${
-      schoolStatus === 'in' ? '' : 'disabled'
+      schoolStatus === 'before' ? 'disabled' : ''
     } ${schoolStatus === 'in' ? 'required' : ''}>
       <option value="AP" ${
         level === 'AP' ? 'selected' : ''
@@ -191,16 +212,16 @@ function getStudentModel(studentInfos = {}) {
     <label class="form-label fw-bold fs-5" for="quranSave-selectbox">متسوى الحفظ</label>
     <select class="form-control" id="quranSave-selectbox" name="quranSave">
       <option value="0" ${
-        quranSave === '0' ? 'selected' : ''
+        findMaxDateElement(quranSave).Qsave == '0' ? 'selected' : ''
       }>أقل من الربع</option>
       <option value="0.25" ${
-        quranSave === '0.25' ? 'selected' : ''
+        findMaxDateElement(quranSave).Qsave == '0.25' ? 'selected' : ''
       }>ربع القرآن</option>
       <option value="0.5" ${
-        quranSave === '0.5' ? 'selected' : ''
+        findMaxDateElement(quranSave).Qsave == '0.5' ? 'selected' : ''
       }>نصف القرآن</option>
-      <option value="0.75" ${quranSave === '0.75' ? 'selected' : ''}>ثلاثة أرباع القرآن</option>
-      <option value="1" ${quranSave === '1' ? 'selected' : ''}>القرآن كاملا</option>
+      <option value="0.75" ${findMaxDateElement(quranSave).Qsave == '0.75' ? 'selected' : ''}>ثلاثة أرباع القرآن</option>
+      <option value="1" ${findMaxDateElement(quranSave).Qsave == '1' ? 'selected' : ''}>القرآن كاملا</option>
 
     </select>
     <div class="invalid-feedback">يرجي ملئ  مستوى الحفظ</div>
@@ -369,6 +390,7 @@ function createModel(
               studentsCard.dataset.fullname = fullName;
               studentsCard.innerHTML = `<p class="students-name m-0 ml-1">${fullName} </p>
               <div class="controllers-wrapper"> 
+                <button class="update-student-save btn btn-outline-primary ms-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop" data-title="حفظ" data-def="update-student-save">زيادة الحفظ</button>
                 <button class="get-student-infos btn btn-primary ms-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop" data-title="معلومات" data-def="get-teacher-infos">معلومات</button>
                 <button class="remove-student btn btn-outline-danger"> احالة</button>
               </div>`;
@@ -410,7 +432,7 @@ addStudentBtn.addEventListener('click', function () {
 
 });
 
-// infos buttons
+// infos teacher buttons
 const teachersCards = document.querySelectorAll('.teachers-card');
 [...teachersCards].forEach((card) => {
   card.addEventListener('click', (event) => {
@@ -418,21 +440,44 @@ const teachersCards = document.querySelectorAll('.teachers-card');
   });
 });
 
-function showInfosEvent(event, teacherId) {
+// infos student buttons
+const studentsCards = document.querySelectorAll('.students-card');
+[...studentsCards].forEach((card) => {
+  card.addEventListener('click', (event) => {
+    showInfosEvent(event, card.dataset.id);
+  });
+});
+
+function showInfosEvent(event, Id) {
   if (event.target.dataset.def === 'get-teacher-infos') {
     const button = event.target;
-    console.log('from button');
-    fetch(`http://localhost:3000/myschool/teachers/${teacherId}`, {
+    fetch(`http://localhost:3000/myschool/teachers/${Id}`, {
       method: 'GET',
     })
       .then((response) => response.json())
       .then((data) => {
         const { msg, teacher } = data;
-        console.log('teacher : ', teacher);
         createModel.call(
           button,
           getTeacherModel(teacher),
-          `teachers/${teacherId}`,
+          `teachers/${Id}`,
+          {
+            method: 'PUT',
+          }
+        );
+      });
+  }else if(event.target.dataset.def === 'get-student-infos'){
+    const button = event.target;
+    fetch(`http://localhost:3000/myschool/students/${Id}`, {
+      method: 'GET',
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        const { msg, student } = data;
+        createModel.call(
+          button,
+          getStudentModel(student),
+          `students/${Id}`,
           {
             method: 'PUT',
           }
