@@ -105,7 +105,7 @@ exports.createStudent = asyncHandler(async (req, res, next) => {
     level ,
     quranSave,
   }  = req.body;
-  // teachers object shape
+  // student object shape
   const newStudent = {
     _id: Types.ObjectId(),
     fullName,
@@ -138,4 +138,43 @@ exports.getSpecificStudent = asyncHandler(async (req, res, next) => {
   const schoolFeatures = new SchoolFeatures(user._id);
   const student = await schoolFeatures.getSpecificStudent(req.params.id);
   res.json({ msg: 'scc', student });
+});
+
+exports.updateStudent = asyncHandler(async (req, res, next) => {
+  const { user } = req;
+  const schoolFeatures = new SchoolFeatures(user._id);
+  const {
+    fullName ,
+    BirthDate,
+    sex,
+    fatherName,
+    schoolStatus,
+    isInternal ,
+    level ,
+  }  = req.body;
+  console.log(req.body);
+  // student object shape
+  const newStudent = {
+    _id: Types.ObjectId(),
+    fullName,
+    BirthDate,
+    sex,
+    fatherName,
+    schoolStatus:{
+      status:schoolStatus,
+      date:Date.now()
+    },
+    isInternal ,
+    level ,
+    
+  };
+  console.log(`the new : ${newStudent}`);
+  await schoolFeatures.updateStudent(req.params.id, newStudent);
+  res.json({
+    msg: 'تم التعديل بنجاح',
+    student: newStudent,
+    numberOfStudent: await schoolFeatures.getNumberOfStudents((students) => students.isActive === true),
+    numberOfStudentMale: await schoolFeatures.getNumberOfStudents((students) => students.sex === 'male' && students.isActive === true),
+    numberOfStudentFemale: await schoolFeatures.getNumberOfStudents((students) => students.sex === 'female' && students.isActive === true),
+  });
 });

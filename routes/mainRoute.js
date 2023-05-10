@@ -8,7 +8,8 @@ const {
   getSpecificTeacher,
   updateTeacher,
   createStudent,
-  getSpecificStudent
+  getSpecificStudent,
+  updateStudent
 } = require('../services/mainService');
 // auth middlewares
 const { protect } = require('../services/authService');
@@ -36,4 +37,5 @@ router
 router
   .route('/students/:id')
   .get(protect, getSpecificStudent)  
+  .put(protect, updateStudent)  
 module.exports = router;

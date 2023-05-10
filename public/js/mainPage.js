@@ -122,7 +122,7 @@ function getTeacherModel(teacherInfos = {}) {
   </form>`;
 }
 
-function getStudentModel(studentInfos = {}) {
+function getStudentModel(studentInfos = {},qSave = false) {
   const {
     fullName = '',
     BirthDate = '01/01/2000',
@@ -131,7 +131,7 @@ function getStudentModel(studentInfos = {}) {
     schoolStatus = 'in',
     isInternal = false,
     level = '',
-    quranSave = '',
+    quranSave = [],
   } = studentInfos;
   return `<form action="addstudent" class="row g-3 needs-validation submit-form" novalidate="novalidate">
   <div class="py-2"> 
@@ -212,23 +212,23 @@ function getStudentModel(studentInfos = {}) {
     <label class="form-label fw-bold fs-5" for="quranSave-selectbox">متسوى الحفظ</label>
     <select class="form-control" id="quranSave-selectbox" name="quranSave">
       <option value="0" ${
-        findMaxDateElement(quranSave).Qsave == '0' ? 'selected' : ''
+        qSave ==true ? (findMaxDateElement(quranSave).Qsave == '0' ? 'selected' : ''):null
       }>أقل من الربع</option>
       <option value="0.25" ${
-        findMaxDateElement(quranSave).Qsave == '0.25' ? 'selected' : ''
+        qSave ==true ? (findMaxDateElement(quranSave).Qsave == '0.25' ? 'selected' : ''):null
       }>ربع القرآن</option>
       <option value="0.5" ${
-        findMaxDateElement(quranSave).Qsave == '0.5' ? 'selected' : ''
+        qSave ==true ? (findMaxDateElement(quranSave).Qsave == '0.5' ? 'selected' : ''):null
       }>نصف القرآن</option>
-      <option value="0.75" ${findMaxDateElement(quranSave).Qsave == '0.75' ? 'selected' : ''}>ثلاثة أرباع القرآن</option>
-      <option value="1" ${findMaxDateElement(quranSave).Qsave == '1' ? 'selected' : ''}>القرآن كاملا</option>
+      <option value="0.75" ${qSave ==true ? (findMaxDateElement(quranSave).Qsave == '0.75' ? 'selected' : ''):null}>ثلاثة أرباع القرآن</option>
+      <option value="1" ${qSave ==true ? (findMaxDateElement(quranSave).Qsave == '1' ? 'selected' : ''):null}>القرآن كاملا</option>
 
     </select>
     <div class="invalid-feedback">يرجي ملئ  مستوى الحفظ</div>
   </div>
   <div class="modal-footer">
     <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">اغلاق</button>
-    <input class="btn btn-primary" type="submit" value="حفظ" data-title="حفظ" id="save-student-btn"/>
+    <input class="btn btn-primary" type="submit" value="حفظ" data-title="حفظ" id="save-btn"/>
   </div>
   </form>`;
 }
@@ -312,9 +312,10 @@ function createModel(
     fetch(`http://localhost:3000/myschool/${UrlEndpoint}`, fetchOptions)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         if (!data.errors) {
+           
           const { _id, fullName } = data.teacher || data.student;
+          console.log(`fullname is : ${fullName}`);
           // add success message
           const successMessage = document.createElement('div');
           successMessage.classList.add('alert', 'alert-success');
@@ -403,7 +404,7 @@ function createModel(
                 });
                 studentsListWrapper.append(studentsCard);
             }
-            // update the teacher info
+            // update the student info
             else {
               const studentsCard = document.querySelector(
                 `.students-card[data-id="${_id}"]`
@@ -474,9 +475,10 @@ function showInfosEvent(event, Id) {
       .then((response) => response.json())
       .then((data) => {
         const { msg, student } = data;
+        console.log(student);
         createModel.call(
           button,
-          getStudentModel(student),
+          getStudentModel(student,true),
           `students/${Id}`,
           {
             method: 'PUT',
