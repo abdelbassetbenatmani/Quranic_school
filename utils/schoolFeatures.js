@@ -55,6 +55,16 @@ class SchoolFeatures {
     const students = await this.getStudents(filterCallback);
     return students.length;
   };
+
+  updateStudent = async function (id, studentObj) {
+    const school = await this.getSchool();
+    const { students } = school;
+    const studentIndex = students.findIndex(
+      (student) => student._id.toString() === id
+    );
+    students[studentIndex] = studentObj;
+    await school.save();
+  };
 }
 
 module.exports = SchoolFeatures;
