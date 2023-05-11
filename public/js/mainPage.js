@@ -7,7 +7,6 @@ if (logout) {
       const response = await fetch('http://localhost:3000/auth/logout', {
         method: 'POST',
       });
-      console.log('errrrrrrrrrr');
       location.href = '/auth/login';
       //window.location.reload();
       //return false;
