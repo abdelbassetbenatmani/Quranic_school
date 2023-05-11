@@ -7,6 +7,25 @@
             <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
         </svg>
     </div>
+    <% function findMaxDateElement(arr) { %>
+      <% if (arr.length === 0) { %>
+        <% return null; // Return null if the array is empty %>
+      <% } %>
+    
+      <% let maxDateElement = arr[0]; // Assume the first element has the biggest date %>
+    
+      <% for (let i = 1; i < arr.length; i++) { %>
+        <% const currentDate = new Date(arr[i].date); %>
+        <% const maxDate = new Date(maxDateElement.date); %>
+    
+        <% if (currentDate > maxDate) { %>
+          <% maxDateElement = arr[i]; // Update maxDateElement if a bigger date is found %>
+        <% } %>
+      <% } %>
+    
+      <% return maxDateElement; %>
+    <% } %>
+    
     <div class="d-flex">
         <%-include('parts/sidebar') %>
         <div class="container-md p-5 large-box">
@@ -299,7 +318,7 @@
                               </div>
                             </div>
                           </div>
-                            <h4 class="mt-5 mb-3">القائمون على المقر </h4>
+                            <h4 class="mt-5 mb-3">القائمون على المقر </h4>  
                             <div class="table-responsive">
                               <table class="table table-hover table-bordered border-primary">
                                 <thead class="table-dark text-white">
@@ -333,7 +352,7 @@
                                       <% }else if(teacher.grade ==='IO'){ %>    
                                           <td class="text-nowrap">إمام أستاذ</td>
                                           <% } else{%>
-                                            <td class="text-nowrap"></td>
+                                            <td class="text-nowrap">بدون رتبة</td>
 
                                        <% } %> 
                                       <% if(teacher.isAuthorized ===true){ %>
@@ -368,46 +387,69 @@
                                   <th >شهادة مدرسية</th>
                                 </thead>
                                 <tbody>
-                                  <tr>
-                                    <td class="text-nowrap">عبد الباسط بن عثماني</td>
-                                    <td class="text-nowrap">موظف</td>
-                                    <td class="text-nowrap">إمام مدرس</td>
-                                    <td class="text-nowrap">غير مرخص</td>
-                                    <td class="text-nowrap">18/01/2022</td>
-                                    <td class="text-nowrap">18/01/2022</td>
-                                    <td class="text-nowrap">18/01/2022</td>
-                                    <td class="text-nowrap">18/01/2022</td>
+                                  <% school.students.forEach((student)=>{ %>
+                                    <tr>
+                                    <td class="text-nowrap"><%= student.fullName %></td>
+                                    <td class="text-nowrap"><%= student.BirthDate.getFullYear() %>-<%= String(student.BirthDate.getMonth() + 1).padStart(
+                                      2,
+                                      '0'
+                                    )  %>-<%= String(student.BirthDate.getDate()).padStart(
+                                      2,
+                                      '0'
+                                    )  %></td>
+                                    <td class="text-nowrap"><%= student.fatherName %></td>
+                                    <% if(student.sex ==='male'){ %>
+                                      <td class="text-nowrap">ذكر</td>
+                                      <% }else{ %>
+                                        <td class="text-nowrap">أنثى</td>
+                                    <% } %>
+                                    <% if(findMaxDateElement(student.schoolStatus).status == 'before'){ %>
+                                      <td class="text-nowrap">قبل سن التمدرس</td>
+                                      <% }else if(findMaxDateElement(student.schoolStatus).status == 'in'){ %>
+                                        <td class="text-nowrap">متمدرس</td>
+                                        
+                                        <% }else if(findMaxDateElement(student.schoolStatus).status == 'out'){ %>
+                                          <td class="text-nowrap">منفصل</td>
+                                          
+                                          <% }else if(findMaxDateElement(student.schoolStatus).status == 'old'){ %>
+                                            <td class="text-nowrap">متفرغ</td>
+
+                                    <% } %>                                     
+                                    <% if(student.level ==='AP'){ %>
+                                      <td class="text-nowrap">مستوى إبتدائي</td>
+                                      <% }else if(student.level ==='AF'){ %>
+                                        <td class="text-nowrap">مستوى متوسط</td>
+                                        
+                                        <% }else if(student.level ==='AS'){ %>
+                                          <td class="text-nowrap">مستوى ثانوي</td>
+                                          
+                                          <% }else if(student.level ==='UN'){ %>
+                                            <td class="text-nowrap">مستوى جامعي</td>
+
+                                    <% } %>
+                                    
+                                    
+                                    <% if(findMaxDateElement(student.quranSave).Qsave == '0'){ %>
+                                      <td class="text-nowrap">أقل من الربع</td>
+                                      <% }else if(findMaxDateElement(student.quranSave).Qsave == '0.25'){ %>
+                                        <td class="text-nowrap">ربع القرآن</td>
+                                        
+                                        <% }else if(findMaxDateElement(student.quranSave).Qsave == '0.5'){ %>
+                                          <td class="text-nowrap">نصف القرآن</td>
+                                          
+                                          <% }else if(findMaxDateElement(student.quranSave).Qsave == '0.75'){ %>
+                                            <td class="text-nowrap">ثلاثة أرباع القرآن</td>
+                                            
+                                            <% }else if(findMaxDateElement(student.quranSave).Qsave == '1'){ %>  
+                                              <td class="text-nowrap">القرآن كاملا</td>
+                                    <% } %>  
+                                    <td class="text-nowrap"><a href=""><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-arrow-down" viewBox="0 0 16 16">
+                                      <path d="M8.5 6.5a.5.5 0 0 0-1 0v3.793L6.354 9.146a.5.5 0 1 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0-.708-.708L8.5 10.293V6.5z"/>
+                                      <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/>
+                                    </svg></a></td>
                                   </tr>
-                                  <tr>
-                                    <td class="text-nowrap">عبد الباسط بن عثماني</td>
-                                    <td class="text-nowrap">موظف</td>
-                                    <td class="text-nowrap">إمام مدرس</td>
-                                    <td class="text-nowrap">غير مرخص</td>
-                                    <td class="text-nowrap">18/01/2022</td>
-                                    <td class="text-nowrap">18/01/2022</td>
-                                    <td class="text-nowrap">18/01/2022</td>
-                                    <td class="text-nowrap">18/01/2022</td>
-                                  </tr>
-                                  <tr>
-                                    <td class="text-nowrap">عبد الباسط بن عثماني</td>
-                                    <td class="text-nowrap">موظف</td>
-                                    <td class="text-nowrap">إمام مدرس</td>
-                                    <td class="text-nowrap">غير مرخص</td>
-                                    <td class="text-nowrap">18/01/2022</td>
-                                    <td class="text-nowrap">18/01/2022</td>
-                                    <td class="text-nowrap">18/01/2022</td>
-                                    <td class="text-nowrap">18/01/2022</td>
-                                  </tr>
-                                  <tr>
-                                    <td class="text-nowrap">عبد الباسط بن عثماني</td>
-                                    <td class="text-nowrap">موظف</td>
-                                    <td class="text-nowrap">إمام مدرس</td>
-                                    <td class="text-nowrap">غير مرخص</td>
-                                    <td class="text-nowrap">18/01/2022</td>
-                                    <td class="text-nowrap">18/01/2022</td>
-                                    <td class="text-nowrap">18/01/2022</td>
-                                    <td class="text-nowrap">18/01/2022</td>
-                                  </tr>
+                                  <% }) %>  
+                                                                    
                                 </tbody>
                               </table>
                             </div>
