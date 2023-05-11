@@ -107,7 +107,8 @@ exports.protect = asyncHandler(async (req, res, next) => {
 exports.allowedTo = (...roles) =>
   asyncHandler(async (req, res, next) => {
     if (!roles.includes(req.user.role)) {
-      return next(new apiError('لا يسمح لك بالدخول إلى هذه الصفحة', 403));
+      // return next(new apiError('لا يسمح لك بالدخول إلى هذه الصفحة', 403));
+      return res.render('denined');
     }
     next();
   });

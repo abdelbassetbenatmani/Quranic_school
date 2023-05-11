@@ -1,7 +1,7 @@
 const express = require('express')
 
 const router = express.Router()
-const {createSchool,setadressToBody,getSchoolsPage,getAddSchoolPage,getStaticsPage,getSpecificSchool,deleteSchool,updateSchool,changePassword} = require('../services/schoolService')
+const {createSchool,setadressToBody,getSchoolsPage,getAddSchoolPage,getStaticsPage,getSpecificSchool,deleteSchool,updateSchool,changePassword,getDashboardPage} = require('../services/schoolService')
 const {createUser,getUserPage,getUsersList,updateUser} = require('../services/userService')
 const {createSchoolValidator,getSchoolValidator,deleteSchoolValidator,updateSchoolValidator,changePasswordValidator} = require('../utils/validator/schoolValidator')
 const {createUserValidator,updateUserValidator} = require('../utils/validator/userValidator')
@@ -18,9 +18,7 @@ const {protect,allowedTo} = require('../services/authService')
 //     .get(protect,allowedTo("admin"),getSchoolValidator,getSpecificSchool)    
 //     .delete(protect,allowedTo("admin"),deleteSchoolValidator,deleteSchool)    
 
-router.get('/',protect,allowedTo('admin'),(req,res,next)=>{
-    res.render('dashboard')
-})
+router.get('/',protect,allowedTo('admin'),getDashboardPage)
 router.route('/users')
         .get(protect,allowedTo('admin'),getUsersList)
 router.route('/adduser')

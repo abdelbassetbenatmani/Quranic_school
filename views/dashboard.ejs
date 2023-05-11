@@ -29,12 +29,18 @@
                         <div class="col-md-8">
                           <div class="card-body text-center">
                             <h5 class="card-title">عدد المدارس</h5>
-                            <p class="card-text">300</p>
+                            <p class="card-text"><%= data.length %></p>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
+                  <% let teacherCount = 0 %>
+                  <% let studentCount = 0 %>
+                    <% data.forEach((school)=>{ %>
+                    <% teacherCount += school.teachers.length %>
+                    <% studentCount += school.students.filter((student)=>student.isActive ==true).length %>
+                  <% }) %>  
                   <div class="col-xl-4 col-md-6">
                     <div class="card mb-3">
                       <div class="row g-0">
@@ -44,7 +50,8 @@
                         <div class="col-md-8">
                           <div class="card-body text-center">
                             <h5 class="card-title">عدد المعلمين</h5>
-                            <p class="card-text">60</p>
+                            
+                            <p class="card-text"><%= teacherCount %></p>
                           </div>
                         </div>
                       </div>
@@ -59,7 +66,7 @@
                         <div class="col-md-8">
                           <div class="card-body text-center">
                             <h5 class="card-title">عدد الطلبة</h5>
-                            <p class="card-text">40</p>
+                            <p class="card-text"><%= studentCount %></p>
                           </div>
                         </div>
                       </div>
