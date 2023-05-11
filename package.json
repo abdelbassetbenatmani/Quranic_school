@@ -6,7 +6,8 @@
   "scripts": {
     "start": "nodemon server",
     "build-sass": "sass ./public/scss/style.scss ./public/css/teachers/style.css",
-    "watch-sass": "sass --watch ./public/scss:./public/css/teachers"
+    "watch-sass": "sass --watch ./public/scss:./public/css/teachers",
+    "build": "node server.js"
   },
   "repository": {
     "type": "git",
