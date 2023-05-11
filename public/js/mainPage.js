@@ -169,15 +169,15 @@ function getStudentModel(studentInfos = {},qSave = false) {
     <label class="form-label fw-bold fs-5" for="schoolStatus-selectbox">الوضعية مع المدرسة التربوية</label>
     <select class="form-control" id="schoolStatus-selectbox" name="schoolStatus">
       <option value="before" ${
-        schoolStatus[0].status === 'before' ? 'selected' : ''
+        findMaxDateElement(schoolStatus).status === 'before' ? 'selected' : ''
       }>قبل سن التمدرس</option>
       <option value="in" ${
-        schoolStatus[0].status === 'in' ? 'selected' : ''
+        findMaxDateElement(schoolStatus).status === 'in' ? 'selected' : ''
       }>متمدرس</option>
       <option value="out" ${
-        schoolStatus[0].status === 'out' ? 'selected' : ''
+        findMaxDateElement(schoolStatus).status === 'out' ? 'selected' : ''
       }>منفصل</option>
-      <option value="old" ${schoolStatus[0].status === 'old' ? 'selected' : ''}>متفرغ</option>
+      <option value="old" ${findMaxDateElement(schoolStatus).status === 'old' ? 'selected' : ''}>متفرغ</option>
 
     </select>
     <div class="invalid-feedback">يرجي ملئ الوضعية التربوية</div>
