@@ -15,7 +15,7 @@ const { loginValidator } = require('../utils/validator/authValidator');
 
 router.route('/login').get(getLoginPage).post(loginValidator, login);
 router.use(protect);
-router.post('/logout', logout);
+router.get('/logout', logout);
 router.post('/forgotpassword', forgotPassword);
 router.post('/verifyResetCode', verifyPassResetCode);
 router.post('/resetPassword', resetPassword);

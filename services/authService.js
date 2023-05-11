@@ -71,11 +71,9 @@ exports.getLoginPage = (req, res) => {
 exports.protect = asyncHandler(async (req, res, next) => {
   // check token exist
   const { token } = req.cookies;
-  console.log('token : ', token);
   if (!token) {
     //return next(new apiError('لست مسجل الدخول سجل دخولك أولا', 401));
     sharedVars.protectError = 'عليك ان تسجل الدخول';
-    console.log('from protect');
     return res.redirect('/auth/login');
   }
   // verify token
@@ -108,7 +106,7 @@ exports.protect = asyncHandler(async (req, res, next) => {
 
 exports.allowedTo = (...roles) =>
   asyncHandler(async (req, res, next) => {
-    if (!roles.includes(req.school.role)) {
+    if (!roles.includes(req.user.role)) {
       return next(new apiError('لا يسمح لك بالدخول إلى هذه الصفحة', 403));
     }
     next();
@@ -212,3 +210,4 @@ exports.logout = asyncHandler(async (req, res, next) => {
   res.set('Location', 'http://localhost:3000/auth/login');
   res.status(302).send();
 });
+

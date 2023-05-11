@@ -18,27 +18,27 @@ const {protect,allowedTo} = require('../services/authService')
 //     .get(protect,allowedTo("admin"),getSchoolValidator,getSpecificSchool)    
 //     .delete(protect,allowedTo("admin"),deleteSchoolValidator,deleteSchool)    
 
-router.get('/',(req,res,next)=>{
+router.get('/',protect,allowedTo('admin'),(req,res,next)=>{
     res.render('dashboard')
 })
 router.route('/users')
-        .get(getUsersList)
+        .get(protect,allowedTo('admin'),getUsersList)
 router.route('/adduser')
-        .get(getUserPage)
-        .post(createUserValidator,createUser)
+        .get(protect,allowedTo('admin'),getUserPage)
+        .post(protect,allowedTo('admin'),createUserValidator,createUser)
 router.route('/addschool')
-        .get(getAddSchoolPage)
-        .post(createSchoolValidator,setadressToBody,createSchool)
-router.get('/schools',getSchoolsPage)
+        .get(protect,allowedTo('admin'),getAddSchoolPage)
+        .post(protect,allowedTo('admin'),createSchoolValidator,setadressToBody,createSchool)
+router.get('/schools',protect,allowedTo('admin'),getSchoolsPage)
 // router.get('/schools/search',filterSchools)
-router.post('/schools/updateuser',updateUser)
-router.post('/schools/updateschool',setadressToBody,updateSchool)
-router.post('/schools/deleteschool',deleteSchool)
+router.post('/schools/updateuser',protect,allowedTo('admin'),updateUser)
+router.post('/schools/updateschool',protect,allowedTo('admin'),setadressToBody,updateSchool)
+router.post('/schools/deleteschool',protect,allowedTo('admin'),deleteSchool)
     
-router.get('/mapschools',(req,res,next)=>{
+router.get('/mapschools',protect,allowedTo('admin'),(req,res,next)=>{
     res.render('mapschools')
 })
-router.get('/statics',getStaticsPage)
+router.get('/statics',protect,allowedTo('admin'),getStaticsPage)
 
 
 module.exports = router;
