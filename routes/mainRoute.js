@@ -9,7 +9,7 @@ const {
   updateTeacher,
   createStudent,
   getSpecificStudent,
-  updateStudent
+  updateStudent,
 } = require('../services/mainService');
 // auth middlewares
 const { protect } = require('../services/authService');
@@ -32,10 +32,10 @@ router
 
 router
   .route('/students')
-  .post(protect, uploads.none(),addStudentValidator, createStudent);  
+  .post(protect, uploads.none(), addStudentValidator, createStudent);
 
 router
   .route('/students/:id')
-  .get(protect, getSpecificStudent)  
-  .put(protect, updateStudent)  
+  .get(protect, getSpecificStudent)
+  .put(protect, uploads.none(), updateStudent);
 module.exports = router;
