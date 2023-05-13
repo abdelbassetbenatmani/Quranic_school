@@ -400,7 +400,7 @@
                                 </thead>
                                 <tbody data-id="<%= school._id %>">
                                   <% school.students.forEach((student)=>{ %>
-                                    <tr class="student-infos">
+                                    <tr class="student-infos" data-fullname = "<%= student.fullName %>">
                                     <td class="text-nowrap"><%= student.fullName %></td>
                                     <td class="text-nowrap"><%= student.BirthDate.getFullYear() %>-<%= String(student.BirthDate.getMonth() + 1).padStart(
                                       2,

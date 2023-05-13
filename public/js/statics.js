@@ -65,44 +65,26 @@ emptyStudentInput.forEach((empty)=>{
   })
 })
 
-searchStudentInput.forEach((search)=>{
-  search.addEventListener('input',(e)=>{
-      if(e.currentTarget.value ===''){
-        for (var i = 0; i < studentInfos.length ; i++) {
-          console.log(studentInfos[i]);
-          studentInfos[i].classList.remove("is-hidden");
-        }
-      }
-  })
-})
-// searchStudentInput.addEventListener('input',()=>{
-//   if(searchStudentInput.value ===''){
-//     for (var i = 1; i < carousels.length ; i++) {
-//       studentInfos[i].classList.remove("active");
-//     }
-//     // studentInfos[0].classList.add('active')
-//   }
-  
-// })
+
 
 searchStudentInput.forEach((student)=>{
   student.addEventListener('keyup',(e)=>{
     let search_query = document.getElementById(e.currentTarget.id).value;
     const StudentTable = document.querySelector(`[data-id="${e.currentTarget.id}"]`);
     const trTableStudent = StudentTable.querySelectorAll('tr')
+    const searchRegex = new RegExp(search_query, 'g');
+    trTableStudent.forEach((tr)=>{
+      if (searchRegex.test(tr.dataset.fullname)){
+        tr.classList.remove("is-hidden");
+      }else{
+        tr.classList.add("is-hidden");
 
+      }
 
-    for (var i = 0; i < trTableStudent.length; i++) {
-        if(trTableStudent[i].firstElementChild.textContent.toLowerCase()
-                .includes(search_query.toLowerCase())) {
-                  trTableStudent[i].classList.remove("is-hidden");
-                  break;
-        } else {
-          trTableStudent[i].classList.add("is-hidden");
-        }
-    }
+    })
 
   })
+
 })
 
 
