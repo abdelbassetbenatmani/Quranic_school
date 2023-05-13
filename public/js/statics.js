@@ -1,10 +1,11 @@
 const carousels = document.querySelectorAll('.carousel-item')
 const studentInfos = document.querySelectorAll('.student-infos')
 const searchInput = document.getElementById('searchInput')
-const searchStudentInput = document.getElementById('searchStudentInput')
+const searchStudentInput = document.querySelectorAll('.searchStudentInput')
 const searchBtn = document.getElementById('searchBtn')
 const emptyInput = document.getElementById('emptyInput')
-const emptyStudentInput = document.getElementById('emptyStudentInput')
+const emptyStudentInput = document.querySelectorAll('.emptyStudentInput')
+const scrollToTop = document.querySelector('.scroll-to-top')
 carousels[0].classList.add('active')
 
 function liveSearch(id,content) {
@@ -54,25 +55,60 @@ searchInput.addEventListener('input',()=>{
   
 })
 
-emptyStudentInput.addEventListener('click',()=>{
-  searchStudentInput.value = '';
-  for (var i = 1; i < studentInfos.length ; i++) {
-    studentInfos[i].classList.remove("active");
-  }
-  // studentInfos[0].classList.add('active')
-})
 
-searchStudentInput.addEventListener('input',()=>{
-  if(searchStudentInput.value ===''){
-    for (var i = 1; i < carousels.length ; i++) {
-      studentInfos[i].classList.remove("active");
+emptyStudentInput.forEach((empty)=>{
+  empty.addEventListener('click',(e)=>{
+    e.currentTarget.parentElement.previousElementSibling.value = '';
+    for (var i = 0; i < studentInfos.length ; i++) {
+      studentInfos[i].classList.remove("is-hidden");
     }
-    // studentInfos[0].classList.add('active')
-  }
-  
+  })
 })
 
-searchStudentInput.addEventListener('keyup', () => {
-  clearTimeout(typingTimer);
-  typingTimer = setTimeout(liveSearch('searchStudentInput',studentInfos), typeInterval);
-});
+searchStudentInput.forEach((search)=>{
+  search.addEventListener('input',(e)=>{
+      if(e.currentTarget.value ===''){
+        for (var i = 0; i < studentInfos.length ; i++) {
+          console.log(studentInfos[i]);
+          studentInfos[i].classList.remove("is-hidden");
+        }
+      }
+  })
+})
+// searchStudentInput.addEventListener('input',()=>{
+//   if(searchStudentInput.value ===''){
+//     for (var i = 1; i < carousels.length ; i++) {
+//       studentInfos[i].classList.remove("active");
+//     }
+//     // studentInfos[0].classList.add('active')
+//   }
+  
+// })
+
+searchStudentInput.forEach((student)=>{
+  student.addEventListener('keyup',(e)=>{
+    let search_query = document.getElementById(e.currentTarget.id).value;
+    const StudentTable = document.querySelector(`[data-id="${e.currentTarget.id}"]`);
+    const trTableStudent = StudentTable.querySelectorAll('tr')
+
+
+    for (var i = 0; i < trTableStudent.length; i++) {
+        if(trTableStudent[i].firstElementChild.textContent.toLowerCase()
+                .includes(search_query.toLowerCase())) {
+                  trTableStudent[i].classList.remove("is-hidden");
+                  break;
+        } else {
+          trTableStudent[i].classList.add("is-hidden");
+        }
+    }
+
+  })
+})
+
+
+scrollToTop.onclick = function(){
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+}
