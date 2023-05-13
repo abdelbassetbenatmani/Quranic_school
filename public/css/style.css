@@ -119,7 +119,7 @@ li{
     display: none;
 }
 /* responsive menu  */
-@media screen and (max-width:480px){
+@media screen and (max-width:992px){
     .side-bar{
      position: fixed;
      right: -100%;
@@ -166,4 +166,50 @@ li{
 }
 .filter-images{
     filter: invert(100%);
+}
+
+
+
+/* style the main page */
+.main{
+    background: url('../../assets/school_wallpaper.jpg') center center/cover;
+    position: relative;
+    width: 100%;
+    height: 100vh;
+}
+.main::after{
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    top: 0;
+    background-color: #192e12;
+    opacity: 0.9;
+}
+
+.main .content{
+    z-index: 200;
+    color: #fff;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    text-align: center;
+    padding: 0 8px;
+}
+.main .content h1 {
+    line-height: 2;
+}
+.main .content .logo{
+    margin-right: 0;
+}
+.main .content a{
+    color: #000000;
+    background-color: #ffffff;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: bold;
 }
