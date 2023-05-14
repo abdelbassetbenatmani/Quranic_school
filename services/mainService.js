@@ -151,8 +151,8 @@ exports.updateStudent = asyncHandler(async (req, res, next) => {
     schoolStatus,
     isInternal ,
     level ,
+    quranSave
   }  = req.body;
-  console.log(req.body);
   // student object shape
   const newStudent = {
     _id: Types.ObjectId(),
@@ -166,7 +166,10 @@ exports.updateStudent = asyncHandler(async (req, res, next) => {
     },
     isInternal ,
     level ,
-    
+    quranSave:{
+      Qsave:quranSave,
+      date:Date.now()
+    },
   };
   console.log(`the new : ${newStudent}`);
   await schoolFeatures.updateStudent(req.params.id, newStudent);

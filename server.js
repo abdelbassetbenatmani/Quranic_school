@@ -89,6 +89,7 @@ app.use(helmet());
 mountRoutes(app);
 app.all('*', (req, res, next) => {
   // eslint-disable-next-line new-cap
+  return res.render('404')
   next(new apiError(`Can't find this route ${req.originalUrl}`, 400));
 });
 app.use(globalError);

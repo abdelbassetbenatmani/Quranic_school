@@ -28,7 +28,7 @@
     
     <div class="d-flex">
         <%-include('parts/sidebar') %>
-        <div class="container-md p-5 large-box">
+        <div class="container-xl p-5 large-box">
 
             <div class="d-flex align-items-center gap-3">
                 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-bar-chart text-success" viewBox="0 0 16 16">
@@ -376,6 +376,16 @@
                               </table>
                             </div>
                             <h4 class="mt-5 mb-3">لائحة التلاميذ</h4>
+                            <div class="input-group border border-1 border-success rounded-2 mb-4">
+                              <input class="form-control mr-sm-2 border border-0 outline-none remove-focus searchStudentInput"   type="text" name="keyword" placeholder="بحث" id="<%= school._id %>">    
+                              <div class="input-group-append">
+                                <button class="btn emptyStudentInput"  type="button">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                                      <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                                    </svg>                  
+                                </button>
+                              </div>
+                            </div>
                             <div class="table-responsive">
                               <table class="table table-hover table-bordered border-primary">
                                 <thead class="table-dark text-white text-center">
@@ -388,9 +398,9 @@
                                   <th >المحصل عليه من القرآن</th>
                                   <th >شهادة مدرسية</th>
                                 </thead>
-                                <tbody>
+                                <tbody data-id="<%= school._id %>">
                                   <% school.students.forEach((student)=>{ %>
-                                    <tr>
+                                    <tr class="student-infos" data-fullname = "<%= student.fullName %>">
                                     <td class="text-nowrap"><%= student.fullName %></td>
                                     <td class="text-nowrap"><%= student.BirthDate.getFullYear() %>-<%= String(student.BirthDate.getMonth() + 1).padStart(
                                       2,
@@ -464,6 +474,10 @@
             </div>
         </div>    
     </div>
+    <div class="scroll-to-top position-fixed bottom-0 end-0 me-2 mb-2 bg-danger text-white  rounded d-flex justify-content-center align-items-center  show" style="width: 40px; height: 40px;z-index: 500;">
+      <span class="mt-2 border-top border-start border-white" style="width: 0.75rem; height: 0.75rem; transform: rotate(45deg);"></span>
+    </div>
+    
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/global.js"></script>
     <script src="/js/statics.js"></script>
