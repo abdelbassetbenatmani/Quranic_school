@@ -57,7 +57,11 @@ app.options(compression());
 app.set('view engine', 'ejs');
 
 // set view directories
-app.set('views', ['./views', './views/mainPage']);
+app.set('views', [
+  path.join(__dirname, 'views'),
+  path.join(__dirname, 'views', 'mainPage'),
+]);
+//console.log('dirname : ', ));
 // register pug engine
 app.engine('pug', pug.renderFile);
 
