@@ -121,7 +121,7 @@ function getTeacherModel(teacherInfos = {}) {
   </form>`;
 }
 
-function getStudentModel(studentInfos = {},qSave = false) {
+function getStudentModel(studentInfos = {}, qSave = false) {
   const {
     fullName = '',
     BirthDate = '01/01/2000',
@@ -169,7 +169,9 @@ function getStudentModel(studentInfos = {},qSave = false) {
     <label class="form-label fw-bold fs-5" for="schoolStatus-selectbox">الوضعية مع المدرسة التربوية</label>
     <select class="form-control" id="schoolStatus-selectbox" name="schoolStatus">
       <option value="before" ${
-        findMaxDateElement(schoolStatus).status === 'before' ? 'selected' : ''
+        findMaxDateElement(schoolStatus).status === 'before'
+          ? 'selected'
+          : ''
       }>قبل سن التمدرس</option>
       <option value="in" ${
         findMaxDateElement(schoolStatus).status === 'in' ? 'selected' : ''
@@ -177,7 +179,9 @@ function getStudentModel(studentInfos = {},qSave = false) {
       <option value="out" ${
         findMaxDateElement(schoolStatus).status === 'out' ? 'selected' : ''
       }>منفصل</option>
-      <option value="old" ${findMaxDateElement(schoolStatus).status === 'old' ? 'selected' : ''}>متفرغ</option>
+      <option value="old" ${
+        findMaxDateElement(schoolStatus).status === 'old' ? 'selected' : ''
+      }>متفرغ</option>
 
     </select>
     <div class="invalid-feedback">يرجي ملئ الوضعية التربوية</div>
@@ -186,7 +190,7 @@ function getStudentModel(studentInfos = {},qSave = false) {
     <p class="fw-bold fs-5 form-label">داخلي</p>
     <div class="form-check">
       <input class="form-check-input" id="isInternal-checkbox" type="checkbox" value="${isInternal}" ${
-        isInternal ? 'checked' : ''
+    isInternal ? 'checked' : ''
   } name="isInternal"  />
       <label class="form-check-label" for="authorization-checkbox">داخلي</label>
     </div>
@@ -202,8 +206,12 @@ function getStudentModel(studentInfos = {},qSave = false) {
       <option value="AF" ${
         level === 'AF' ? 'selected' : ''
       }>مستوى متوسط</option>
-      <option value="AS" ${level === 'AS' ? 'selected' : ''}>مستوى ثانوي</option>
-      <option value="UN" ${level === 'UN' ? 'selected' : ''}>مستوى جامعي</option>
+      <option value="AS" ${
+        level === 'AS' ? 'selected' : ''
+      }>مستوى ثانوي</option>
+      <option value="UN" ${
+        level === 'UN' ? 'selected' : ''
+      }>مستوى جامعي</option>
     </select>
     <div class="invalid-feedback">يرجي ملئ المستوى التعليمي</div>
   </div>
@@ -211,16 +219,40 @@ function getStudentModel(studentInfos = {},qSave = false) {
     <label class="form-label fw-bold fs-5" for="quranSave-selectbox">متسوى الحفظ</label>
     <select class="form-control" id="quranSave-selectbox" name="quranSave">
       <option value="0" ${
-        qSave ==true  ? (findMaxDateElement(quranSave).Qsave == '0' ? 'selected' : ''):{}
+        qSave == true
+          ? findMaxDateElement(quranSave).Qsave == '0'
+            ? 'selected'
+            : ''
+          : {}
       }>أقل من الربع</option>
       <option value="0.25" ${
-        qSave ==true  ? (findMaxDateElement(quranSave).Qsave == '0.25' ? 'selected' : ''):{}
+        qSave == true
+          ? findMaxDateElement(quranSave).Qsave == '0.25'
+            ? 'selected'
+            : ''
+          : {}
       }>ربع القرآن</option>
       <option value="0.5" ${
-        qSave ==true ? (findMaxDateElement(quranSave).Qsave == '0.5' ? 'selected' : ''):{}
+        qSave == true
+          ? findMaxDateElement(quranSave).Qsave == '0.5'
+            ? 'selected'
+            : ''
+          : {}
       }>نصف القرآن</option>
-      <option value="0.75" ${qSave ==true  ? (findMaxDateElement(quranSave).Qsave == '0.75' ? 'selected' : ''):{}}>ثلاثة أرباع القرآن</option>
-      <option value="1" ${qSave ==true  ? (findMaxDateElement(quranSave).Qsave == '1' ? 'selected' : ''):{}}>القرآن كاملا</option>
+      <option value="0.75" ${
+        qSave == true
+          ? findMaxDateElement(quranSave).Qsave == '0.75'
+            ? 'selected'
+            : ''
+          : {}
+      }>ثلاثة أرباع القرآن</option>
+      <option value="1" ${
+        qSave == true
+          ? findMaxDateElement(quranSave).Qsave == '1'
+            ? 'selected'
+            : ''
+          : {}
+      }>القرآن كاملا</option>
 
     </select>
     <div class="invalid-feedback">يرجي ملئ  مستوى الحفظ</div>
@@ -231,7 +263,6 @@ function getStudentModel(studentInfos = {},qSave = false) {
   </div>
   </form>`;
 }
-
 
 // add buttons
 const addStudentBtn = document.getElementById('add-student-btn');
@@ -285,20 +316,18 @@ function createModel(
       });
     }
   );
-  let schoolStatus= document.querySelector('#schoolStatus-selectbox')
-  if (typeof(schoolStatus) != 'undefined' && schoolStatus != null)
-  {
-    let levelStatus= document.querySelector('#level-selectbox')
-    schoolStatus.addEventListener('change',()=>{
-      if(schoolStatus.value ==="before"){
+  let schoolStatus = document.querySelector('#schoolStatus-selectbox');
+  if (typeof schoolStatus != 'undefined' && schoolStatus != null) {
+    let levelStatus = document.querySelector('#level-selectbox');
+    schoolStatus.addEventListener('change', () => {
+      if (schoolStatus.value === 'before') {
         levelStatus.setAttribute('disabled', true);
-      }else{
-        levelStatus.removeAttribute('disabled')
+      } else {
+        levelStatus.removeAttribute('disabled');
       }
-    })
+    });
   }
-  
-  
+
   const form = modalBody.querySelector('.submit-form');
   form.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -312,7 +341,6 @@ function createModel(
       .then((res) => res.json())
       .then((data) => {
         if (!data.errors) {
-           
           const { _id, fullName } = data.teacher || data.student;
           console.log(`fullname is : ${fullName}`);
           // add success message
@@ -365,7 +393,7 @@ function createModel(
               teachersCard.querySelector('.teachers-name').textContent =
                 fullName;
             }
-          } else if(/\bstudents/.test(UrlEndpoint)){
+          } else if (/\bstudents/.test(UrlEndpoint)) {
             document.querySelector('#nbr-students').textContent =
               data.numberOfStudent;
             document.querySelector('#nbr-males').textContent =
@@ -373,9 +401,9 @@ function createModel(
             document.querySelector('#nbr-females').textContent =
               data.numberOfStudentFemale;
             const studentsListWrapper = document.querySelector(
-                'ul.students-list__wrapper'
+              'ul.students-list__wrapper'
             );
-            if (fetchOptions.method === 'POST'){
+            if (fetchOptions.method === 'POST') {
               const studentsCard = document.createElement('li');
               studentsCard.classList.add(
                 'students-card',
@@ -391,7 +419,7 @@ function createModel(
               studentsCard.innerHTML = `<p class="students-name m-0 ml-1">${fullName} </p>
               <div class="controllers-wrapper"> 
                 <button class="update-student-save btn btn-outline-primary ms-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop" data-title="حفظ" data-def="update-student-save">زيادة الحفظ</button>
-                <button class="get-student-infos btn btn-primary ms-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop" data-title="معلومات" data-def="get-teacher-infos">معلومات</button>
+                <button class="get-student-infos btn btn-primary ms-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop" data-title="معلومات" data-def="get-student-infos">معلومات</button>
                 <button class="remove-student btn btn-outline-danger"> احالة</button>
               </div>`;
               console.log('student card : ', studentsCard);
@@ -401,12 +429,7 @@ function createModel(
                 .addEventListener('click', (event) => {
                   showInfosEvent(event, _id);
                 });
-              studentsCard
-                .querySelector('button.get-student-save')
-                .addEventListener('click', (event) => {
-                  showInfosEvent(event, _id);
-                });
-                studentsListWrapper.append(studentsCard);
+              studentsListWrapper.append(studentsCard);
             }
             // update the student info
             else {
@@ -429,12 +452,7 @@ addTeacherBtn.addEventListener('click', function () {
 });
 
 addStudentBtn.addEventListener('click', function () {
-  createModel.call(
-    addStudentBtn,
-    getStudentModel(),
-    'students'
-  );
-
+  createModel.call(addStudentBtn, getStudentModel(), 'students');
 });
 
 // infos teacher buttons
@@ -471,7 +489,7 @@ function showInfosEvent(event, Id) {
           }
         );
       });
-  }else if(event.target.dataset.def === 'get-student-infos'){
+  } else if (event.target.dataset.def === 'get-student-infos') {
     const button = event.target;
     fetch(`http://localhost:3000/myschool/students/${Id}`, {
       method: 'GET',
@@ -482,14 +500,14 @@ function showInfosEvent(event, Id) {
         console.log(student);
         createModel.call(
           button,
-          getStudentModel(student,true),
+          getStudentModel(student, true),
           `students/${Id}`,
           {
             method: 'PUT',
           }
         );
       });
-  }else if(event.target.dataset.def === 'update-student-save'){
+  } else if (event.target.dataset.def === 'update-student-save') {
     const button = event.target;
     fetch(`http://localhost:3000/myschool/students/increase/${Id}`, {
       method: 'GET',
@@ -500,7 +518,7 @@ function showInfosEvent(event, Id) {
         console.log(student);
         createModel.call(
           button,
-          getStudentModel(student,true),
+          getStudentModel(student, true),
           `students/increase/${Id}`,
           {
             method: 'PUT',
@@ -556,5 +574,3 @@ function clientSideValidation() {
     );
   });
 }
-
-
