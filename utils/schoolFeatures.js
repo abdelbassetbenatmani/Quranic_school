@@ -65,6 +65,26 @@ class SchoolFeatures {
     students[studentIndex] = studentObj;
     await school.save();
   };
+  addStatusAndQuranSave = async function (id,studentObj) {
+    const school = await this.getSchool();
+    const { students } = school;
+    const studentIndex = students.findIndex(
+      (student) => student._id.toString() === id
+    );
+    
+    const checkSave = students[studentIndex].quranSave.some((s)=>s.Qsave == studentObj.quranSave.Qsave)
+    const checkStatus =  students[studentIndex].schoolStatus.some((s)=>s.status == studentObj.schoolStatus.status)
+    console.log(checkSave);
+      console.log(studentObj.quranSave.Qsave);
+    if(checkStatus ==false){
+      students[studentIndex].schoolStatus.push( studentObj.schoolStatus);
+
+    }
+    if(checkSave ==false){
+      students[studentIndex].quranSave.push( studentObj.quranSave);
+    }
+    await school.save();
+  }
 }
 
 module.exports = SchoolFeatures;

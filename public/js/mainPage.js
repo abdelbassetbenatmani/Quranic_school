@@ -211,16 +211,16 @@ function getStudentModel(studentInfos = {},qSave = false) {
     <label class="form-label fw-bold fs-5" for="quranSave-selectbox">متسوى الحفظ</label>
     <select class="form-control" id="quranSave-selectbox" name="quranSave">
       <option value="0" ${
-        qSave ==true ? (findMaxDateElement(quranSave).Qsave == '0' ? 'selected' : ''):null
+        qSave ==true  ? (findMaxDateElement(quranSave).Qsave == '0' ? 'selected' : ''):{}
       }>أقل من الربع</option>
       <option value="0.25" ${
-        qSave ==true ? (findMaxDateElement(quranSave).Qsave == '0.25' ? 'selected' : ''):null
+        qSave ==true  ? (findMaxDateElement(quranSave).Qsave == '0.25' ? 'selected' : ''):{}
       }>ربع القرآن</option>
       <option value="0.5" ${
-        qSave ==true ? (findMaxDateElement(quranSave).Qsave == '0.5' ? 'selected' : ''):null
+        qSave ==true ? (findMaxDateElement(quranSave).Qsave == '0.5' ? 'selected' : ''):{}
       }>نصف القرآن</option>
-      <option value="0.75" ${qSave ==true ? (findMaxDateElement(quranSave).Qsave == '0.75' ? 'selected' : ''):null}>ثلاثة أرباع القرآن</option>
-      <option value="1" ${qSave ==true ? (findMaxDateElement(quranSave).Qsave == '1' ? 'selected' : ''):null}>القرآن كاملا</option>
+      <option value="0.75" ${qSave ==true  ? (findMaxDateElement(quranSave).Qsave == '0.75' ? 'selected' : ''):{}}>ثلاثة أرباع القرآن</option>
+      <option value="1" ${qSave ==true  ? (findMaxDateElement(quranSave).Qsave == '1' ? 'selected' : ''):{}}>القرآن كاملا</option>
 
     </select>
     <div class="invalid-feedback">يرجي ملئ  مستوى الحفظ</div>
@@ -401,6 +401,11 @@ function createModel(
                 .addEventListener('click', (event) => {
                   showInfosEvent(event, _id);
                 });
+              studentsCard
+                .querySelector('button.get-student-save')
+                .addEventListener('click', (event) => {
+                  showInfosEvent(event, _id);
+                });
                 studentsListWrapper.append(studentsCard);
             }
             // update the student info
@@ -479,6 +484,24 @@ function showInfosEvent(event, Id) {
           button,
           getStudentModel(student,true),
           `students/${Id}`,
+          {
+            method: 'PUT',
+          }
+        );
+      });
+  }else if(event.target.dataset.def === 'update-student-save'){
+    const button = event.target;
+    fetch(`http://localhost:3000/myschool/students/increase/${Id}`, {
+      method: 'GET',
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        const { msg, student } = data;
+        console.log(student);
+        createModel.call(
+          button,
+          getStudentModel(student,true),
+          `students/increase/${Id}`,
           {
             method: 'PUT',
           }
