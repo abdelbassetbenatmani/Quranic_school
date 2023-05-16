@@ -11,7 +11,9 @@ exports.getMainPage = asyncHandler(async (req, res, next) => {
   const { name, address = {} } = school;
   const { daira } = address;
   const stat = {
-    nStudents: await schoolFeatures.getNumberOfStudents((students) => students.isActive === true),
+    nStudents: await schoolFeatures.getNumberOfStudents(
+      (students) => students.isActive === true
+    ),
     nMales: await schoolFeatures.getNumberOfStudents(
       (students) => students.sex === 'male' && students.isActive === true
     ),
@@ -24,7 +26,9 @@ exports.getMainPage = asyncHandler(async (req, res, next) => {
   res.render('index.pug', {
     stat,
     teachers: await schoolFeatures.getTeachers(),
-    students: await schoolFeatures.getStudents((students) => students.isActive === true),
+    students: await schoolFeatures.getStudents(
+      (students) => students.isActive === true
+    ),
     name,
     daira,
   });
@@ -91,20 +95,19 @@ exports.updateTeacher = asyncHandler(async (req, res, next) => {
   });
 });
 
-
 exports.createStudent = asyncHandler(async (req, res, next) => {
   const { user } = req;
   const schoolFeatures = new SchoolFeatures(user._id);
   const {
-    fullName ,
+    fullName,
     BirthDate,
     sex,
     fatherName,
     schoolStatus,
-    isInternal ,
-    level ,
+    isInternal,
+    level,
     quranSave,
-  }  = req.body;
+  } = req.body;
   // student object shape
   const newStudent = {
     _id: Types.ObjectId(),
@@ -112,24 +115,30 @@ exports.createStudent = asyncHandler(async (req, res, next) => {
     BirthDate,
     sex,
     fatherName,
-    schoolStatus:{
-      status:schoolStatus,
-      date:Date.now()
+    schoolStatus: {
+      status: schoolStatus,
+      date: Date.now(),
     },
-    isInternal ,
-    level ,
-    quranSave:{
-      Qsave:quranSave,
-      date:Date.now()
+    isInternal,
+    level,
+    quranSave: {
+      Qsave: quranSave,
+      date: Date.now(),
     },
   };
   await schoolFeatures.createStudent(newStudent);
   res.json({
     msg: 'تمت الاضافة بنجاح',
     student: newStudent,
-    numberOfStudent: await schoolFeatures.getNumberOfStudents((students) => students.isActive === true),
-    numberOfStudentMale: await schoolFeatures.getNumberOfStudents((students) => students.sex === 'male' && students.isActive === true),
-    numberOfStudentFemale: await schoolFeatures.getNumberOfStudents((students) => students.sex === 'female' && students.isActive === true),
+    numberOfStudent: await schoolFeatures.getNumberOfStudents(
+      (students) => students.isActive === true
+    ),
+    numberOfStudentMale: await schoolFeatures.getNumberOfStudents(
+      (students) => students.sex === 'male' && students.isActive === true
+    ),
+    numberOfStudentFemale: await schoolFeatures.getNumberOfStudents(
+      (students) => students.sex === 'female' && students.isActive === true
+    ),
   });
 });
 
@@ -144,40 +153,46 @@ exports.updateStudent = asyncHandler(async (req, res, next) => {
   const { user } = req;
   const schoolFeatures = new SchoolFeatures(user._id);
   const {
-    fullName ,
-    BirthDate,
-    sex,
-    fatherName,
-    schoolStatus,
-    isInternal ,
-    level ,
-    quranSave
-  }  = req.body;
-  // student object shape
-  const newStudent = {
-    _id: Types.ObjectId(),
     fullName,
     BirthDate,
     sex,
     fatherName,
-    schoolStatus:{
-      status:schoolStatus,
-      date:Date.now()
+    schoolStatus,
+    isInternal,
+    level,
+    quranSave,
+  } = req.body;
+  // student object shape
+  const newStudent = {
+    _id: req.params.id,
+    fullName,
+    BirthDate,
+    sex,
+    fatherName,
+    schoolStatus: {
+      status: schoolStatus,
+      date: Date.now(),
     },
-    isInternal ,
-    level ,
-    quranSave:{
-      Qsave:quranSave,
-      date:Date.now()
+    isInternal,
+    level,
+    quranSave: {
+      Qsave: quranSave,
+      date: Date.now(),
     },
   };
   await schoolFeatures.updateStudent(req.params.id, newStudent);
   res.json({
     msg: 'تم التعديل بنجاح',
     student: newStudent,
-    numberOfStudent: await schoolFeatures.getNumberOfStudents((students) => students.isActive === true),
-    numberOfStudentMale: await schoolFeatures.getNumberOfStudents((students) => students.sex === 'male' && students.isActive === true),
-    numberOfStudentFemale: await schoolFeatures.getNumberOfStudents((students) => students.sex === 'female' && students.isActive === true),
+    numberOfStudent: await schoolFeatures.getNumberOfStudents(
+      (students) => students.isActive === true
+    ),
+    numberOfStudentMale: await schoolFeatures.getNumberOfStudents(
+      (students) => students.sex === 'male' && students.isActive === true
+    ),
+    numberOfStudentFemale: await schoolFeatures.getNumberOfStudents(
+      (students) => students.sex === 'female' && students.isActive === true
+    ),
   });
 });
 
@@ -185,15 +200,15 @@ exports.updateStatusOfStudent = asyncHandler(async (req, res, next) => {
   const { user } = req;
   const schoolFeatures = new SchoolFeatures(user._id);
   const {
-    fullName ,
+    fullName,
     // BirthDate,
     // sex,
     // fatherName,
     schoolStatus,
     // isInternal ,
     // level ,
-    quranSave
-  }  = req.body;
+    quranSave,
+  } = req.body;
   // student object shape
   const newStudent = {
     _id: Types.ObjectId(),
@@ -201,23 +216,29 @@ exports.updateStatusOfStudent = asyncHandler(async (req, res, next) => {
     // BirthDate,
     // sex,
     // fatherName,
-    schoolStatus:{
-      status:schoolStatus,
-      date:Date.now()
+    schoolStatus: {
+      status: schoolStatus,
+      date: Date.now(),
     },
     // isInternal ,
     // level ,
-    quranSave:{
-      Qsave:quranSave,
-      date:Date.now()
+    quranSave: {
+      Qsave: quranSave,
+      date: Date.now(),
     },
   };
   await schoolFeatures.addStatusAndQuranSave(req.params.id, newStudent);
   res.json({
     msg: 'تم التعديل بنجاح',
     student: newStudent,
-    numberOfStudent: await schoolFeatures.getNumberOfStudents((students) => students.isActive === true),
-    numberOfStudentMale: await schoolFeatures.getNumberOfStudents((students) => students.sex === 'male' && students.isActive === true),
-    numberOfStudentFemale: await schoolFeatures.getNumberOfStudents((students) => students.sex === 'female' && students.isActive === true),
+    numberOfStudent: await schoolFeatures.getNumberOfStudents(
+      (students) => students.isActive === true
+    ),
+    numberOfStudentMale: await schoolFeatures.getNumberOfStudents(
+      (students) => students.sex === 'male' && students.isActive === true
+    ),
+    numberOfStudentFemale: await schoolFeatures.getNumberOfStudents(
+      (students) => students.sex === 'female' && students.isActive === true
+    ),
   });
 });
